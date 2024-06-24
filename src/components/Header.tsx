@@ -1,9 +1,31 @@
+import { useState, useRef, useEffect } from "react";
 import { Menu, Search, ShoppingCart } from "react-feather";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/images/navbar-logo.webp";
 
 function Header() {
+  const [isActive, setIsActive] = useState(false);
+  const navbarNavRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLAnchorElement>(null);
+
+  const toggleNavbar = () => {
+    setIsActive((prev) => !prev);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (hamburgerRef.current && !hamburgerRef.current.contains(event.target as Node) && navbarNavRef.current && !navbarNavRef.current.contains(event.target as Node)) {
+      setIsActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="font-jakarta">
       <nav className="flex justify-between items-center bg-black fixed py-[2%] tbt:py-[0.5%] px-[5%] tbt:px-[10%] top-0 left-0 right-0 z-50">
@@ -47,10 +69,10 @@ function Header() {
               </button>
             </Link>
           </div>
-          <Link to="#" id="hamburger-menu" className="md:hidden" aria-label="Read more about hamburger">
+          <Link to="#" id="hamburger-menu" ref={hamburgerRef} onClick={toggleNavbar} className="md:hidden" aria-label="Read more about hamburger">
             <Menu className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
-          <div className="navbar-nav-detail absolute top-full bg-white w-full h-screen duration-300">
+          <div className={`navbar-nav-detail ${isActive ? "active" : ""} absolute top-full bg-white w-full h-screen duration-300`} ref={navbarNavRef}>
             <Link to="/index" className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Home
             </Link>

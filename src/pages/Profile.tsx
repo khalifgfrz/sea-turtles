@@ -1,5 +1,12 @@
 import { Component } from "react";
 
+import profileImg from "../assets/images/profile-img.webp";
+import phoneIcon from "../assets/images/phone-icon.svg";
+import nameIcon from "../assets/images/form-icon.svg";
+import addressIcon from "../assets/images/address-icon.svg";
+import emailIcon from "../assets/images/email-icon.svg";
+import passwordIcon from "../assets/images/password-icon.svg";
+
 export class Profile extends Component {
   render() {
     return (
@@ -10,7 +17,7 @@ export class Profile extends Component {
             <p className="text-center text-sm uw:text-xl">Ghaluh Wizard</p>
             <p className="text-center text-sm uw:text-xl mb-2">ghaluhwizz@gmail.com</p>
             <div className="grid place-items-center mb-2">
-              <img width="100" height="100" src="assets/images/profile-img.webp" alt="profile-img" />
+              <img width="100" height="100" src={profileImg} alt="profile-img" />
             </div>
             <div className="flex justify-center items-center">
               <button className="mb-2 text-lightblack text-sm uw:text-xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-1/2 tbt:w-3/4 h-11 uw:h-16">Upload New Photo</button>
@@ -22,7 +29,7 @@ export class Profile extends Component {
               Full Name
             </label>
             <div className="relative mt-2">
-              <img className="absolute mt-4 ml-5" width="20" height="20" src="/assets/images/form-icon.svg" alt="name-icon" />
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
               <input
                 className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
                 type="text"
@@ -36,7 +43,7 @@ export class Profile extends Component {
               Email
             </label>
             <div className="relative mt-2">
-              <img className="absolute mt-4 ml-5" width="20" height="20" src="/assets/images/email-icon.svg" alt="email-icon" />
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
               <input
                 className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
                 type="text"
@@ -50,7 +57,7 @@ export class Profile extends Component {
               Phone
             </label>
             <div className="relative mt-2">
-              <img className="absolute mt-4 ml-5" width="20" height="20" src="/assets/images/phone-icon.svg" alt="phone-icon" />
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
               <input
                 className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
                 type="text"
@@ -67,7 +74,7 @@ export class Profile extends Component {
               <p className="text-sm text-right text-primary">Set New Password</p>
             </div>
             <div className="relative mt-2">
-              <img className="absolute mt-4 ml-5" width="20" height="20" src="/assets/images/password-icon.svg" alt="password-icon" />
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={passwordIcon} alt="password-icon" />
               <input
                 className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
                 type="password"
@@ -81,7 +88,7 @@ export class Profile extends Component {
               Address
             </label>
             <div className="relative mt-2">
-              <img className="absolute mt-4 ml-5" width="20" height="20" src="/assets/images/address-icon.svg" alt="address-icon" />
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
               <input
                 className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
                 type="text"

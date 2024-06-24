@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Checkout from "./pages/Checkout";
 import DetailOrder from "./pages/DetailOrder";
+import DetailProduct from "./pages/DetailProduct";
+import HistoryOrder from "./pages/HistoryOrder";
 
 function NotFound() {
   return <div>Not Found</div>;
@@ -72,6 +74,14 @@ const routerWithChildren = createBrowserRouter([
       {
         path: "detail-order",
         element: <DetailOrder />,
+      },
+      {
+        path: "detail-product",
+        element: <DetailProduct />,
+      },
+      {
+        path: "history-order",
+        element: <HistoryOrder />,
       },
     ],
   },
