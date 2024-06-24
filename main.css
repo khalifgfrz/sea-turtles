@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* default style per elemen */
+/* @layer base {
+} */
+
+/* untuk bikin utility class baru */
+/* @layer utilities {
+} */
+
+/* untuk bikin component class */
+@layer components {
+  .checkbox {
+    @apply flex items-center mb-4;
+  }
+  .checkbox:hover {
+    @apply cursor-pointer;
+  }
+  .checkbox input {
+    @apply mr-2.5;
+  }
+  .checkbox input[type="checkbox"] {
+    @apply hidden;
+  }
+  .checkmark {
+    @apply w-3.5 h-3.5 mr-2.5 bg-transparent border border-solid rounded inline-block relative;
+  }
+  .checkbox input[type="checkbox"]:checked + .checkmark {
+    @apply bg-primary cursor-pointer;
+  }
+  .checkmark:after {
+    @apply absolute hidden;
+    content: "";
+  }
+  .checkbox input[type="checkbox"]:checked + .checkmark:after {
+    @apply block;
+  }
+  .checkbox .checkmark:after {
+    @apply left-1 w-1 h-2 border-solid border-black border-r-2 border-b-2 rotate-45 top-px;
+  }
+  .range-slider {
+    @apply relative h-12;
+  }
+  .range-slider input[type="range"] {
+    @apply absolute w-full pointer-events-none appearance-none bg-transparent top-2.5;
+  }
+  .range-slider input[type="range"]::-webkit-slider-thumb {
+    @apply bg-white cursor-pointer h-4 w-4 rounded-full pointer-events-auto;
+    -webkit-appearance: none;
+  }
+  .range-track {
+    @apply absolute w-full bg-white z-10 h-1;
+    transform: translateY(-50%);
+  }
+  .range-progress {
+    @apply bg-primary z-10 absolute h-1;
+    transform: translateY(-50%);
+  }
+  .price-labels {
+    @apply absolute w-full flex text-sm top-7 left-2;
+  }
+  .price-labels span {
+    @apply text-white absolute;
+    transform: translateX(-82%);
+  }
+  .testimonial-content {
+    display: grid;
+    max-width: 100%;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "image header"
+      "image name"
+      "image title"
+      "image reaction"
+      "image rating"
+      "image button"
+      "image pagination";
+  }
+  .navbar-nav-detail {
+    @apply right-[-150%];
+  }
+  .navbar-nav-detail.active {
+    @apply right-0;
+  }
+  .feather {
+    @apply text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary;
+  }
+  .modal-bg {
+    @apply hidden;
+  }
+  .modal-bg.show {
+    @apply flex;
+  }
+  .dropdown-content {
+    @apply hidden;
+  }
+  .dropdown-content.show {
+    @apply block;
+  }
+}
