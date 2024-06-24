@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
@@ -12,18 +12,18 @@ function Product() {
   const [minPrice, setMinPrice] = useState(100);
   const [maxPrice, setMaxPrice] = useState(900);
 
-  const updateProgress = () => {
+  const updateProgress = useCallback(() => {
     if (minPrice > maxPrice - 10) {
       setMinPrice(maxPrice - 10);
     }
     if (maxPrice < minPrice + 10) {
       setMaxPrice(minPrice + 10);
     }
-  };
+  }, [minPrice, maxPrice]);
 
   useEffect(() => {
     updateProgress();
-  }, [minPrice, maxPrice]);
+  }, [minPrice, maxPrice, updateProgress]);
 
   return (
     <main>

@@ -11,8 +11,12 @@ import DetailOrder from "./pages/DetailOrder";
 import DetailProduct from "./pages/DetailProduct";
 import HistoryOrder from "./pages/HistoryOrder";
 
+function Error() {
+  return <div>Error</div>;
+}
+
 function NotFound() {
-  return <div>Not Found</div>;
+  return <div className="my-[45%] md:my-[25%] px-[5%] tbt:px-[10%]">Route Not Found</div>;
 }
 
 // const router = createBrowserRouter([
@@ -53,7 +57,7 @@ const routerWithChildren = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-    errorElement: <NotFound />,
+    errorElement: <Error />,
     children: [
       {
         path: "home",
@@ -82,6 +86,10 @@ const routerWithChildren = createBrowserRouter([
       {
         path: "history-order",
         element: <HistoryOrder />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
