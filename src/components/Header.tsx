@@ -37,7 +37,7 @@ function Header() {
           </div>
           <div className="hidden md:flex uw:text-xl">
             <Link
-              to="/home"
+              to="/"
               className="md:mr-16 md:text-white md:after:block md:after:border-b-2 md:after:border-solid md:after:border-primary md:after:scale-x-0 md:after:duration-200 md:after:ease-linear md:hover:after:scale-x-100 md:active:text-darkwhite"
             >
               Home
