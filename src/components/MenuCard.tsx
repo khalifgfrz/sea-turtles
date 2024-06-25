@@ -6,7 +6,7 @@ import productImg1 from "../assets/images/menu/1.webp";
 export class MenuCard extends Component {
   render() {
     return (
-      <div className="block mr-2 md:relative">
+      <div className="font-jakarta block mr-2 md:relative">
         <img className=" md:mb-0 w-full" src={productImg1} alt="Hazzlenut Latte" />
         <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-12rem] left-0 right-0 ms-auto me-auto md:bg-white">
           <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>

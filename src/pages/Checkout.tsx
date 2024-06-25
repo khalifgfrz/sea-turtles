@@ -35,7 +35,7 @@ function Checkout() {
   };
 
   return (
-    <main className="mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
+    <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
       <section className="px-[5%] tbt:px-[10%]">
         <h1 className="font-bold text-xl md:text-2xl lg:text-4xl">Payment Details</h1>
         <div className="inline-block mt-10 tbt:flex">

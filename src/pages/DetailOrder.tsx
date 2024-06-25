@@ -12,7 +12,7 @@ import productImg2 from "../assets/images/menu/2.webp";
 export class DetailOrder extends Component {
   render() {
     return (
-      <main className="mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
+      <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
         <section className="px-[5%] tbt:px-[10%]">
           <h1 className="font-bold text-xl md:text-2xl lg:text-4xl">Order #12354-09893</h1>
           <p className="mt-2 text-lightgray text-xs">21 March 2024 at 10.30 AM</p>

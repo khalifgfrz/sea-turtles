@@ -28,7 +28,7 @@ function CheckoutCard() {
 
   return (
     <>
-      <div className="flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+      <div className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
         <div className="flex mr-2 justify-center items-center">
           <img width="150" height="150" src={productImg1} alt="menu1" />
         </div>

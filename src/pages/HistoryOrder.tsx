@@ -35,7 +35,7 @@ function HistoryOrder() {
   }, []);
 
   return (
-    <main className="mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
+    <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
       <section className="px-[5%] tbt:px-[10%]">
         <div className="flex justify-between tbt:justify-normal tbt:items-center">
           <h1 className="items-center justify-center font-bold font-jakarta text-xl md:text-4xl tbt:mr-2">History Order</h1>

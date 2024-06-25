@@ -27,7 +27,7 @@ function Product() {
   }, [minPrice, maxPrice, updateProgress]);
 
   return (
-    <main>
+    <main className="font-jakarta">
       <section className="hidden md:flex md:bg-[url('/src/assets/images/background-product.webp')] md:h-80 md:bg-no-repeat md:bg-cover md:bg-center">
         <h1 className="text-white my-auto pl-[10%] text-4xl lg:text-5xl max-w-xl lg:max-w-4xl">We Provide Good Coffee and Healthy Meals</h1>
       </section>

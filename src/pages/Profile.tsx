@@ -10,7 +10,7 @@ import passwordIcon from "../assets/images/password-icon.svg";
 export class Profile extends Component {
   render() {
     return (
-      <main className="mt-[20%] tbt:mt-[10%] lg:mt-[7%] px-[5%] tbt:px-[10%]">
+      <main className="font-jakarta mt-[20%] tbt:mt-[10%] lg:mt-[7%] px-[5%] tbt:px-[10%]">
         <h1 className="text-4xl mb-4">Profile</h1>
         <section className="block tbt:flex">
           <div className="border border-solid border-darkgray2 p-2 tbt:h-1/2 tbt:mr-4 tbt:w-1/2 md:w-2/5 lg:w-1/4 2xl:w-1/5">

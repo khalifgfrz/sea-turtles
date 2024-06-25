@@ -11,7 +11,7 @@ import MenuCard from "../components/MenuCard";
 export class DetailProduct extends Component {
   render() {
     return (
-      <main className="mt-[10%] uw:mt-[5%] lg:mt-[7%]">
+      <main className="font-jakarta mt-[10%] uw:mt-[5%] lg:mt-[7%]">
         <section className="px-[5%] tbt:px-[10%]">
           <div className="block mt-10">
             <div className="inline-block tbt:flex tbt:justify-between tbt:mr-1">

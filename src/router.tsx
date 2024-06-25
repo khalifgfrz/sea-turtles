@@ -9,6 +9,8 @@ import Checkout from "./pages/Checkout";
 import DetailOrder from "./pages/DetailOrder";
 import DetailProduct from "./pages/DetailProduct";
 import HistoryOrder from "./pages/HistoryOrder";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function Error() {
   return <div>Error</div>;
@@ -127,6 +129,16 @@ const router = createBrowserRouter([
   {
     path: "/history-order",
     element: <History />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
     errorElement: <Error />,
   },
   {
