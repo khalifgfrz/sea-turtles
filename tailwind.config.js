@@ -22,6 +22,7 @@ const tailwindConfig = {
         "bg-login": "url('/src/assets/images/background-login.webp')",
         "bg-home": "url('/src/assets/images/header-img.webp')",
         "bg-product": "url('/src/assets/images/background-product.webp')",
+        "bg-menu": "url('/src/assets/images/menu/1.webp')",
       },
       fontFamily: {
         jakarta: ["Plus Jakarta Sans", "sans-serif"],
@@ -84,6 +85,11 @@ const tailwindConfig = {
         "105%": "105%",
       },
       inset: {
+        "-22rem": "-22rem",
+        "-15rem": "-15rem",
+        "-12rem": "-12rem",
+        "-10rem": "-10rem",
+        "-9rem": "-9rem",
         "22rem": "22rem",
         "26rem": "26rem",
         "27rem": "27rem",

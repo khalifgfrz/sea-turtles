@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
-import productImg1 from "../assets/images/menu/1.webp";
-import productImg2 from "../assets/images/menu/2.webp";
-import productImg3 from "../assets/images/menu/3.webp";
-import productImg4 from "../assets/images/menu/4.webp";
-import shoppingLogo from "../assets/images/shopping-cart.svg";
+// import productImg1 from "../assets/images/menu/1.webp";
+// import productImg2 from "../assets/images/menu/2.webp";
+// import productImg3 from "../assets/images/menu/3.webp";
+// import productImg4 from "../assets/images/menu/4.webp";
+// import shoppingLogo from "../assets/images/shopping-cart.svg";
+import MenuCard from "../components/MenuCard";
 
 function Product() {
   const [minPrice, setMinPrice] = useState(100);
@@ -86,7 +87,7 @@ function Product() {
           Our <span className="text-span">Product</span>
         </h1>
         <div className="md:flex md:mt-8">
-          <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 uw:w-2/3 md:p-6 md:rounded-3xl">
+          <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 lg:w-1/3 uw:w-2/3 md:p-6 md:rounded-3xl">
             <div className="flex justify-between mb-6 text-sm">
               <p>Filter</p>
               <a href="#">Reset Filter</a>
@@ -175,229 +176,25 @@ function Product() {
             </div>
             <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm">Apply Filter</button>
           </div>
-          <div className="block md:w-full">
+          <div className="block md:w-1/2">
             <div className="flex flex-wrap justify-center">
-              <div className="block w-[45%] mr-2 md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg1} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
-              <div className="block w-[45%] tbt:mr-2 md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg2} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
-              <div className="block w-[45%] mr-2 md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg3} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
-              <div className="block w-[45%] md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg4} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
-              <div className="block w-[45%] mr-2 md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg1} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
-              <div className="block w-[45%] md:mb-44 md:relative">
-                <img className="mt-4 md:mt-0 mb-2 md:mb-0 w-full" src={productImg2} alt="Hazzlenut Latte" />
-                <div className="z-1 md:absolute md:top-52 lg:top-64 xl:top-72 2xl:top-80 4xl:top-96 md:left-2.5 lg:left-1.5 xl:left-2.5 2xl:left-5 4xl:left-2.5 uw:left-4 md:w-56 lg:w-72 xl:w-80 4xl:w-[27rem] uw:w-[32rem] md:p-2 md:bg-white">
-                  <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">Hazzlenut Latte</p>
-                  <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">You can explore the menu that we provide with fun and have their own taste and make your day better.</p>
-                  <div className="flex text-primary items-center mt-1">
-                    <div className="uw:text-xl" data-value="1">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="2">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="3">
-                      &#9733;
-                    </div>
-                    <div className="uw:text-xl" data-value="4">
-                      &#9733;
-                    </div>
-                    <div className="mr-1 uw:text-xl" data-value="5">
-                      &#9733;
-                    </div>
-                    <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
-                  </div>
-                  <div className="block tbt:flex tbt:items-center">
-                    <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
-                    <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR 20.000</p>
-                  </div>
-                  <div className="md:flex">
-                    <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
-                    <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
-                      <div className="flex items-center justify-center">
-                        <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
+              <div className="w-[45%] md:mb-52">
+                <MenuCard />
               </div>
             </div>
             <div className="flex justify-center mt-5">
