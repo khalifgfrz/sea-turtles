@@ -86,8 +86,8 @@ function Product() {
         <h1 className="text-2xl mt-5">
           Our <span className="text-span">Product</span>
         </h1>
-        <div className="md:flex md:mt-8">
-          <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 lg:w-1/3 uw:w-2/3 md:p-6 md:rounded-3xl">
+        <div className="flex md:mt-8">
+          <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 uw:w-2/3 md:p-6 md:rounded-3xl">
             <div className="flex justify-between mb-6 text-sm">
               <p>Filter</p>
               <a href="#">Reset Filter</a>
@@ -176,9 +176,12 @@ function Product() {
             </div>
             <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm">Apply Filter</button>
           </div>
-          <div className="block md:w-1/2">
+          <div className="block justify-center items-center w-full">
             <div className="flex flex-wrap justify-center">
-              <div className="w-[45%] md:mb-52">
+              <div className="">
+                <MenuCard />
+              </div>
+              {/* <div className="w-[45%] md:mb-52">
                 <MenuCard />
               </div>
               <div className="w-[45%] md:mb-52">
@@ -192,10 +195,7 @@ function Product() {
               </div>
               <div className="w-[45%] md:mb-52">
                 <MenuCard />
-              </div>
-              <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-center mt-5">
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>

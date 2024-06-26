@@ -82,22 +82,11 @@ export class Home extends Component {
             </div>
             <p className="mt-2 text-sm lg:text-base text-lightgray">Let's choose and have a bit taste of poeple's favorite. It might be yours too!</p>
           </div>
-          <div className="flex flex-wrap justify-center">
-            <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-              <MenuCard />
-            </div>
-            <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-              <MenuCard />
-            </div>
-            <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-              <MenuCard />
-            </div>
-            <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-              <MenuCard />
-            </div>
+          <div>
+            <MenuCard />
           </div>
         </section>
-        <section className="my-5 md:mt-52 uw:mt-60 px-[5%] tbt:px-[10%]">
+        <section className="my-5 uw:mt-60 px-[5%] tbt:px-[10%]">
           <div className="text-center">
             <h1 className="text-2xl lg:text-4xl">
               <span className="text-span">Visit Our Store</span> in the Spot on the Map Below

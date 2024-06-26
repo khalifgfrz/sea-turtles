@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/images/navbar-logo.webp";
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const { token, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const navbarNavRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLAnchorElement>(null);
@@ -32,8 +33,7 @@ function Header() {
   };
 
   const handleConfirmLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    logout();
     setShowModal(false);
     navigate("/login");
   };
@@ -77,7 +77,7 @@ function Header() {
             <ShoppingCart className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
           <div className="hidden md:flex uw:text-xl">
-            {isLoggedIn ? (
+            {token ? (
               <>
                 <Link to="/profile">
                   <button
@@ -122,7 +122,7 @@ function Header() {
             <Link to="#" className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Search
             </Link>
-            {isLoggedIn ? (
+            {token ? (
               <>
                 <Link to="/profile" className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
                   Profile

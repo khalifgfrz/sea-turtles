@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 import headerLogo from "../assets/images/header-logo.webp";
 import emailIcon from "../assets/images/email-icon.svg";
@@ -13,6 +14,7 @@ import eyeOffIcon from "../assets/images/eye-off-icon.svg";
 function Login() {
   const [form, setForm] = useState<{ email: string; pwd: string }>({ email: "", pwd: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ function Login() {
       .post(url, form)
       .then((result) => {
         console.log(result.data);
-        localStorage.setItem("token", result.data.token);
+        login(result.data.token);
         navigate("/");
       })
       .catch((err) => console.error(err));

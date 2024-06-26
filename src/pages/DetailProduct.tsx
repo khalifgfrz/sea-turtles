@@ -104,22 +104,11 @@ export class DetailProduct extends Component {
               <p className="mt-4 text-center font-semibold text-lg tbt:text-xl uw:text-4xl text-lightblack2">
                 Recommendation <span className="text-span">For You</span>
               </p>
-              <div className="flex flex-wrap justify-center">
-                <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-                  <MenuCard />
-                </div>
-                <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-                  <MenuCard />
-                </div>
-                <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-                  <MenuCard />
-                </div>
-                <div className="w-1/2 md:w-1/5 mt-4 mb-2">
-                  <MenuCard />
-                </div>
+              <div>
+                <MenuCard />
               </div>
             </div>
-            <div className="hidden md:flex justify-center mt-5 md:mt-52">
+            <div className="hidden md:flex justify-center mt-5">
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">2</button>
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">3</button>
