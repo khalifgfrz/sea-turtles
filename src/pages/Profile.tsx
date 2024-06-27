@@ -23,13 +23,12 @@ function Profile() {
   };
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     const url = "https://coffee-shop-three-omega.vercel.app/user/settings";
+    console.log("Token:", token);
     axios
       .patch(url, form, {
         headers: {
           Authorization: `Bearer ${token}`,
-          // "Content-Type": "application/json",
         },
       })
       .then((result: AxiosResponse) => console.log(result.data))
