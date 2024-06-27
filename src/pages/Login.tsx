@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -10,6 +10,7 @@ import facebookIcon from "../assets/images/facebook-icon.svg";
 import googleIcon from "../assets/images/google-icon.svg";
 import eyeIcon from "../assets/images/eye-icon.svg";
 import eyeOffIcon from "../assets/images/eye-off-icon.svg";
+import { IAuthResponse } from "../types/response";
 
 function Login() {
   const [form, setForm] = useState<{ email: string; pwd: string }>({ email: "", pwd: "" });
@@ -30,9 +31,8 @@ function Login() {
     const url = "https://coffee-shop-three-omega.vercel.app/user/login";
     axios
       .post(url, form)
-      .then((result) => {
-        console.log(result.data);
-        login(result.data.token);
+      .then((result: AxiosResponse<IAuthResponse>) => {
+        login(result.data.data[0].token);
         navigate("/");
       })
       .catch((err) => console.error(err));

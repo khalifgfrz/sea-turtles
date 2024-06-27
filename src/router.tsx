@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import Checkout from "./pages/Checkout";
-import DetailOrder from "./pages/DetailOrder";
+import { DetailOrd } from "./pages/DetailOrder";
 import DetailProduct from "./pages/DetailProduct";
 import HistoryOrder from "./pages/HistoryOrder";
 import Login from "./pages/Login";
@@ -60,16 +60,6 @@ function Check() {
   );
 }
 
-function DetailOrd() {
-  return (
-    <>
-      <Header />
-      <DetailOrder />
-      <Footer />
-    </>
-  );
-}
-
 function DetailProd() {
   return (
     <>
@@ -109,11 +99,6 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <Check />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/detail-order",
-    element: <DetailOrd />,
     errorElement: <Error />,
   },
   {

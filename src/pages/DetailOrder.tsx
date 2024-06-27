@@ -8,8 +8,20 @@ import shippingIcon from "../assets/images/shipping-icon.svg";
 import statusIcon from "../assets/images/status-icon.svg";
 import productImg1 from "../assets/images/menu/1.webp";
 import productImg2 from "../assets/images/menu/2.webp";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-export class DetailOrder extends Component {
+export function DetailOrd() {
+  return (
+    <>
+      <Header />
+      <DetailOrder />
+      <Footer />
+    </>
+  );
+}
+
+class DetailOrder extends Component {
   render() {
     return (
       <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
