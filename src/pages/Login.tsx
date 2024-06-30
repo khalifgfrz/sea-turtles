@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuth from "../components/UseAuth";
+import { IAuthResponse } from "../types/response";
+import Input from "../components/Input";
 
 import headerLogo from "../assets/images/header-logo.webp";
 import emailIcon from "../assets/images/email-icon.svg";
@@ -10,7 +12,6 @@ import facebookIcon from "../assets/images/facebook-icon.svg";
 import googleIcon from "../assets/images/google-icon.svg";
 import eyeIcon from "../assets/images/eye-icon.svg";
 import eyeOffIcon from "../assets/images/eye-off-icon.svg";
-import { IAuthResponse } from "../types/response";
 
 function Login() {
   const [form, setForm] = useState<{ email: string; pwd: string }>({ email: "", pwd: "" });
@@ -56,16 +57,7 @@ function Login() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Enter Your Email"
-                autoComplete="email"
-                value={form.email}
-                onChange={onChangeHandler}
-              />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
               Password
@@ -73,16 +65,7 @@ function Login() {
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={passwordIcon} alt="password-icon" />
               <img className="absolute mt-3.5 mr-5 right-0 cursor-pointer" width="20" height="20" src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle-password-visibility" onClick={togglePasswordVisibility} />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type={showPassword ? "text" : "password"}
-                name="pwd"
-                id="password"
-                placeholder="Enter Your Password"
-                autoComplete="off"
-                value={form.pwd}
-                onChange={onChangeHandler}
-              />
+              <Input input={{ type: showPassword ? "text" : "password", name: "pwd", placeholder: "Enter Your Password", autocomplete: "off", value: form.pwd, onChange: onChangeHandler }} />
             </div>
             <div className="text-right text-sm uw:text-2xl mb-5 text-primary hover:text-darkprimary active:text-darkprimary2">
               <a href="#">Lupa Password?</a>

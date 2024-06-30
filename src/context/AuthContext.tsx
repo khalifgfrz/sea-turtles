@@ -1,40 +1,25 @@
 //AuthContext.tsx
-import React, { createContext, useState, useContext } from "react";
+import { createContext } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-interface AuthContextType {
-  token: string | null;
+export type AuthContextType = {
+  token: string;
   login: (token: string) => void;
   logout: () => void;
-}
+};
 
-const AuthContext = createContext<AuthContextType>({ token: null, login() {}, logout() {} });
+export const AuthContext = createContext<AuthContextType>({ token: "", login() {}, logout() {} });
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [token, setToken] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const storedToken = sessionStorage.getItem("token");
-  //   if (storedToken) {
-  //     setToken(storedToken);
-  //   }
-  // }, []);
+export function AuthProvider({ children }: { children: JSX.Element }) {
+  const [token, setToken] = useLocalStorage<string>("", "token");
 
   const login = (newToken: string) => {
     setToken(newToken);
-    // sessionStorage.setItem("token", newToken);
   };
 
   const logout = () => {
-    setToken(null);
-    // sessionStorage.removeItem("token");
+    setToken("");
   };
 
   return <AuthContext.Provider value={{ token, login, logout }}>{children}</AuthContext.Provider>;
 }
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-  // if (context === undefined) {
-  //   throw new Error("useAuth must be used within an AuthProvider");
-  // }
-};

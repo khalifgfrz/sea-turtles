@@ -189,21 +189,6 @@ function Product() {
               <div className="">
                 <MenuCard />
               </div>
-              {/* <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div>
-              <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div>
-              <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div>
-              <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div>
-              <div className="w-[45%] md:mb-52">
-                <MenuCard />
-              </div> */}
             </div>
             <div className="flex justify-center mt-5">
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>

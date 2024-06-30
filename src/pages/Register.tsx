@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { IAuthResponse } from "../types/response";
+import Input from "../components/Input";
 
 import headerLogo from "../assets/images/header-logo.webp";
 import nameIcon from "../assets/images/form-icon.svg";
@@ -41,7 +43,7 @@ function Register() {
     const url = "https://coffee-shop-three-omega.vercel.app/user/register";
     axios
       .post(url, form)
-      .then((result) => {
+      .then((result: AxiosResponse<IAuthResponse>) => {
         console.log(result.data);
         navigate("/login");
       })
@@ -68,32 +70,14 @@ function Register() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type="text"
-                name="full_name"
-                id="fullname"
-                placeholder="Enter Your Full Name"
-                autoComplete="name"
-                value={form.full_name}
-                onChange={onChangeHandler}
-              />
+              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form.full_name, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="email">
               Email
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type="text"
-                name="email"
-                id="email"
-                placeholder="Enter Your Email"
-                autoComplete="email"
-                value={form.email}
-                onChange={onChangeHandler}
-              />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
               Password
@@ -101,30 +85,12 @@ function Register() {
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={passwordIcon} alt="password-icon" />
               <img className="absolute mt-3.5 mr-5 right-0 cursor-pointer" width="20" height="20" src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle-password-visibility" onClick={togglePasswordVisibility} />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type={showPassword ? "text" : "password"}
-                name="pwd"
-                id="password"
-                placeholder="Enter Your Password"
-                autoComplete="off"
-                value={form.pwd}
-                onChange={onChangeHandler}
-              />
+              <Input input={{ type: showPassword ? "text" : "password", name: "pwd", placeholder: "Enter Your Password", autocomplete: "off", value: form.pwd, onChange: onChangeHandler }} />
             </div>
             <label htmlFor="confirmpassword">Confirm Password</label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={passwordIcon} alt="confirmpassword-icon" />
-              <input
-                className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                type="password"
-                name="confirmpassword"
-                id="confirmpassword"
-                placeholder="Enter Your Password Again"
-                autoComplete="off"
-                value={confirmPassword}
-                onChange={onConfirmPasswordChange}
-              />
+              <Input input={{ type: "password", name: "confirmpassword", placeholder: "Enter Your Password Again", autocomplete: "off", value: confirmPassword, onChange: onConfirmPasswordChange }} />
             </div>
             {errorMessage && <p className="text-red-500 text-sm mb-3">{errorMessage}</p>}
             <button className="text-lightblack text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">

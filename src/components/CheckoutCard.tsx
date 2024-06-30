@@ -15,7 +15,6 @@ function CheckoutCard() {
   };
 
   const handleConfirmDeleteClick = () => {
-    // Tambahkan logika log out Anda di sini
     alert("Item has been deleted!");
     setIsModalDeleteVisible(false);
   };

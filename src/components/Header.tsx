@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/images/navbar-logo.webp";
-import { useAuth } from "../context/AuthContext";
+import useAuth from "../components/UseAuth";
 
 function Header() {
   const [isActive, setIsActive] = useState(false);

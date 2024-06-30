@@ -1,16 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { Index } from "./pages/Home";
-import { Profiles } from "./pages/Profile";
 import { Products } from "./pages/Product";
 import { CheckoutProduct } from "./pages/Checkout";
 import { OrderDetail } from "./pages/DetailOrder";
 import { DetailProducts } from "./pages/DetailProduct";
 import { History } from "./pages/HistoryOrder";
+import { Profiles } from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Error from "./pages/Error";
 import NotFound from "./pages/NotFound";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Profiles />,
+    element: (
+      <PrivateRoute to={"/login"}>
+        <Profiles />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
   },
   {
@@ -30,12 +35,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/checkout",
-    element: <CheckoutProduct />,
+    element: (
+      <PrivateRoute to={"/login"}>
+        <CheckoutProduct />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
   },
   {
     path: "/detail-order",
-    element: <OrderDetail />,
+    element: (
+      <PrivateRoute to={"/login"}>
+        <OrderDetail />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
   },
   {
@@ -45,7 +58,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/history-order",
-    element: <History />,
+    element: (
+      <PrivateRoute to={"/login"}>
+        <History />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
   },
   {
