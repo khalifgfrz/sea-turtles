@@ -1,84 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import Product from "./pages/Product";
-import Checkout from "./pages/Checkout";
-import { DetailOrd } from "./pages/DetailOrder";
-import DetailProduct from "./pages/DetailProduct";
-import HistoryOrder from "./pages/HistoryOrder";
+import { Index } from "./pages/Home";
+import { Profiles } from "./pages/Profile";
+import { Products } from "./pages/Product";
+import { CheckoutProduct } from "./pages/Checkout";
+import { OrderDetail } from "./pages/DetailOrder";
+import { DetailProducts } from "./pages/DetailProduct";
+import { History } from "./pages/HistoryOrder";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
-function Error() {
-  return <div>Error</div>;
-}
-
-function NotFound() {
-  return <div>Route Not Found</div>;
-}
-
-function Index() {
-  return (
-    <>
-      <Header />
-      <Home />
-      <Footer />
-    </>
-  );
-}
-
-function Prof() {
-  return (
-    <>
-      <Header />
-      <Profile />
-      <Footer />
-    </>
-  );
-}
-
-function Prod() {
-  return (
-    <>
-      <Header />
-      <Product />
-      <Footer />
-    </>
-  );
-}
-
-function Check() {
-  return (
-    <>
-      <Header />
-      <Checkout />
-      <Footer />
-    </>
-  );
-}
-
-function DetailProd() {
-  return (
-    <>
-      <Header />
-      <DetailProduct />
-      <Footer />
-    </>
-  );
-}
-
-function History() {
-  return (
-    <>
-      <Header />
-      <HistoryOrder />
-      <Footer />
-    </>
-  );
-}
+import Error from "./pages/Error";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -88,27 +20,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <Prof />,
+    element: <Profiles />,
     errorElement: <Error />,
   },
   {
     path: "/product",
-    element: <Prod />,
+    element: <Products />,
     errorElement: <Error />,
   },
   {
     path: "/checkout",
-    element: <Check />,
+    element: <CheckoutProduct />,
     errorElement: <Error />,
   },
   {
     path: "/detail-order",
-    element: <DetailOrd />,
+    element: <OrderDetail />,
     errorElement: <Error />,
   },
   {
     path: "/detail-product",
-    element: <DetailProd />,
+    element: <DetailProducts />,
     errorElement: <Error />,
   },
   {

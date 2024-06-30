@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 import calenderIcon from "../assets/images/calender-icon.svg";
 import downIcon from "../assets/images/down-icon.svg";
 import glassIcon from "../assets/images/glass-icon.svg";
@@ -10,6 +13,16 @@ import productImg1 from "../assets/images/menu/1.webp";
 import productImg2 from "../assets/images/menu/2.webp";
 import productImg3 from "../assets/images/menu/3.webp";
 import productImg4 from "../assets/images/menu/4.webp";
+
+export function History() {
+  return (
+    <>
+      <Header />
+      <HistoryOrder />
+      <Footer />
+    </>
+  );
+}
 
 function HistoryOrder() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import axios, { AxiosResponse } from "axios";
 
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 import profileImg from "../assets/images/profile-img.webp";
 import phoneIcon from "../assets/images/phone-icon.svg";
 import nameIcon from "../assets/images/form-icon.svg";
@@ -8,6 +11,16 @@ import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
 import passwordIcon from "../assets/images/password-icon.svg";
 import { useAuth } from "../context/AuthContext";
+
+export function Profiles() {
+  return (
+    <>
+      <Header />
+      <Profile />
+      <Footer />
+    </>
+  );
+}
 
 function Profile() {
   const [form, setForm] = useState<{ full_name?: string; email?: string; phone?: string; address?: string }>({ full_name: "", email: "", phone: "", address: "" });

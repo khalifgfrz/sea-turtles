@@ -10,6 +10,18 @@ import gopayIcon from "../assets/images/gopay-logo.svg";
 import ovoIcon from "../assets/images/ovo-logo.svg";
 import paypalIcon from "../assets/images/paypal-logo.svg";
 import CheckoutCard from "../components/CheckoutCard";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+export function CheckoutProduct() {
+  return (
+    <>
+      <Header />
+      <Checkout />
+      <Footer />
+    </>
+  );
+}
 
 function Checkout() {
   const [isModalCheckoutVisible, setIsModalCheckoutVisible] = useState(false);

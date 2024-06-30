@@ -1,13 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
-// import productImg1 from "../assets/images/menu/1.webp";
-// import productImg2 from "../assets/images/menu/2.webp";
-// import productImg3 from "../assets/images/menu/3.webp";
-// import productImg4 from "../assets/images/menu/4.webp";
-// import shoppingLogo from "../assets/images/shopping-cart.svg";
 import MenuCard from "../components/MenuCard";
+
+export function Products() {
+  return (
+    <>
+      <Header />
+      <Product />
+      <Footer />
+    </>
+  );
+}
 
 function Product() {
   const [minPrice, setMinPrice] = useState(100);
