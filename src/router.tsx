@@ -52,17 +52,13 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/detail-product",
+    path: "/product/:uuid",
     element: <DetailProducts />,
     errorElement: <Error />,
   },
   {
     path: "/history-order",
-    element: (
-      <PrivateRoute to={"/login"}>
-        <History />
-      </PrivateRoute>
-    ),
+    element: <History />,
     errorElement: <Error />,
   },
   {
