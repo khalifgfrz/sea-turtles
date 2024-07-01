@@ -18,8 +18,8 @@ export function Products() {
 }
 
 function Product() {
-  const [minPrice, setMinPrice] = useState(100);
-  const [maxPrice, setMaxPrice] = useState(900);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
 
   const updateProgress = useCallback(() => {
     if (minPrice > maxPrice - 10) {
@@ -104,7 +104,7 @@ function Product() {
               <form>
                 <div className="search-name text-sm mb-1">Search</div>
                 <div>
-                  <input className="h-10 rounded text-sm w-full" type="text" name="search" placeholder="Search Your Product" autoComplete="off" />
+                  <input className="h-10 rounded text-sm w-full text-black" type="text" name="search" placeholder="Search Your Product" autoComplete="off" />
                 </div>
               </form>
             </div>
@@ -182,11 +182,11 @@ function Product() {
                 </div>
               </div>
             </div>
-            <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm">Apply Filter</button>
+            <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm hover:bg-darkprimary active:bg-darkprimary2">Apply Filter</button>
           </div>
           <div className="block justify-center items-center w-full">
             <div className="flex flex-wrap justify-center">
-              <div className="">
+              <div>
                 <MenuCard />
               </div>
             </div>

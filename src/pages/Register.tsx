@@ -36,8 +36,7 @@ function Register() {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (form.pwd !== confirmPassword) {
-      setErrorMessage("Password harus sama");
-      return;
+      return setErrorMessage("Password harus sama");
     }
     setErrorMessage("");
     const url = "https://coffee-shop-three-omega.vercel.app/user/register";
@@ -87,7 +86,9 @@ function Register() {
               <img className="absolute mt-3.5 mr-5 right-0 cursor-pointer" width="20" height="20" src={showPassword ? eyeOffIcon : eyeIcon} alt="toggle-password-visibility" onClick={togglePasswordVisibility} />
               <Input input={{ type: showPassword ? "text" : "password", name: "pwd", placeholder: "Enter Your Password", autocomplete: "off", value: form.pwd, onChange: onChangeHandler }} />
             </div>
-            <label htmlFor="confirmpassword">Confirm Password</label>
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="confirmpassword">
+              Confirm Password
+            </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={passwordIcon} alt="confirmpassword-icon" />
               <Input input={{ type: "password", name: "confirmpassword", placeholder: "Enter Your Password Again", autocomplete: "off", value: confirmPassword, onChange: onConfirmPasswordChange }} />

@@ -11,8 +11,9 @@ import phoneIcon from "../assets/images/phone-icon.svg";
 import nameIcon from "../assets/images/form-icon.svg";
 import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
-import passwordIcon from "../assets/images/password-icon.svg";
+// import passwordIcon from "../assets/images/password-icon.svg";
 import useAuth from "../components/UseAuth";
+import ChangePassword from "../components/ChangePassword";
 
 export function Profiles() {
   return (
@@ -36,6 +37,7 @@ function Profile() {
       };
     });
   };
+
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = "https://coffee-shop-three-omega.vercel.app/user/settings";
@@ -64,29 +66,30 @@ function Profile() {
           </div>
           <p className="text-center text-sm uw:text-xl">Since 20 January 2024</p>
         </div>
-        <form onSubmit={onSubmitHandler} className="w-full mt-4 tbt:mt-0 border border-solid border-darkgray2 p-2">
-          <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="fullname">
-            Full Name
-          </label>
-          <div className="relative mt-2">
-            <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-            <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form.full_name, onChange: onChangeHandler }} />
-          </div>
-          <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="email">
-            Email
-          </label>
-          <div className="relative mt-2">
-            <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-            <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
-          </div>
-          <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="phone">
-            Phone
-          </label>
-          <div className="relative mt-2">
-            <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
-            <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form.phone, onChange: onChangeHandler }} />
-          </div>
-          <div className="flex justify-between">
+        <div className="w-full mt-4 tbt:mt-0 border border-solid border-darkgray2 p-2">
+          <form onSubmit={onSubmitHandler}>
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="fullname">
+              Full Name
+            </label>
+            <div className="relative mt-2">
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
+              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form.full_name, onChange: onChangeHandler }} />
+            </div>
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="email">
+              Email
+            </label>
+            <div className="relative mt-2">
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
+            </div>
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="phone">
+              Phone
+            </label>
+            <div className="relative mt-2">
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
+              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form.phone, onChange: onChangeHandler }} />
+            </div>
+            {/* <div className="flex justify-between">
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
               Password
             </label>
@@ -102,18 +105,20 @@ function Profile() {
               placeholder="Enter Your Password"
               autoComplete="off"
             />
-          </div>
-          <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
-            Address
-          </label>
-          <div className="relative mt-2">
-            <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
-            <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: form.address, onChange: onChangeHandler }} />
-          </div>
-          <button className="text-lightblack text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">
-            Submit
-          </button>
-        </form>
+          </div> */}
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
+              Address
+            </label>
+            <div className="relative mt-2">
+              <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
+              <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: form.address, onChange: onChangeHandler }} />
+            </div>
+            <button className="text-lightblack mb-5 text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">
+              Submit
+            </button>
+          </form>
+          <ChangePassword />
+        </div>
       </section>
     </main>
   );

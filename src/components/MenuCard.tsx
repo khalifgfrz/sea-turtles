@@ -54,7 +54,6 @@ function MenuCard() {
               <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
             </div>
             <div className="block tbt:flex tbt:items-center">
-              <p className="md:hidden text-red-600 text-[0.7rem] line-through tbt:mr-2">IDR 40.000</p>
               <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR {product.price}</p>
             </div>
             <div className="md:flex">
