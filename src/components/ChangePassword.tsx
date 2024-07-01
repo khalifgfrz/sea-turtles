@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Input from "../components/Input";
 import axios, { AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response";
@@ -15,6 +15,7 @@ function ChangePassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const handleChangePassword = () => {
     setShowModal(true);
@@ -62,6 +63,23 @@ function ChangePassword() {
     setShowPassword((prev) => !prev);
   };
 
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      handleCloseModal();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (showModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, handleClickOutside]);
+
   return (
     <>
       <button onClick={handleChangePassword} className="text-sm text-right text-primary" type="submit">
@@ -69,10 +87,10 @@ function ChangePassword() {
       </button>
       {showModal && (
         <div className="show fixed z-50 inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full">
+          <div ref={modalRef} className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full">
             <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4 text-center">Set New Password</h2>
             <form onSubmit={onSubmitHandler} className="w-full mt-4 tbt:mt-0 p-2">
-              <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
+              <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="pwd">
                 Password
               </label>
               <div className="relative mt-2">

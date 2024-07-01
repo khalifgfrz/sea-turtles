@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
@@ -13,6 +14,7 @@ function MenuCard() {
   }
 
   const [getProduct, setProduct] = useState<ProductBody[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDataProduct = async () => {
@@ -26,6 +28,10 @@ function MenuCard() {
     };
     getDataProduct();
   }, []);
+
+  const handleBuyClick = (uuid: string) => {
+    navigate(`/product/${uuid}`);
+  };
 
   return (
     <div className="block md:flex md:flex-wrap justify-center">
@@ -57,7 +63,9 @@ function MenuCard() {
               <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR {product.price}</p>
             </div>
             <div className="md:flex">
-              <button className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">Buy</button>
+              <button onClick={() => handleBuyClick(product.uuid)} className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">
+                Buy
+              </button>
               <button className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
                 <div className="flex items-center justify-center">
                   <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />

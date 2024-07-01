@@ -59,7 +59,7 @@ function Login() {
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
               <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
             </div>
-            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="pwd">
               Password
             </label>
             <div className="relative mt-2">

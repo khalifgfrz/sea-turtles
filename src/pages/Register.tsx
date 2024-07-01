@@ -64,7 +64,7 @@ function Register() {
       <section className="bg-white w-full px-5 md:w-3/5 md:ml-[35%] mx-auto">
         <div>
           <form onSubmit={onSubmitHandler}>
-            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="fullname">
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="full_name">
               Full Name
             </label>
             <div className="relative mt-2">
@@ -78,7 +78,7 @@ function Register() {
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
               <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
             </div>
-            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="password">
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="pwd">
               Password
             </label>
             <div className="relative mt-2">

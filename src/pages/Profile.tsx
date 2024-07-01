@@ -68,7 +68,7 @@ function Profile() {
         </div>
         <div className="w-full mt-4 tbt:mt-0 border border-solid border-darkgray2 p-2">
           <form onSubmit={onSubmitHandler}>
-            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="fullname">
+            <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="full_name">
               Full Name
             </label>
             <div className="relative mt-2">
