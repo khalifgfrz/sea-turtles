@@ -8,6 +8,7 @@ import axios from "axios";
 function MenuCard() {
   interface ProductBody {
     uuid: string;
+    image: string;
     product_name: string;
     description: string;
     price: number;
@@ -37,7 +38,7 @@ function MenuCard() {
     <div className="block md:flex md:flex-wrap justify-center">
       {getProduct.map((product) => (
         <div key={product.uuid} className="font-jakarta block mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
-          <img className=" md:mb-0 mt-4 w-full" src={productImg1} alt="Hazzlenut Latte" />
+          {product.image ? <img className=" md:mb-0 mt-4 w-full" src={product.image} alt={product.product_name} /> : <img className=" md:mb-0 mt-4 w-full" src={productImg1} alt={product.product_name} />}
           <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white">
             <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">{product.product_name}</p>
             <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">{product.description}</p>

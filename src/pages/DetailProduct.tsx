@@ -23,6 +23,7 @@ export function DetailProducts() {
 function DetailProduct() {
   interface Product {
     uuid: string;
+    image: string;
     product_name: string;
     description: string;
     price: number;
@@ -30,6 +31,7 @@ function DetailProduct() {
 
   const { uuid } = useParams<{ uuid: string }>();
   const [getProduct, setProduct] = useState<Product[]>([]);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const getDetailProduct = async () => {
@@ -44,33 +46,49 @@ function DetailProduct() {
     getDetailProduct();
   }, [uuid]);
 
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  const handleDecrement = () => {
+    setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+  };
+
   return (
     <main className="font-jakarta mt-[10%] uw:mt-[5%] lg:mt-[7%]">
       {getProduct.map((product) => (
-        <section className="px-[5%] tbt:px-[10%]">
+        <section key={product.uuid} className="px-[5%] tbt:px-[10%]">
           <div className="block mt-10">
             <div className="inline-block tbt:flex tbt:justify-between tbt:mr-1">
               <div className="inline-block tbt:w-1/2 lg:w-1/3 tbt:mr-5">
-                <div className="flex">
-                  <img className="w-full" src={productImg1} alt="menu1" />
-                </div>
+                <div className="flex">{product.image ? <img className="w-full" src={product.image} alt={product.product_name} /> : <img className="w-full" src={productImg1} alt={product.product_name} />}</div>
                 <div className="flex justify-center mt-2">
                   <div className="flex mr-2">
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt="menu1" />
+                    {product.image ? (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={product.image} alt={product.product_name} />
+                    ) : (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={product.product_name} />
+                    )}
                   </div>
                   <div className="flex mr-2">
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt="menu1" />
+                    {product.image ? (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={product.image} alt={product.product_name} />
+                    ) : (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={product.product_name} />
+                    )}
                   </div>
                   <div className="flex">
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt="menu1" />
+                    {product.image ? (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={product.image} alt={product.product_name} />
+                    ) : (
+                      <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={product.product_name} />
+                    )}
                   </div>
                 </div>
               </div>
               <div className="tbt:w-1/2 lg:w-2/3 xl:w-3/4 mt-4 tbt:mt-0">
-                <p className="text-[0.6rem] uw:text-xl text-center p-1 bg-red-600 text-white rounded-2xl max-w-20 uw:max-w-36 mb-1">FLASH SALE</p>
                 <p className="font-bold mb-1 md:text-lg uw:text-4xl">{product.product_name}</p>
                 <div className="flex items-center">
-                  <p className="text-red-600 text-xs md:text-sm uw:text-xl line-through mr-2">IDR 40.000</p>
                   <p className="text-primary md:text-xl uw:text-4xl">IDR {product.price}</p>
                 </div>
                 <div className="flex text-primary items-center mt-1">
@@ -97,11 +115,15 @@ function DetailProduct() {
                 </div>
                 <p className="text-xs lg:text-sm uw:text-2xl text-lightgray mb-1">{product.description}</p>
                 <div className="grid grid-cols-3 border border-darkgray2 rounded max-w-24 uw:max-w-32 mt-2">
-                  <button className="uw:text-xl border border-primary mr-2 rounded w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">-</button>
+                  <button onClick={handleDecrement} className="uw:text-xl border border-primary mr-2 rounded w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
+                    -
+                  </button>
                   <div className="flex justify-center items-center font-bold uw:text-xl">
-                    <p>0</p>
+                    <p>{count}</p>
                   </div>
-                  <button className="uw:text-xl uw:ml-2 border rounded border-primary w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">+</button>
+                  <button onClick={handleIncrement} className="uw:text-xl uw:ml-2 border rounded border-primary w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
+                    +
+                  </button>
                 </div>
                 <p className="mt-3 font-bold text-sm uw:text-xl">Choose Size</p>
                 <div className="flex justify-between mt-3">
