@@ -32,7 +32,7 @@ interface IProduct {
 
 interface IDetailProduct {
   uuid?: string | null;
-  quantity?: number | null;
+  count?: number | null;
   size?: string | null;
   ice?: boolean | null;
   image?: string;
@@ -48,7 +48,7 @@ function DetailProduct() {
 
   const [form, setForm] = useState<IDetailProduct>({
     uuid: null,
-    quantity: 0,
+    count: 0,
     size: null,
     ice: null,
     image: undefined,
