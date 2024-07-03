@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/detail-order",
+    path: "/order/:uuid",
     element: (
       <PrivateRoute to={"/login"}>
         <OrderDetail />

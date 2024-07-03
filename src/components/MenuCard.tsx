@@ -5,30 +5,36 @@ import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
 import axios from "axios";
 
-function MenuCard() {
-  interface ProductBody {
-    uuid: string;
-    image: string;
-    product_name: string;
-    description: string;
-    price: number;
-  }
+interface IProductBody {
+  uuid: string;
+  image: string;
+  product_name: string;
+  category: string;
+  created_at: string;
+  description: string;
+  price: number;
+}
 
-  const [getProduct, setProduct] = useState<ProductBody[]>([]);
+function MenuCard({ props }: { props: IProductBody[] | undefined }) {
+  const [getProduct, setProduct] = useState<IProductBody[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getDataProduct = async () => {
       const url = "https://coffee-shop-three-omega.vercel.app/product";
       try {
-        const result = await axios.get(url);
-        setProduct(result.data.data);
+        if (props) {
+          setProduct(props);
+        } else {
+          const result = await axios.get(url);
+          setProduct(result.data.data);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     getDataProduct();
-  }, []);
+  }, [props]);
 
   const handleBuyClick = (uuid: string) => {
     navigate(`/product/${uuid}`);
@@ -41,6 +47,8 @@ function MenuCard() {
           {product.image ? <img className=" md:mb-0 mt-4 w-full" src={product.image} alt={product.product_name} /> : <img className=" md:mb-0 mt-4 w-full" src={productImg1} alt={product.product_name} />}
           <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white">
             <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">{product.product_name}</p>
+            <p className="hidden">{product.category}</p>
+            <p className="hidden">{product.created_at}</p>
             <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">{product.description}</p>
             <div className="flex text-primary items-center mt-1">
               <div className="uw:text-xl" data-value="1">

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+// import React, { useState, useRef } from "react";
 
 import emailIcon from "../assets/images/email-icon.svg";
 import nameIcon from "../assets/images/form-icon.svg";
@@ -12,6 +12,7 @@ import paypalIcon from "../assets/images/paypal-logo.svg";
 import CheckoutCard from "../components/CheckoutCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import CheckoutButton from "../components/CheckoutButton";
 
 export function CheckoutProduct() {
   return (
@@ -24,28 +25,6 @@ export function CheckoutProduct() {
 }
 
 function Checkout() {
-  const [isModalCheckoutVisible, setIsModalCheckoutVisible] = useState(false);
-  const checkoutModalBgRef = useRef<HTMLDivElement>(null);
-
-  const handleCheckoutClick = () => {
-    setIsModalCheckoutVisible(true);
-  };
-
-  const handleCancelCheckoutClick = () => {
-    setIsModalCheckoutVisible(false);
-  };
-
-  const handleConfirmCheckoutClick = () => {
-    alert("You have been checkout item!");
-    setIsModalCheckoutVisible(false);
-  };
-
-  const handleBackgroundCheckoutClick = (event: React.MouseEvent) => {
-    if (event.target === checkoutModalBgRef.current) {
-      setIsModalCheckoutVisible(false);
-    }
-  };
-
   return (
     <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
       <section className="px-[5%] tbt:px-[10%]">
@@ -61,7 +40,6 @@ function Checkout() {
                 </div>
               </button>
             </div>
-            <CheckoutCard />
             <CheckoutCard />
             <div className="mt-7">
               <h2 className="font-semibold md:text-2xl">Payment Info & Delivery</h2>
@@ -142,9 +120,7 @@ function Checkout() {
                 <p className="text-xs md:text-base uw:text-xl">Subtotal</p>
                 <p className="text-xs md:text-base uw:text-xl">Idr. 44.000</p>
               </div>
-              <button onClick={handleCheckoutClick} className="w-full h-9 bg-primary font-semibold rounded-xl hover:bg-darkprimary2 active:bg-darkprimary">
-                Checkout
-              </button>
+              <CheckoutButton />
               <p className="mt-3 text-lightgray text-sm md:text-base uw:text-xl">We Accept</p>
               <div className="flex justify-between mt-3">
                 <img className="mr-2 md:w-8 md:h-8 lg:w-9 lg:h-9 uw:w-14 uw:h-14" width="25" height="25" src={briIcon} alt="bri-logo" />
@@ -156,22 +132,6 @@ function Checkout() {
               </div>
               <p className="mt-3 text-lightgray text-xs md:text-base uw:text-xl">*Get Discount if you pay with Bank Central Asia</p>
             </div>
-            {isModalCheckoutVisible && (
-              <div ref={checkoutModalBgRef} onClick={handleBackgroundCheckoutClick} className="show fixed inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
-                <div className="modal-content bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full text-center">
-                  <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4">Confirm Checkout</h2>
-                  <p className="text-xs xsm:text-sm tbt:text-base uw:text-2xl mb-6">Are you sure you want to checkout?</p>
-                  <div className="flex justify-center">
-                    <button onClick={handleConfirmCheckoutClick} className="text-xs tbt:text-base uw:text-2xl bg-primary hover:bg-darkprimary2 active:bg-darkprimary text-white px-4 py-2 rounded mr-2">
-                      Checkout
-                    </button>
-                    <button onClick={handleCancelCheckoutClick} className="text-xs tbt:text-base uw:text-2xl bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-4 py-2 rounded">
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </section>

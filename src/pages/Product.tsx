@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
 import MenuCard from "../components/MenuCard";
+import axios from "axios";
 
 export function Products() {
   return (
@@ -17,16 +18,82 @@ export function Products() {
   );
 }
 
+interface Filters {
+  category: string;
+  sortBy: string;
+  product_name: string;
+  min_price: string;
+  max_price: string;
+}
+
+interface ProductBody {
+  uuid: string;
+  image: string;
+  product_name: string;
+  category: string;
+  created_at: string;
+  description: string;
+  price: number;
+}
+
 function Product() {
+  const [filters, setFilters] = useState<Filters>({
+    category: "",
+    sortBy: "",
+    product_name: "",
+    min_price: "0",
+    max_price: "100000",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      category: event.target.value,
+    }));
+  };
+
+  const handleSortByChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      sortBy: event.target.value,
+    }));
+  };
+
+  const [getProduct, setProduct] = useState<ProductBody[]>([]);
+
+  const handleApplyFilter = () => {
+    const { category, sortBy, product_name, min_price, max_price } = filters;
+    const categoryFilters = { category, sortBy, product_name, min_price, max_price };
+
+    const params = new URLSearchParams(categoryFilters).toString();
+    // console.log(params)
+    axios
+      .get(`https://coffee-shop-three-omega.vercel.app/product/?${params}`)
+      .then((response) => {
+        setProduct(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(100000);
 
   const updateProgress = useCallback(() => {
-    if (minPrice > maxPrice - 10) {
-      setMinPrice(maxPrice - 10);
+    if (minPrice > maxPrice - 1000) {
+      setMinPrice(maxPrice - 1000);
     }
-    if (maxPrice < minPrice + 10) {
-      setMaxPrice(minPrice + 10);
+    if (maxPrice < minPrice + 1000) {
+      setMaxPrice(minPrice + 1000);
     }
   }, [minPrice, maxPrice]);
 
@@ -98,65 +165,70 @@ function Product() {
           <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 uw:w-2/3 md:p-6 md:rounded-3xl">
             <div className="flex justify-between mb-6 text-sm">
               <p>Filter</p>
-              <a href="#">Reset Filter</a>
+              <button
+                onClick={() =>
+                  setFilters({
+                    category: "",
+                    sortBy: "",
+                    product_name: "",
+                    min_price: "0",
+                    max_price: "100000",
+                  })
+                }
+              >
+                Reset Filter
+              </button>
             </div>
             <div className="mb-4">
               <form>
-                <div className="search-name text-sm mb-1">Search</div>
+                <label className="search-name text-sm mb-1" htmlFor="product_name">
+                  Search
+                </label>
                 <div>
-                  <input className="h-10 rounded text-sm w-full text-black" type="text" name="search" placeholder="Search Your Product" autoComplete="off" />
+                  <input className="h-10 rounded text-sm w-full text-black" type="text" id="product_name" name="product_name" placeholder="Search Your Product" autoComplete="off" value={filters.product_name} onChange={handleChange} />
                 </div>
               </form>
             </div>
             <div className="text-sm">
               <h2 className="mb-4">Category</h2>
               <label className="checkbox" htmlFor="favorite-product">
-                <input type="checkbox" id="favorite-product" name="favorite-product" />
-                <div className="checkmark"></div>
+                <input type="radio" id="favorite-product" name="category" value="Favorite Product" checked={filters.category === "Favorite Product"} onChange={handleCategoryChange} />
                 Favorite Product
               </label>
               <label className="checkbox" htmlFor="coffee">
-                <input type="checkbox" id="coffee" name="coffee" />
-                <div className="checkmark"></div>
+                <input type="radio" id="coffee" name="category" value="Coffee" checked={filters.category === "Coffee"} onChange={handleCategoryChange} />
                 Coffee
               </label>
               <label className="checkbox" htmlFor="non-coffee">
-                <input type="checkbox" id="non-coffee" name="non-coffee" />
-                <div className="checkmark"></div>
+                <input type="radio" id="non-coffee" name="category" value="Non Coffee" checked={filters.category === "Non Coffee"} onChange={handleCategoryChange} />
                 Non Coffee
               </label>
               <label className="checkbox" htmlFor="foods">
-                <input type="checkbox" id="foods" name="foods" />
-                <div className="checkmark"></div>
+                <input type="radio" id="foods" name="category" value="Foods" checked={filters.category === "Foods"} onChange={handleCategoryChange} />
                 Foods
               </label>
               <label className="checkbox" htmlFor="add-on">
-                <input type="checkbox" id="add-on" name="add-on" />
-                <div className="checkmark"></div>
+                <input type="radio" id="add-on" name="category" value="Add-On" checked={filters.category === "Add-On"} onChange={handleCategoryChange} />
                 Add-On
               </label>
             </div>
             <div className="text-sm">
               <h2 className="mb-4">Sort By</h2>
-              <label className="checkbox" htmlFor="buy1get1">
-                <input type="checkbox" id="buy1get1" name="buy1get1" />
-                <div className="checkmark"></div>
-                Buy 1 get 1
+              <label className="checkbox" htmlFor="alphabet">
+                <input type="radio" id="alphabet" name="sortBy" value="alphabet" checked={filters.sortBy === "alphabet"} onChange={handleSortByChange} />
+                Alphabet
               </label>
               <label className="checkbox" htmlFor="flash-sale">
-                <input type="checkbox" id="flash-sale" name="flash-sale" />
-                <div className="checkmark"></div>
-                Flash Sale
+                <input type="radio" id="price" name="sortBy" value="price" checked={filters.sortBy === "price"} onChange={handleSortByChange} />
+                Price
               </label>
               <label className="checkbox" htmlFor="birthday-package">
-                <input type="checkbox" id="birthday-package" name="birthday-package" />
-                <div className="checkmark"></div>
-                Birthday Package
+                <input type="radio" id="latest" name="sortBy" value="latest" checked={filters.sortBy === "latest"} onChange={handleSortByChange} />
+                Latest
               </label>
               <label className="checkbox" htmlFor="cheap">
-                <input type="checkbox" id="cheap" name="cheap" />
-                <div className="checkmark"></div>
-                Cheap
+                <input type="radio" id="oldest" name="sortBy" value="oldest" checked={filters.sortBy === "oldest"} onChange={handleSortByChange} />
+                Oldest
               </label>
             </div>
             <div>
@@ -166,28 +238,30 @@ function Product() {
                 <div
                   className="range-progress"
                   style={{
-                    left: `${(minPrice / 1000) * 100}%`,
-                    right: `${100 - (maxPrice / 1000) * 100}%`,
+                    left: `${(minPrice / 100000) * 100}%`,
+                    right: `${100 - (maxPrice / 100000) * 100}%`,
                   }}
                 ></div>
-                <input type="range" id="min-price-range" min="0" max="1000" step="10" value={minPrice} onChange={(e) => setMinPrice(parseInt(e.target.value))} />
-                <input type="range" id="max-price-range" min="0" max="1000" step="10" value={maxPrice} onChange={(e) => setMaxPrice(parseInt(e.target.value))} />
+                <input type="range" id="min-price-range" min="0" max="100000" step="10000" value={minPrice} onChange={(e) => setMinPrice(parseInt(e.target.value))} />
+                <input type="range" id="max-price-range" min="0" max="100000" step="10000" value={maxPrice} onChange={(e) => setMaxPrice(parseInt(e.target.value))} />
                 <div className="price-labels">
-                  <span id="min-price-value" style={{ left: `${(minPrice / 1000) * 100}%` }}>
+                  <span id="min-price-value" style={{ left: `${(minPrice / 100000) * 100}%` }}>
                     Idr.{minPrice}
                   </span>
-                  <span id="max-price-value" style={{ left: `${(maxPrice / 1000) * 100}%` }}>
+                  <span id="max-price-value" style={{ left: `${(maxPrice / 100000) * 100}%` }}>
                     Idr.{maxPrice}
                   </span>
                 </div>
               </div>
             </div>
-            <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm hover:bg-darkprimary active:bg-darkprimary2">Apply Filter</button>
+            <button className="bg-primary mt-4 rounded text-black w-full h-8 text-sm hover:bg-darkprimary active:bg-darkprimary2" onClick={handleApplyFilter}>
+              Apply Filter
+            </button>
           </div>
           <div className="block justify-center items-center w-full">
             <div className="flex flex-wrap justify-center">
               <div>
-                <MenuCard />
+                <MenuCard props={getProduct} />
               </div>
             </div>
             <div className="flex justify-center mt-5">

@@ -11,13 +11,9 @@ import router from "./router";
 import { persistedStore, store } from "./redux/store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  // <React.StrictMode>
-  // <AuthProvider>
   <ReduxProvider store={store}>
     <PersistGate persistor={persistedStore} loading={null}>
       <RouterProvider router={router} />
     </PersistGate>
   </ReduxProvider>
-  // </AuthProvider>
-  // </React.StrictMode>
 );

@@ -1,52 +1,65 @@
-import React, { useState, useRef } from "react";
+// import React, { useState, useRef } from "react";
 
-import productImg1 from "../assets/images/menu/1.webp";
+// import productImg1 from "../assets/images/menu/1.webp";
+import { useStoreDispatch } from "../redux/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { deleteTempProduct } from "../redux/slices/checkout";
 
 function CheckoutCard() {
-  const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
-  const deleteModalBgRef = useRef<HTMLDivElement>(null);
+  // const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
+  // const deleteModalBgRef = useRef<HTMLDivElement>(null);
+  const dispatch = useStoreDispatch();
+  const { TempProduct } = useSelector((state: RootState) => state.checkout);
+  const orderedProduct = TempProduct;
+  // const handleDeleteClick = () => {
+  //   setIsModalDeleteVisible(true);
+  // };
 
-  const handleDeleteClick = () => {
-    setIsModalDeleteVisible(true);
-  };
+  // const handleCancelDeleteClick = () => {
+  //   setIsModalDeleteVisible(false);
+  // };
 
-  const handleCancelDeleteClick = () => {
-    setIsModalDeleteVisible(false);
-  };
+  // const handleConfirmDeleteClick = () => {
+  //   alert("Item has been deleted!");
+  //   setIsModalDeleteVisible(false);
+  // };
 
-  const handleConfirmDeleteClick = () => {
-    alert("Item has been deleted!");
-    setIsModalDeleteVisible(false);
-  };
-
-  const handleBackgroundDeleteClick = (event: React.MouseEvent) => {
-    if (event.target === deleteModalBgRef.current) {
-      setIsModalDeleteVisible(false);
-    }
-  };
+  // const handleBackgroundDeleteClick = (event: React.MouseEvent) => {
+  //   if (event.target === deleteModalBgRef.current) {
+  //     setIsModalDeleteVisible(false);
+  //   }
+  // };
 
   return (
-    <>
-      <div className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
-        <div className="flex mr-2 justify-center items-center">
-          <img width="150" height="150" src={productImg1} alt="menu1" />
-        </div>
-        <div className="w-3/5 pr-5">
-          <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">Hazzlenut Latte</p>
-          <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">2pcs | Reguler | Ice | Dine In</p>
-          <div className="flex">
-            <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR 20.000</p>
+    <div>
+      {orderedProduct.map((product, index) => (
+        <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+          <div className="flex mr-2 justify-center items-center">
+            <img width="150" height="150" src={product.image} alt="menu1" />
+          </div>
+          <div className="w-3/5 pr-5">
+            <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
+            <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+              {product.count}pcs | {product.size} | {product.ice ? "Ice" : "Hot"} | Dine In
+            </p>
+            <div className="flex">
+              <p className="text-primary text-sm md:text-xl uw:text-2xl">{product.price}</p>
+            </div>
+          </div>
+          <div className="flex pr-1">
+            <button
+              onClick={() => dispatch(deleteTempProduct(index))}
+              className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200"
+            >
+              <div className="flex justify-center">
+                <p>x</p>
+              </div>
+            </button>
           </div>
         </div>
-        <div className="flex pr-1">
-          <button onClick={handleDeleteClick} className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200">
-            <div className="flex justify-center">
-              <p>x</p>
-            </div>
-          </button>
-        </div>
-      </div>
-      {isModalDeleteVisible && (
+      ))}
+      {/* {isModalDeleteVisible && (
         <div ref={deleteModalBgRef} onClick={handleBackgroundDeleteClick} className="show z-10 fixed inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
           <div className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full text-center">
             <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4">Confirm Delete</h2>
@@ -61,8 +74,8 @@ function CheckoutCard() {
             </div>
           </div>
         </div>
-      )}
-    </>
+      )} */}
+    </div>
   );
 }
 

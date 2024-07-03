@@ -32,8 +32,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setToken: (prevState, { payload }: PayloadAction<IAuthState>) => {
-      // state bentuknya adalah object
-      // untuk memperbaharui object maka harus buat object baru
       const newState = {
         ...prevState,
         token: payload.token,
@@ -45,9 +43,6 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.token = null;
-      state.isLoading = false;
-      state.isFulfilled = false;
-      state.isRejected = false;
     },
   },
   extraReducers: (builder) => {
@@ -69,10 +64,6 @@ const authSlice = createSlice({
       });
   },
 });
-
-// yg diexport
-// 1. reducer
-// 2. action
 
 export const { setToken, removeToken, logout } = authSlice.actions;
 

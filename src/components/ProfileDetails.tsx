@@ -4,13 +4,13 @@ import axios from "axios";
 import { useStoreSelector } from "../redux/hooks";
 
 function ProfileDetails() {
-  interface ProfileBody {
+  interface IProfileBody {
     email: string;
     image: string;
     full_name: string;
   }
 
-  const [getProfile, setProfile] = useState<ProfileBody[]>([]);
+  const [getProfile, setProfile] = useState<IProfileBody[]>([]);
   const { token } = useStoreSelector((state) => state.auth);
 
   useEffect(() => {
