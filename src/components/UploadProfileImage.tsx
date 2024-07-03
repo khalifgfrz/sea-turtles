@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useRef } from "react";
-import useAuth from "./UseAuth";
+import { useStoreSelector } from "../redux/hooks";
 
 function UploadProfileImage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { token } = useAuth();
+  const { token } = useStoreSelector((state) => state.auth);
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -19,12 +19,12 @@ function UploadProfileImage() {
 
       // Membuat form data untuk mengirim file
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("image", file);
 
       try {
         console.log("Token:", token);
-        console.log("Sending formData:", formData.get("file"));
-        const result = await axios.patch("http://localhost:8000/user/settings/upload", formData, {
+        console.log("Sending formData:", formData.get("image"));
+        const result = await axios.patch("https://coffee-shop-three-omega.vercel.app/user/settings/upload", formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

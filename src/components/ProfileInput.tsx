@@ -3,17 +3,17 @@ import axios, { AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response";
 
 import Input from "../components/Input";
-import useAuth from "../components/UseAuth";
 import ChangePassword from "../components/ChangePassword";
 
 import phoneIcon from "../assets/images/phone-icon.svg";
 import nameIcon from "../assets/images/form-icon.svg";
 import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
+import { useStoreSelector } from "../redux/hooks";
 
 function ProfileInput() {
   const [form, setForm] = useState<{ full_name?: string; email?: string; phone?: string; address?: string }>({ full_name: "", email: "", phone: "", address: "" });
-  const { token } = useAuth();
+  const { token } = useStoreSelector((state) => state.auth);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((form) => {

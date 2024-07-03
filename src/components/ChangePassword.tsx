@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Input from "../components/Input";
 import axios, { AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response";
-import useAuth from "./UseAuth";
+import { useStoreSelector } from "../redux/hooks";
 
 import passwordIcon from "../assets/images/password-icon.svg";
 import eyeIcon from "../assets/images/eye-icon.svg";
@@ -10,7 +10,7 @@ import eyeOffIcon from "../assets/images/eye-off-icon.svg";
 
 function ChangePassword() {
   const [form, setForm] = useState<{ pwd: string }>({ pwd: "" });
-  const { token } = useAuth();
+  const { token } = useStoreSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

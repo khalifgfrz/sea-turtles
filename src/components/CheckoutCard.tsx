@@ -32,12 +32,10 @@ function CheckoutCard() {
           <img width="150" height="150" src={productImg1} alt="menu1" />
         </div>
         <div className="w-3/5 pr-5">
-          <p className="text-xs uw:text-base text-center p-1 bg-red-600 text-white rounded-2xl max-w-24 uw:max-w-32 mb-3">FLASH SALE</p>
           <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">Hazzlenut Latte</p>
           <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">2pcs | Reguler | Ice | Dine In</p>
           <div className="flex">
-            <p className="text-red-600 text-xs md:text-sm uw:text-base line-through mr-2">IDR40.000</p>
-            <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR20.000</p>
+            <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR 20.000</p>
           </div>
         </div>
         <div className="flex pr-1">

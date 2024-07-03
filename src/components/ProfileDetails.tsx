@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import profileImg from "../assets/images/profile-img.webp";
 import axios from "axios";
-import useAuth from "./UseAuth";
+import { useStoreSelector } from "../redux/hooks";
 
 function ProfileDetails() {
   interface ProfileBody {
@@ -11,7 +11,7 @@ function ProfileDetails() {
   }
 
   const [getProfile, setProfile] = useState<ProfileBody[]>([]);
-  const { token } = useAuth();
+  const { token } = useStoreSelector((state) => state.auth);
 
   useEffect(() => {
     const getDataUser = async () => {

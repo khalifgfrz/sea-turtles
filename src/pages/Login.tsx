@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
+// import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../components/UseAuth";
-import { IAuthResponse } from "../types/response";
+// import useAuth from "../components/UseAuth";
+// import { IAuthResponse } from "../types/response";
 import Input from "../components/Input";
+import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
+import { authAction } from "../redux/slices/auth";
 
 import headerLogo from "../assets/images/header-logo.webp";
 import emailIcon from "../assets/images/email-icon.svg";
@@ -14,9 +16,11 @@ import eyeIcon from "../assets/images/eye-icon.svg";
 import eyeOffIcon from "../assets/images/eye-off-icon.svg";
 
 function Login() {
+  const { token, isLoading } = useStoreSelector((state) => state.auth);
+  const dispatch = useStoreDispatch();
+  const { loginThunk } = authAction;
   const [form, setForm] = useState<{ email: string; pwd: string }>({ email: "", pwd: "" });
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,17 +31,24 @@ function Login() {
       };
     });
   };
+
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = "https://coffee-shop-three-omega.vercel.app/user/login";
-    axios
-      .post(url, form)
-      .then((result: AxiosResponse<IAuthResponse>) => {
-        login(result.data.data[0].token);
-        navigate("/");
-      })
-      .catch((err) => console.error(err));
+    dispatch(loginThunk(form));
+    // const url = "https://coffee-shop-three-omega.vercel.app/user/login";
+    // axios
+    //   .post(url, form)
+    //   .then((result: AxiosResponse<IAuthResponse>) => {
+    //     login(result.data.data[0].token);
+    //     navigate("/");
+    //   })
+    //   .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    if (token) navigate("/");
+  }, [navigate, token]);
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -70,8 +81,8 @@ function Login() {
             <div className="text-right text-sm uw:text-2xl mb-5 text-primary hover:text-darkprimary active:text-darkprimary2">
               <a href="#">Lupa Password?</a>
             </div>
-            <button className="text-lightblack text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">
-              Login
+            <button className="text-lightblack text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit" disabled={isLoading}>
+              {isLoading ? "loading..." : "Login"}
             </button>
             <p className="text-center text-lightgray text-sm uw:text-2xl my-5">
               Not Have An Account?

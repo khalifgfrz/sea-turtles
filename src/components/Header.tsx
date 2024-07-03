@@ -4,15 +4,19 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/images/navbar-logo.webp";
-import useAuth from "../components/UseAuth";
+// import useAuth from "../components/UseAuth";
+import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
+import { authAction } from "../redux/slices/auth";
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
-  const { token, logout } = useAuth();
+  const { token } = useStoreSelector((state) => state.auth);
   const [showModal, setShowModal] = useState(false);
   const navbarNavRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLAnchorElement>(null);
+  const { logout } = authAction;
   const navigate = useNavigate();
+  const dispatch = useStoreDispatch();
 
   const toggleNavbar = () => {
     setIsActive((prev) => !prev);
@@ -33,7 +37,7 @@ function Header() {
   };
 
   const handleConfirmLogout = () => {
-    logout();
+    dispatch(logout());
     setShowModal(false);
     navigate("/login");
   };

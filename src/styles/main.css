@@ -774,10 +774,6 @@ video {
   margin-bottom: auto;
 }
 
-.-mt-16 {
-  margin-top: -4rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -976,10 +972,6 @@ video {
 
 .h-9 {
   height: 2.25rem;
-}
-
-.h-\[400px\] {
-  height: 400px;
 }
 
 .h-full {
@@ -1284,16 +1276,6 @@ video {
 
 .bg-none {
   background-image: none;
-}
-
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.object-top {
-  -o-object-position: top;
-     object-position: top;
 }
 
 .p-0 {
