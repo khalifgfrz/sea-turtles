@@ -13,6 +13,7 @@ import CheckoutCard from "../components/CheckoutCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import CheckoutButton from "../components/CheckoutButton";
+import { useNavigate } from "react-router-dom";
 
 export function CheckoutProduct() {
   return (
@@ -25,6 +26,12 @@ export function CheckoutProduct() {
 }
 
 function Checkout() {
+  const navigate = useNavigate();
+
+  const handleAddMenuClick = () => {
+    navigate(`/product`);
+  };
+
   return (
     <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
       <section className="px-[5%] tbt:px-[10%]">
@@ -33,7 +40,7 @@ function Checkout() {
           <div className="tbt:w-1/2 tbt:mr-5">
             <div className="flex justify-between items-center">
               <h2 className="font-semibold md:text-2xl">Your Order</h2>
-              <button className="bg-primary rounded w-20 h-8 md:w-24 md:h-11 uw:w-32 uw:h-12 hover:bg-darkprimary2 active:bg-darkprimary">
+              <button onClick={() => handleAddMenuClick()} className="bg-primary rounded w-20 h-8 md:w-24 md:h-11 uw:w-32 uw:h-12 hover:bg-darkprimary2 active:bg-darkprimary">
                 <div className="flex justify-center items-center">
                   <p className="text-xl md:text-2xl uw:text-4xl mr-2">+</p>
                   <p className="text-xs md:text-sm uw:text-xl">Add Menu</p>
@@ -87,18 +94,6 @@ function Checkout() {
                   />
                 </div>
               </form>
-              <h2 className="text-lightblack2 font-semibold md:text-xl uw:text-2xl">Delivery</h2>
-              <div className="flex justify-between mt-3">
-                <button className="w-1/4 h-10 border border-solid border-darkwhite rounded-xl text-lightgray hover:border-primary text-[0.6rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary">
-                  Dine In
-                </button>
-                <button className="w-1/4 h-10 border border-solid border-darkwhite rounded-xl text-lightgray hover:border-primary text-[0.6rem] tbt:text-[0.7rem] md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary">
-                  Door Delivery
-                </button>
-                <button className="w-1/4 h-10 border border-solid border-darkwhite rounded-xl text-lightgray hover:border-primary text-[0.6rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary">
-                  Pick Up
-                </button>
-              </div>
             </div>
           </div>
           <div className="mt-5 tbt:mt-2 tbt:w-1/2">

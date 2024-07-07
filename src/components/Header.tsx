@@ -77,7 +77,7 @@ function Header() {
           <Link to="#" className="hidden md:flex md:mr-6" aria-label="Read more about search" id="search">
             <Search className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
-          <Link to="#" className="mr-6" aria-label="Read more about card" id="shopping-cart">
+          <Link to="/checkout" className="mr-6" aria-label="Read more about card" id="shopping-cart">
             <ShoppingCart className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
           <div className="hidden md:flex uw:text-xl">

@@ -28,7 +28,7 @@ function ProductDetailCard() {
     getDataProduct();
   });
   return (
-    <div>
+    <div className="block md:grid md:grid-cols-4 justify-center">
       <MenuCard products={getProduct} />
     </div>
   )

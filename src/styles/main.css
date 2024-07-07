@@ -2141,16 +2141,8 @@ video {
     flex-direction: row-reverse;
   }
 
-  .md\:flex-wrap {
-    flex-wrap: wrap;
-  }
-
   .md\:justify-between {
     justify-content: space-between;
-  }
-
-  .md\:overflow-x-scroll {
-    overflow-x: scroll;
   }
 
   .md\:rounded-3xl {
@@ -2481,10 +2473,6 @@ video {
     height: 4rem;
   }
 
-  .uw\:h-60 {
-    height: 15rem;
-  }
-
   .uw\:h-8 {
     height: 2rem;
   }
@@ -2523,10 +2511,6 @@ video {
 
   .uw\:w-60 {
     width: 15rem;
-  }
-
-  .uw\:w-64 {
-    width: 16rem;
   }
 
   .uw\:w-7 {

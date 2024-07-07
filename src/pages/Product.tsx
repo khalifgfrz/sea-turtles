@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
-import ProductCard from "../components/ProductCard";
 import axios from "axios";
+import MenuCard from "../components/MenuCard";
 
 export function Products() {
   return (
@@ -293,8 +293,8 @@ function Product() {
           </div>
           <div className="block justify-center items-center w-full">
             <div className="grid justify-center">
-              <div>
-                <ProductCard products={getProduct} />
+              <div className="block md:grid md:grid-cols-2 justify-center">
+                <MenuCard products={getProduct} />
               </div>
             </div>
             <div className="flex justify-center mt-5">

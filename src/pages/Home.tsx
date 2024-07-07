@@ -30,6 +30,7 @@ interface IProductBody {
   price: number;
 }
 
+
 function Home() {
   const [getProduct, setProduct] = useState<IProductBody[]>([]);
 
@@ -115,7 +116,9 @@ function Home() {
           <p className="mt-2 text-sm lg:text-base text-lightgray">Let's choose and have a bit taste of poeple's favorite. It might be yours too!</p>
         </div>
         <div>
+          <div className="block md:grid md:grid-cols-4 justify-center">
           <MenuCard products={getProduct} />
+          </div>
         </div>
       </section>
       <section className="my-5 uw:mt-60 px-[5%] tbt:px-[10%]">

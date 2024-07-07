@@ -50,9 +50,9 @@ function DetailProduct() {
   const [form, setForm] = useState<IDetailProduct>({
     uuid: null,
     count: 1,
-    size: null,
-    ice: null,
-    delivery: null,
+    size: "Regular",
+    ice: false,
+    delivery: "Dine In",
     image: undefined,
   });
 
