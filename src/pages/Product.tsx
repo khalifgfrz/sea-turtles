@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -37,69 +38,78 @@ interface ProductBody {
 }
 
 function Product() {
+  const [getProduct, setProduct] = useState<ProductBody[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100000);
   const [filters, setFilters] = useState<Filters>({
+    product_name: "",
     category: "",
     sortBy: "",
-    product_name: "",
-    min_price: "0",
-    max_price: "100000",
+    min_price: "",
+    max_price: "",
   });
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
-  };
-
-  const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      category: event.target.value,
-    }));
-  };
-
-  const handleSortByChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      sortBy: event.target.value,
-    }));
-  };
-
-  const [getProduct, setProduct] = useState<ProductBody[]>([]);
 
   useEffect(() => {
     const getDataProduct = async () => {
-      const url = "https://coffee-shop-three-omega.vercel.app/product";
+      const category = searchParams.get("category");
+      const sortBy = searchParams.get("sortBy");
+      const product_name = searchParams.get("product_name");
+      const min_price = searchParams.get("min_price");
+      const max_price = searchParams.get("max_price");
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
       try {
-        const result = await axios.get(url);
+        const result = await axios.get(url, {
+          params: { product_name, category, sortBy, min_price, max_price },
+        });
         setProduct(result.data.data);
       } catch (error) {
         console.log(error);
       }
     };
     getDataProduct();
-  }, []);
+  }, [searchParams]);
 
   const handleApplyFilter = () => {
     const { category, sortBy, product_name, min_price, max_price } = filters;
-    const categoryFilters = { category, sortBy, product_name, min_price, max_price };
+    const categoryFilters: Record<string, string> = {};
+
+    if (category) categoryFilters.category = category;
+    if (sortBy) categoryFilters.sortBy = sortBy;
+    if (product_name) categoryFilters.product_name = product_name;
+    if (min_price) categoryFilters.min_price = min_price;
+    if (max_price) categoryFilters.max_price = max_price;
 
     const params = new URLSearchParams(categoryFilters).toString();
-    // console.log(params)
-    axios
-      .get(`https://coffee-shop-three-omega.vercel.app/product/?${params}`)
-      .then((response) => {
-        setProduct(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setSearchParams(params);
   };
 
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handlePriceChange = (min: number, max: number) => {
+    setFilters({
+      ...filters,
+      min_price: min.toString(),
+      max_price: max.toString(),
+    });
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      product_name: "",
+      category: "",
+      sortBy: "",
+      min_price: "",
+      max_price: "",
+    });
+    setMinPrice(0);
+    setMaxPrice(100000);
+  };
 
   const updateProgress = useCallback(() => {
     if (minPrice > maxPrice - 1000) {
@@ -178,69 +188,55 @@ function Product() {
           <div className="hidden md:block md:bg-black md:text-white md:h-1/2 md:w-1/2 uw:w-2/3 md:p-6 md:rounded-3xl">
             <div className="flex justify-between mb-6 text-sm">
               <p>Filter</p>
-              <button
-                onClick={() =>
-                  setFilters({
-                    category: "",
-                    sortBy: "",
-                    product_name: "",
-                    min_price: "0",
-                    max_price: "100000",
-                  })
-                }
-              >
-                Reset Filter
-              </button>
+              <button onClick={() => resetFilters()}>Reset Filter</button>
             </div>
             <div className="mb-4">
-              <form>
-                <label className="search-name text-sm mb-1" htmlFor="product_name">
-                  Search
-                </label>
-                <div>
-                  <input className="h-10 rounded text-sm w-full text-black" type="text" id="product_name" name="product_name" placeholder="Search Your Product" autoComplete="off" value={filters.product_name} onChange={handleChange} />
-                </div>
-              </form>
+              <label className="search-name text-sm mb-1" htmlFor="product_name">
+                Search
+              </label>
+              <div>
+                <input className="h-10 rounded text-sm w-full text-black" type="text" id="product_name" name="product_name" placeholder="Search Your Product" autoComplete="off" value={filters.product_name} onChange={handleChange} />
+              </div>
             </div>
             <div className="text-sm">
               <h2 className="mb-4">Category</h2>
               <label className="checkbox" htmlFor="favorite-product">
-                <input type="radio" id="favorite-product" name="category" value="Favorite Product" checked={filters.category === "Favorite Product"} onChange={handleCategoryChange} />
+                <input type="radio" id="favorite-product" name="category" value="Favorite Product" checked={filters.category === "Favorite Product"} onChange={handleChange} />
                 Favorite Product
               </label>
               <label className="checkbox" htmlFor="coffee">
-                <input type="radio" id="coffee" name="category" value="Coffee" checked={filters.category === "Coffee"} onChange={handleCategoryChange} />
+                <input type="radio" id="coffee" name="category" value="Coffee" checked={filters.category === "Coffee"} onChange={handleChange} />
                 Coffee
               </label>
               <label className="checkbox" htmlFor="non-coffee">
-                <input type="radio" id="non-coffee" name="category" value="Non Coffee" checked={filters.category === "Non Coffee"} onChange={handleCategoryChange} />
+                <input type="radio" id="non-coffee" name="category" value="Non Coffee" checked={filters.category === "Non Coffee"} onChange={handleChange} />
                 Non Coffee
               </label>
               <label className="checkbox" htmlFor="foods">
-                <input type="radio" id="foods" name="category" value="Foods" checked={filters.category === "Foods"} onChange={handleCategoryChange} />
+                <input type="radio" id="foods" name="category" value="Foods" checked={filters.category === "Foods"} onChange={handleChange} />
                 Foods
               </label>
               <label className="checkbox" htmlFor="add-on">
-                <input type="radio" id="add-on" name="category" value="Add-On" checked={filters.category === "Add-On"} onChange={handleCategoryChange} />
+                <input type="radio" id="add-on" name="category" value="Add-On" checked={filters.category === "Add-On"} onChange={handleChange} />
                 Add-On
               </label>
             </div>
             <div className="text-sm">
               <h2 className="mb-4">Sort By</h2>
               <label className="checkbox" htmlFor="alphabet">
-                <input type="radio" id="alphabet" name="sortBy" value="alphabet" checked={filters.sortBy === "alphabet"} onChange={handleSortByChange} />
+                <input type="radio" id="alphabet" name="sortBy" value="alphabet" checked={filters.sortBy === "alphabet"} onChange={handleChange} />
                 Alphabet
               </label>
               <label className="checkbox" htmlFor="flash-sale">
-                <input type="radio" id="price" name="sortBy" value="price" checked={filters.sortBy === "price"} onChange={handleSortByChange} />
+                <input type="radio" id="price" name="sortBy" value="price" checked={filters.sortBy === "price"} onChange={handleChange} />
                 Price
               </label>
               <label className="checkbox" htmlFor="birthday-package">
-                <input type="radio" id="latest" name="sortBy" value="latest" checked={filters.sortBy === "latest"} onChange={handleSortByChange} />
+                <input type="radio" id="latest" name="sortBy" value="latest" checked={filters.sortBy === "latest"} onChange={handleChange} />
                 Latest
               </label>
               <label className="checkbox" htmlFor="cheap">
-                <input type="radio" id="oldest" name="sortBy" value="oldest" checked={filters.sortBy === "oldest"} onChange={handleSortByChange} />
+                <input type="radio" id="oldest" name="sortBy" value="oldest" checked={filters.sortBy === "oldest"} onChange={handleChange} />
                 Oldest
               </label>
             </div>
@@ -255,8 +251,32 @@ function Product() {
                     right: `${100 - (maxPrice / 100000) * 100}%`,
                   }}
                 ></div>
-                <input type="range" id="min-price-range" min="0" max="100000" step="10000" value={minPrice} onChange={(e) => setMinPrice(parseInt(e.target.value))} />
-                <input type="range" id="max-price-range" min="0" max="100000" step="10000" value={maxPrice} onChange={(e) => setMaxPrice(parseInt(e.target.value))} />
+                <input
+                  type="range"
+                  id="min-price-range"
+                  min="0"
+                  max="100000"
+                  step="10000"
+                  value={minPrice}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    setMinPrice(value);
+                    handlePriceChange(value, maxPrice);
+                  }}
+                />
+                <input
+                  type="range"
+                  id="max-price-range"
+                  min="0"
+                  max="100000"
+                  step="10000"
+                  value={maxPrice}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    setMaxPrice(value);
+                    handlePriceChange(minPrice, value);
+                  }}
+                />
                 <div className="price-labels">
                   <span id="min-price-value" style={{ left: `${(minPrice / 100000) * 100}%` }}>
                     Idr.{minPrice}
