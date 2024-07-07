@@ -292,7 +292,7 @@ function Product() {
             </button>
           </div>
           <div className="block justify-center items-center w-full">
-            <div className="flex flex-wrap justify-center">
+            <div className="grid justify-center">
               <div>
                 <MenuCard products={getProduct} />
               </div>

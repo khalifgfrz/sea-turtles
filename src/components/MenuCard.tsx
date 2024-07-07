@@ -21,11 +21,11 @@ function MenuCard({ products }: { products: IProductBody[] }) {
   };
 
   return (
-    <div className="block md:flex md:flex-wrap justify-center">
+    <div className="block md:grid md:grid-cols-2 justify-center">
       {products.map((product) => (
         <div key={product.uuid} className="font-jakarta block mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
-          {product.image ? <img className=" md:mb-0 mt-4 w-full" src={product.image} alt={product.product_name} /> : <img className=" md:mb-0 mt-4 w-full" src={productImg1} alt={product.product_name} />}
-          <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white">
+          <img className=" md:mb-0 mt-4 w-full cursor-pointer" onClick={() => handleBuyClick(product.uuid)} src={product.image || productImg1} alt={product.product_name} />
+          <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white cursor-pointer" onClick={() => handleBuyClick(product.uuid)}>
             <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">{product.product_name}</p>
             <p className="hidden">{product.category}</p>
             <p className="hidden">{product.created_at}</p>
