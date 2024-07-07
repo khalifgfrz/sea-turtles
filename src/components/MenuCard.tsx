@@ -1,9 +1,7 @@
-// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
-// import axios from "axios";
 
 interface IProductBody {
   uuid: string;
@@ -16,25 +14,7 @@ interface IProductBody {
 }
 
 function MenuCard({ products }: { products: IProductBody[] }) {
-  // const [getProduct, setProduct] = useState<IProductBody[]>([]);
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const getDataProduct = async () => {
-  //     const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
-  //     try {
-  //       if (props) {
-  //         setProduct(props);
-  //       } else {
-  //         const result = await axios.get(url);
-  //         setProduct(result.data.data);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getDataProduct();
-  // }, [props]);
 
   const handleBuyClick = (uuid: string) => {
     navigate(`/product/${uuid}`);

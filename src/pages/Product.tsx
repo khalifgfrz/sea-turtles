@@ -19,7 +19,7 @@ export function Products() {
   );
 }
 
-interface Filters {
+interface IFilters {
   category: string;
   sortBy: string;
   product_name: string;
@@ -27,7 +27,7 @@ interface Filters {
   max_price: string;
 }
 
-interface ProductBody {
+interface IProductBody {
   uuid: string;
   image: string;
   product_name: string;
@@ -38,11 +38,11 @@ interface ProductBody {
 }
 
 function Product() {
-  const [getProduct, setProduct] = useState<ProductBody[]>([]);
+  const [getProduct, setProduct] = useState<IProductBody[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100000);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters, setFilters] = useState<IFilters>({
     product_name: "",
     category: "",
     sortBy: "",
