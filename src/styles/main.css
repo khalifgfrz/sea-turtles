@@ -2137,16 +2137,20 @@ video {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .md\:grid-rows-2 {
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
-
   .md\:flex-row-reverse {
     flex-direction: row-reverse;
   }
 
+  .md\:flex-wrap {
+    flex-wrap: wrap;
+  }
+
   .md\:justify-between {
     justify-content: space-between;
+  }
+
+  .md\:overflow-x-scroll {
+    overflow-x: scroll;
   }
 
   .md\:rounded-3xl {

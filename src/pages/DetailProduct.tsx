@@ -2,7 +2,6 @@ import axios from "axios";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import MenuCard from "../components/MenuCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -11,6 +10,7 @@ import shoppingLogo from "../assets/images/shopping-cart.svg";
 import thumbsIcon from "../assets/images/thumbs-icon.svg";
 import { useStoreDispatch } from "../redux/hooks";
 import { setProducts } from "../redux/slices/checkout";
+import ProductDetailCard from "../components/ProductDetailCard";
 
 export function DetailProducts() {
   return (
@@ -34,6 +34,7 @@ interface IDetailProduct {
   uuid?: string | null;
   count?: number | null;
   size?: string | null;
+  delivery?: string | null;
   ice?: boolean | null;
   image?: string;
   product_name?: string;
@@ -42,15 +43,16 @@ interface IDetailProduct {
 function DetailProduct() {
   const { uuid } = useParams<{ uuid: string }>();
   const [getProduct, setProduct] = useState<IProduct>();
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
 
   const [form, setForm] = useState<IDetailProduct>({
     uuid: null,
-    count: 0,
+    count: 1,
     size: null,
     ice: null,
+    delivery: null,
     image: undefined,
   });
 
@@ -79,12 +81,16 @@ function DetailProduct() {
   };
 
   const handleDecrement = () => {
-    setCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
     setForm((prevForm) => ({ ...prevForm, count: count - 1 }));
   };
 
   const handleSizeChange = (size: string) => {
     setForm((prevForm) => ({ ...prevForm, size }));
+  };
+
+  const handleDeliveryChange = (delivery: string) => {
+    setForm((prevForm) => ({ ...prevForm, delivery }));
   };
 
   const handleIceChange = (ice: boolean) => {
@@ -106,35 +112,23 @@ function DetailProduct() {
         <div className="block mt-10">
           <div className="inline-block tbt:flex tbt:justify-between tbt:mr-1">
             <div className="inline-block tbt:w-1/2 lg:w-1/3 tbt:mr-5">
-              <div className="flex">{getProduct?.image ? <img className="w-full" src={getProduct?.image} alt={getProduct?.product_name} /> : <img className="w-full" src={productImg1} alt={getProduct?.product_name} />}</div>
+              <div className="flex"><img className="w-full" src={getProduct?.image || productImg1} alt={getProduct?.product_name} /></div>
               <div className="flex justify-center mt-2">
                 <div className="flex mr-2">
-                  {getProduct?.image ? (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={getProduct?.image} alt={getProduct?.product_name} />
-                  ) : (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={getProduct?.product_name} />
-                  )}
+                <div className="flex"><img className="w-full" src={getProduct?.image || productImg1} alt={getProduct?.product_name} /></div>
                 </div>
                 <div className="flex mr-2">
-                  {getProduct?.image ? (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={getProduct?.image} alt={getProduct?.product_name} />
-                  ) : (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={getProduct?.product_name} />
-                  )}
+                <div className="flex"><img className="w-full" src={getProduct?.image || productImg1} alt={getProduct?.product_name} /></div>
                 </div>
                 <div className="flex">
-                  {getProduct?.image ? (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={getProduct?.image} alt={getProduct?.product_name} />
-                  ) : (
-                    <img className="uw:w-64 uw:h-60" width="150" height="150" src={productImg1} alt={getProduct?.product_name} />
-                  )}
+                <div className="flex"><img className="w-full" src={getProduct?.image || productImg1} alt={getProduct?.product_name} /></div>
                 </div>
               </div>
             </div>
             <div className="tbt:w-1/2 lg:w-2/3 xl:w-3/4 mt-4 tbt:mt-0">
-              <p className="font-bold mb-1 md:text-lg uw:text-4xl">{getProduct?.product_name}</p>
+              <p className="font-bold mb-1 md:text-lg uw:text-4xl">{getProduct?.product_name || "Product Name"}</p>
               <div className="flex items-center">
-                <p className="text-primary md:text-xl uw:text-4xl">IDR {getProduct?.price}</p>
+                <p className="text-primary md:text-xl uw:text-4xl">IDR {getProduct?.price || "0"}</p>
               </div>
               <div className="flex text-primary items-center mt-1">
                 <div className="mr-2 uw:text-4xl" data-value="1">
@@ -158,7 +152,7 @@ function DetailProduct() {
                 <p className="text-xs lg:text-sm uw:text-2xl mr-2">200+ Review | Recommendation</p>
                 <img className="uw:w-10 uw:h-10" width="20" height="20" src={thumbsIcon} alt="thumbs-icon" />
               </div>
-              <p className="text-xs lg:text-sm uw:text-2xl text-lightgray mb-1">{getProduct?.description}</p>
+              <p className="text-xs lg:text-sm uw:text-2xl text-lightgray mb-1">{getProduct?.description || "description"}</p>
               <div className="grid grid-cols-3 border border-darkgray2 rounded max-w-24 uw:max-w-32 mt-2">
                 <button onClick={handleDecrement} className="uw:text-xl border border-primary mr-2 rounded w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
                   -
@@ -189,6 +183,27 @@ function DetailProduct() {
                   onClick={() => handleSizeChange("Large")}
                 >
                   Large
+                </button>
+              </div>
+              <p className="mt-3 font-bold text-sm uw:text-xl">Delivery</p>
+              <div className="flex justify-between mt-3">
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handleDeliveryChange("Dine In")}
+                >
+                  Dine In
+                </button>
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handleDeliveryChange("Door Delivery")}
+                >
+                  Door Delivery
+                </button>
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handleDeliveryChange("Pick Up")}
+                >
+                  Pick Up
                 </button>
               </div>
               <p className="mt-3 font-bold text-sm uw:text-xl">Hot/Ice?</p>
@@ -234,7 +249,7 @@ function DetailProduct() {
               Recommendation <span className="text-span">For You</span>
             </p>
             <div>
-              <MenuCard products={[]} />
+              <ProductDetailCard />
             </div>
           </div>
           <div className="hidden md:flex justify-center mt-5">

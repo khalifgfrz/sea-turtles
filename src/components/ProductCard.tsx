@@ -13,7 +13,7 @@ interface IProductBody {
   price: number;
 }
 
-function MenuCard({ products }: { products: IProductBody[] }) {
+function ProductCard({ products }: { products: IProductBody[] }) {
   const navigate = useNavigate();
 
   const handleBuyClick = (uuid: string) => {
@@ -21,7 +21,7 @@ function MenuCard({ products }: { products: IProductBody[] }) {
   };
 
   return (
-    <div className="block md:grid md:grid-cols-4 justify-center">
+    <div className="block md:grid md:grid-cols-2 justify-center">
       {products.map((product) => (
         <div key={product.uuid} className="font-jakarta block mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
           <img className=" md:mb-0 mt-4 w-full cursor-pointer" onClick={() => handleBuyClick(product.uuid)} src={product.image || productImg1} alt={product.product_name} />
@@ -68,4 +68,4 @@ function MenuCard({ products }: { products: IProductBody[] }) {
   );
 }
 
-export default MenuCard;
+export default ProductCard;

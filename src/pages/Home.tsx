@@ -7,6 +7,8 @@ import visitImg from "../assets/images/visit-img.webp";
 import testimonialImg from "../assets/images/testimonial-img.webp";
 import checklistLogo from "../assets/images/checklist-logo.svg";
 import MenuCard from "../components/MenuCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function Index() {
   return (
@@ -18,7 +20,32 @@ export function Index() {
   );
 }
 
+interface IProductBody {
+  uuid: string;
+  image: string;
+  product_name: string;
+  category: string;
+  created_at: string;
+  description: string;
+  price: number;
+}
+
 function Home() {
+  const [getProduct, setProduct] = useState<IProductBody[]>([]);
+
+  useEffect(() => {
+    const getDataProduct = async () => {
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
+      try {
+        const result = await axios.get(url);
+        setProduct(result.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDataProduct();
+  });
+
   return (
     <main className="font-jakarta">
       <section className="tbt:flex tbt:flex-row-reverse">
@@ -88,7 +115,7 @@ function Home() {
           <p className="mt-2 text-sm lg:text-base text-lightgray">Let's choose and have a bit taste of poeple's favorite. It might be yours too!</p>
         </div>
         <div>
-          <MenuCard products={[]} />
+          <MenuCard products={getProduct} />
         </div>
       </section>
       <section className="my-5 uw:mt-60 px-[5%] tbt:px-[10%]">

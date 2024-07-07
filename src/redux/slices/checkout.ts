@@ -8,6 +8,7 @@ export interface IDetailProduct {
   uuid?: string | null;
   count?: number | null;
   size?: string | null;
+  delivery?: string | null;
   ice?: boolean | null;
   image?: string;
   product_name?: string;

@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
-import MenuCard from "../components/MenuCard";
+import ProductCard from "../components/ProductCard";
 import axios from "axios";
 
 export function Products() {
@@ -294,7 +294,7 @@ function Product() {
           <div className="block justify-center items-center w-full">
             <div className="grid justify-center">
               <div>
-                <MenuCard products={getProduct} />
+                <ProductCard products={getProduct} />
               </div>
             </div>
             <div className="flex justify-center mt-5">
