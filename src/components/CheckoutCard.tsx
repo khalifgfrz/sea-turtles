@@ -4,12 +4,12 @@
 import { useStoreDispatch } from "../redux/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteTempProduct } from "../redux/slices/checkout";
+import { deleteProducts } from "../redux/slices/checkout";
 
 function CheckoutCard() {
   const dispatch = useStoreDispatch();
-  const { TempProduct } = useSelector((state: RootState) => state.checkout);
-  const orderedProduct = TempProduct;
+  const { products } = useSelector((state: RootState) => state.checkout);
+  const orderedProduct = products;
 
   return (
     <div>
@@ -28,10 +28,7 @@ function CheckoutCard() {
             </div>
           </div>
           <div className="flex pr-1">
-            <button
-              onClick={() => dispatch(deleteTempProduct(index))}
-              className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200"
-            >
+            <button onClick={() => dispatch(deleteProducts(index))} className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200">
               <div className="flex justify-center">
                 <p>x</p>
               </div>

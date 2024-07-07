@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type checkout = {
-  uuid: string | null;
-  TempProduct: IDetailProduct[];
+  products: IDetailProduct[];
 };
 
 export interface IDetailProduct {
@@ -16,32 +15,25 @@ export interface IDetailProduct {
 }
 
 const initialState: checkout = {
-  uuid: null,
-  TempProduct: [],
+  products: [],
 };
 
 const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
   reducers: {
-    setUuid: (state, action: PayloadAction<string>) => {
-      state.uuid = action.payload;
+    setProducts: (state, action: PayloadAction<IDetailProduct>) => {
+      state.products.push(action.payload);
     },
-    deleteUuid: (state) => {
-      state.uuid = null;
+    deleteProducts: (state, action: PayloadAction<number>) => {
+      state.products = state.products.filter((_, index) => index !== action.payload);
     },
-    setTempProduct: (state, action: PayloadAction<IDetailProduct>) => {
-      state.TempProduct.push(action.payload);
-    },
-    deleteTempProduct: (state, action: PayloadAction<number>) => {
-      state.TempProduct = state.TempProduct.filter((_, index) => index !== action.payload);
-    },
-    deleteAllProduct: (state) => {
-      state.TempProduct = [];
+    deleteAllProducts: (state) => {
+      state.products = [];
     },
   },
 });
 
-export const { setUuid, deleteUuid, deleteTempProduct, setTempProduct, deleteAllProduct } = checkoutSlice.actions;
+export const { deleteProducts, setProducts, deleteAllProducts } = checkoutSlice.actions;
 export type CheckoutState = ReturnType<typeof checkoutSlice.reducer>;
 export default checkoutSlice.reducer;

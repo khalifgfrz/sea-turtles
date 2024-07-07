@@ -10,7 +10,7 @@ import productImg1 from "../assets/images/menu/1.webp";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import thumbsIcon from "../assets/images/thumbs-icon.svg";
 import { useStoreDispatch } from "../redux/hooks";
-import { setTempProduct } from "../redux/slices/checkout";
+import { setProducts } from "../redux/slices/checkout";
 
 export function DetailProducts() {
   return (
@@ -92,12 +92,12 @@ function DetailProduct() {
   };
 
   function buyProduct() {
-    dispatch(setTempProduct(form));
+    dispatch(setProducts(form));
     navigate("/checkout");
   }
 
   function saveProduct() {
-    dispatch(setTempProduct(form));
+    dispatch(setProducts(form));
   }
 
   return (
