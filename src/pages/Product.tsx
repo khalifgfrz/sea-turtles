@@ -227,15 +227,15 @@ function Product() {
                 <input type="radio" id="alphabet" name="sortBy" value="alphabet" checked={filters.sortBy === "alphabet"} onChange={handleChange} />
                 Alphabet
               </label>
-              <label className="checkbox" htmlFor="flash-sale">
+              <label className="checkbox" htmlFor="price">
                 <input type="radio" id="price" name="sortBy" value="price" checked={filters.sortBy === "price"} onChange={handleChange} />
                 Price
               </label>
-              <label className="checkbox" htmlFor="birthday-package">
+              <label className="checkbox" htmlFor="latest">
                 <input type="radio" id="latest" name="sortBy" value="latest" checked={filters.sortBy === "latest"} onChange={handleChange} />
                 Latest
               </label>
-              <label className="checkbox" htmlFor="cheap">
+              <label className="checkbox" htmlFor="oldest">
                 <input type="radio" id="oldest" name="sortBy" value="oldest" checked={filters.sortBy === "oldest"} onChange={handleChange} />
                 Oldest
               </label>
