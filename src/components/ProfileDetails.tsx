@@ -15,7 +15,7 @@ function ProfileDetails() {
 
   useEffect(() => {
     const getDataUser = async () => {
-      const url = "https://coffee-shop-three-omega.vercel.app/user";
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user`;
       try {
         const result = await axios.get(url, {
           headers: {
@@ -32,15 +32,15 @@ function ProfileDetails() {
 
   return (
     <div>
-      {getProfile.map((user) => (
-        <div key={user.email}>
-          <p className="text-center text-sm uw:text-xl">{user.full_name}</p>
-          <p className="text-center text-sm uw:text-xl mb-2">{user.email}</p>
-          <div className="grid place-items-center mb-2">
-            {user.image ? <img className="rounded-full" width="100" height="100" src={user.image} alt={user.full_name} /> : <img className="rounded-full" width="100" height="100" src={profileImg} alt={user.full_name} />}
-          </div>
+      {/* {getProfile.map((user) => ( */}
+      <div>
+        <p className="text-center text-sm uw:text-xl">{getProfile[0]?.full_name || "fullname"}</p>
+        <p className="text-center text-sm uw:text-xl mb-2">{getProfile[0]?.email || "email"}</p>
+        <div className="grid place-items-center mb-2 w-full h-25">
+          <img className="rounded-full" width="100" height="100" src={getProfile[0]?.image || profileImg} alt="profile" />
         </div>
-      ))}
+      </div>
+      {/* ))} */}
     </div>
   );
 }

@@ -24,7 +24,7 @@ function UploadProfileImage() {
       try {
         console.log("Token:", token);
         console.log("Sending formData:", formData.get("image"));
-        const result = await axios.patch("https://coffee-shop-three-omega.vercel.app/user/settings/upload", formData, {
+        const result = await axios.patch(`${import.meta.env.VITE_REACT_APP_API_URL}/user/settings/upload`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

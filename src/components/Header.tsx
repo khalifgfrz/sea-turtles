@@ -33,7 +33,7 @@ function Header() {
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Menutup modal
+    setShowModal(false);
   };
 
   const handleConfirmLogout = () => {

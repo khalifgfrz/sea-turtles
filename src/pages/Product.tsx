@@ -69,6 +69,19 @@ function Product() {
 
   const [getProduct, setProduct] = useState<ProductBody[]>([]);
 
+  useEffect(() => {
+    const getDataProduct = async () => {
+      const url = "https://coffee-shop-three-omega.vercel.app/product";
+      try {
+        const result = await axios.get(url);
+        setProduct(result.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDataProduct();
+  }, []);
+
   const handleApplyFilter = () => {
     const { category, sortBy, product_name, min_price, max_price } = filters;
     const categoryFilters = { category, sortBy, product_name, min_price, max_price };
@@ -261,7 +274,7 @@ function Product() {
           <div className="block justify-center items-center w-full">
             <div className="flex flex-wrap justify-center">
               <div>
-                <MenuCard props={getProduct} />
+                <MenuCard products={getProduct} />
               </div>
             </div>
             <div className="flex justify-center mt-5">

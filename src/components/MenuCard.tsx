@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
-import axios from "axios";
+// import axios from "axios";
 
 interface IProductBody {
   uuid: string;
@@ -15,26 +15,26 @@ interface IProductBody {
   price: number;
 }
 
-function MenuCard({ props }: { props: IProductBody[] | undefined }) {
-  const [getProduct, setProduct] = useState<IProductBody[]>([]);
+function MenuCard({ products }: { products: IProductBody[] }) {
+  // const [getProduct, setProduct] = useState<IProductBody[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getDataProduct = async () => {
-      const url = "https://coffee-shop-three-omega.vercel.app/product";
-      try {
-        if (props) {
-          setProduct(props);
-        } else {
-          const result = await axios.get(url);
-          setProduct(result.data.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDataProduct();
-  }, [props]);
+  // useEffect(() => {
+  //   const getDataProduct = async () => {
+  //     const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
+  //     try {
+  //       if (props) {
+  //         setProduct(props);
+  //       } else {
+  //         const result = await axios.get(url);
+  //         setProduct(result.data.data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getDataProduct();
+  // }, [props]);
 
   const handleBuyClick = (uuid: string) => {
     navigate(`/product/${uuid}`);
@@ -42,7 +42,7 @@ function MenuCard({ props }: { props: IProductBody[] | undefined }) {
 
   return (
     <div className="block md:flex md:flex-wrap justify-center">
-      {getProduct.map((product) => (
+      {products.map((product) => (
         <div key={product.uuid} className="font-jakarta block mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
           {product.image ? <img className=" md:mb-0 mt-4 w-full" src={product.image} alt={product.product_name} /> : <img className=" md:mb-0 mt-4 w-full" src={productImg1} alt={product.product_name} />}
           <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white">

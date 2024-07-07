@@ -56,7 +56,7 @@ function DetailProduct() {
 
   useEffect(() => {
     const getDetailProduct = async () => {
-      const url = "https://coffee-shop-three-omega.vercel.app/product";
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
       try {
         const result = await axios.get(`${url}/${uuid}`);
         setProduct(result.data.data[0]);
@@ -234,7 +234,7 @@ function DetailProduct() {
               Recommendation <span className="text-span">For You</span>
             </p>
             <div>
-              <MenuCard props={undefined} />
+              <MenuCard products={[]} />
             </div>
           </div>
           <div className="hidden md:flex justify-center mt-5">

@@ -31,7 +31,7 @@ function ChangePassword() {
       return setErrorMessage("Password harus sama");
     }
     setErrorMessage("");
-    const url = "https://coffee-shop-three-omega.vercel.app/user/resetpassword";
+    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/resetpassword`;
     console.log("Token:", token);
     axios
       .patch(url, form, {

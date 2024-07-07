@@ -35,14 +35,6 @@ function Login() {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginThunk(form));
-    // const url = "https://coffee-shop-three-omega.vercel.app/user/login";
-    // axios
-    //   .post(url, form)
-    //   .then((result: AxiosResponse<IAuthResponse>) => {
-    //     login(result.data.data[0].token);
-    //     navigate("/");
-    //   })
-    //   .catch((err) => console.error(err));
   };
 
   useEffect(() => {

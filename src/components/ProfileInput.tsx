@@ -26,7 +26,7 @@ function ProfileInput() {
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const url = "https://coffee-shop-three-omega.vercel.app/user/settings";
+    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/settings`;
     console.log("Token:", token);
     axios
       .patch(url, form, {

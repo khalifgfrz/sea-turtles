@@ -18,7 +18,7 @@ const initialState = {
 
 const loginThunk = createAsyncThunk<string, { email: string; pwd: string }, { rejectValue: { error: Error; status?: number } }>("auth/login", async (form, { rejectWithValue }) => {
   try {
-    const url = "https://coffee-shop-three-omega.vercel.app/user/login";
+    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/login`;
     const result: AxiosResponse<IAuthResponse> = await axios.post(url, form);
     return result.data.data[0].token;
   } catch (error) {

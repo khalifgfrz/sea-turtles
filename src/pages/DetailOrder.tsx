@@ -42,7 +42,7 @@ function DetailOrder() {
 
   useEffect(() => {
     const getDetailOrder = async () => {
-      const url = "https://coffee-shop-three-omega.vercel.app/order";
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order`;
       try {
         console.log(token);
         const result = await axios.get(`${url}/${uuid}`, {

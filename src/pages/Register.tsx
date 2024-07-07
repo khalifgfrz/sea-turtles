@@ -39,7 +39,7 @@ function Register() {
       return setErrorMessage("Password harus sama");
     }
     setErrorMessage("");
-    const url = "https://coffee-shop-three-omega.vercel.app/user/register";
+    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/register`;
     axios
       .post(url, form)
       .then((result: AxiosResponse<IAuthResponse>) => {

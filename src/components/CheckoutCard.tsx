@@ -7,29 +7,9 @@ import { RootState } from "../redux/store";
 import { deleteTempProduct } from "../redux/slices/checkout";
 
 function CheckoutCard() {
-  // const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
-  // const deleteModalBgRef = useRef<HTMLDivElement>(null);
   const dispatch = useStoreDispatch();
   const { TempProduct } = useSelector((state: RootState) => state.checkout);
   const orderedProduct = TempProduct;
-  // const handleDeleteClick = () => {
-  //   setIsModalDeleteVisible(true);
-  // };
-
-  // const handleCancelDeleteClick = () => {
-  //   setIsModalDeleteVisible(false);
-  // };
-
-  // const handleConfirmDeleteClick = () => {
-  //   alert("Item has been deleted!");
-  //   setIsModalDeleteVisible(false);
-  // };
-
-  // const handleBackgroundDeleteClick = (event: React.MouseEvent) => {
-  //   if (event.target === deleteModalBgRef.current) {
-  //     setIsModalDeleteVisible(false);
-  //   }
-  // };
 
   return (
     <div>
@@ -59,22 +39,6 @@ function CheckoutCard() {
           </div>
         </div>
       ))}
-      {/* {isModalDeleteVisible && (
-        <div ref={deleteModalBgRef} onClick={handleBackgroundDeleteClick} className="show z-10 fixed inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full text-center">
-            <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4">Confirm Delete</h2>
-            <p className="text-xs xsm:text-sm tbt:text-base uw:text-2xl mb-6">Are you sure you want to delete item?</p>
-            <div className="flex justify-center">
-              <button onClick={handleConfirmDeleteClick} className="text-xs tbt:text-base uw:text-2xl bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-4 py-2 rounded mr-2">
-                Delete
-              </button>
-              <button onClick={handleCancelDeleteClick} className="text-xs tbt:text-base uw:text-2xl bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-4 py-2 rounded">
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }
