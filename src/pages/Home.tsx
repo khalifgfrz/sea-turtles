@@ -9,6 +9,7 @@ import checklistLogo from "../assets/images/checklist-logo.svg";
 import MenuCard from "../components/MenuCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IProductBody } from "../types/product";
 
 export function Index() {
   return (
@@ -19,17 +20,6 @@ export function Index() {
     </>
   );
 }
-
-interface IProductBody {
-  uuid: string;
-  image: string;
-  product_name: string;
-  category: string;
-  created_at: string;
-  description: string;
-  price: number;
-}
-
 
 function Home() {
   const [getProduct, setProduct] = useState<IProductBody[]>([]);
@@ -117,7 +107,7 @@ function Home() {
         </div>
         <div>
           <div className="block md:grid md:grid-cols-4 justify-center">
-          <MenuCard products={getProduct} />
+            <MenuCard products={getProduct} />
           </div>
         </div>
       </section>

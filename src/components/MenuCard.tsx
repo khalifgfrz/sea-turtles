@@ -3,53 +3,32 @@ import { useNavigate } from "react-router-dom";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
 import { useStoreDispatch } from "../redux/hooks";
-import { useState } from "react";
-import { setProducts } from "../redux/slices/checkout";
-
-interface IProductBody {
-  uuid: string;
-  image: string;
-  product_name: string;
-  category: string;
-  created_at: string;
-  description: string;
-  price: number;
-}
-
-interface IDetailProduct {
- uuid?: string | null;
-  count?: number | null;
-  size?: string | null;
-  delivery?: string | null;
-  ice?: boolean | null;
-  image?: string;
-  product_name?: string;
-  price?: string;
-}
+import { setProducts, IDetailProduct } from "../redux/slices/checkout";
+import { IProductBody } from "../types/product";
 
 function MenuCard({ products }: { products: IProductBody[] }) {
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
-  const [form, setForm] = useState<IDetailProduct>({
-    uuid: null,
-    count: 1,
-    size: "Regular",
-    ice: false,
-    delivery: "Dine In",
-    image: undefined,
-  });
 
   const handleComponentClick = (uuid: string) => {
     navigate(`/product/${uuid}`);
   };
 
-  function buyProduct() {
-    dispatch(setProducts(form));
-    navigate("/checkout");
-  }
-
-  function saveProduct() {
-    dispatch(setProducts(form));
+  function checkoutProduct(product: IProductBody, isNavigate: boolean) {
+    const detailProduct: IDetailProduct = {
+      uuid: product.uuid,
+      count: 1,
+      delivery: "Dine In",
+      ice: false,
+      image: product.image,
+      price: product.price,
+      product_name: product.product_name,
+      size: "Regular",
+    };
+    dispatch(setProducts(detailProduct));
+    if (isNavigate) {
+      navigate("/checkout");
+    }
   }
 
   return (
@@ -84,10 +63,10 @@ function MenuCard({ products }: { products: IProductBody[] }) {
               <p className="text-primary text-sm tbt:text-base md:text-lg uw:text-2xl">IDR {product.price}</p>
             </div>
             <div className="md:flex">
-              <button onClick={() => buyProduct()} className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">
+              <button onClick={() => checkoutProduct(product, true)} className="w-full md:w-2/3 md:mr-2 h-8 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs">
                 Buy
               </button>
-              <button onClick={() => saveProduct()} className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
+              <button onClick={() => checkoutProduct(product, false)} className="mt-3 md:mt-0 w-full md:w-1/3 h-8 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs">
                 <div className="flex items-center justify-center">
                   <img width="20" height="20" src={shoppingLogo} alt="shopping-cart" />
                 </div>

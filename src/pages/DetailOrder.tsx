@@ -63,16 +63,16 @@ function DetailOrder() {
       <section className="px-[5%] tbt:px-[10%]">
         {getOrder.map((order) => (
           <div key={order.uuid}>
-            <h1 className="font-bold text-xl md:text-2xl lg:text-4xl">IOrder {order.id}</h1>
+            <h1 className="font-bold text-xl md:text-2xl lg:text-4xl">Order {order.id}</h1>
             <p className="mt-2 text-lightgray text-xs">21 March 2024 at 10.30 AM</p>
             <div className="inline-block mt-2 tbt:flex tbt:flex-row-reverse tbt:justify-between">
               <div className="tbt:w-1/2">
-                <h2 className="font-semibold md:text-2xl">Your IOrder</h2>
+                <h2 className="font-semibold md:text-2xl">Your Order</h2>
                 <CheckoutCard />
                 <CheckoutCard />
               </div>
               <div className="mt-5 tbt:mt-0 tbt:w-1/2 tbt:mr-5">
-                <h2 className="md:text-2xl font-semibold">IOrder Information</h2>
+                <h2 className="md:text-2xl font-semibold">Order Information</h2>
                 <div className="mt-4">
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">

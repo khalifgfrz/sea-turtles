@@ -5,14 +5,14 @@ type checkout = {
 };
 
 export interface IDetailProduct {
-  uuid?: string | null;
-  count?: number | null;
-  size?: string | null;
-  delivery?: string | null;
-  ice?: boolean | null;
+  uuid?: string;
+  count?: number;
+  size?: "Regular" | "Medium" | "Large";
+  delivery?: string;
+  ice?: boolean;
   image?: string;
   product_name?: string;
-  price?: string;
+  price?: number;
 }
 
 const initialState: checkout = {
