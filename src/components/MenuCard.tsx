@@ -5,26 +5,38 @@ import productImg1 from "../assets/images/menu/1.webp";
 import { useStoreDispatch } from "../redux/hooks";
 import { setProducts, IDetailProduct } from "../redux/slices/checkout";
 import { IProductBody } from "../types/product";
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
 
 function MenuCard({ products }: { products: IProductBody[] }) {
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
+  const { getProducts } = useSelector((state: RootState) => state.checkout);
 
   const handleComponentClick = (uuid: string) => {
     navigate(`/product/${uuid}`);
   };
 
   function checkoutProduct(product: IProductBody, isNavigate: boolean) {
-    const detailProduct: IDetailProduct = {
-      uuid: product.uuid,
-      count: 1,
-      delivery: "Dine In",
-      ice: false,
-      image: product.image,
-      price: product.price,
-      product_name: product.product_name,
-      size: "Regular",
-    };
+    const existingProduct = getProducts.find((p) => p.uuid === product.uuid);
+
+    let detailProduct: IDetailProduct;
+
+    if (existingProduct) {
+      detailProduct = { ...existingProduct, count: existingProduct.count + 1 };
+    } else {
+      detailProduct = {
+        uuid: product.uuid,
+        count: 1,
+        delivery: "Dine In",
+        ice: false,
+        image: product.image,
+        price: product.price,
+        product_name: product.product_name,
+        size: "Regular",
+      };
+    }
+
     dispatch(setProducts(detailProduct));
     if (isNavigate) {
       navigate("/checkout");

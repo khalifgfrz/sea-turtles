@@ -37,6 +37,7 @@ function DetailProduct() {
     ice: false,
     delivery: "Dine In",
     image: undefined,
+    price: 10,
   });
 
   useEffect(() => {
@@ -50,6 +51,7 @@ function DetailProduct() {
           uuid: result.data.data[0].uuid,
           image: result.data.data[0].image,
           product_name: result.data.data[0].product_name,
+          price: result.data.data[0].price,
         }));
       } catch (error) {
         console.log(error);

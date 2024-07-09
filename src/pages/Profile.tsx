@@ -82,21 +82,26 @@ function Profile() {
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      if (form.full_name) {
+        formData.append("full_name", form.full_name);
+      }
+      if (form.phone) {
+        formData.append("phone", form.phone);
+      }
+      if (form.address) {
+        formData.append("address", form.address);
+      }
       if (changeImage) {
-        const formData = new FormData();
         formData.append("image", changeImage);
       }
       const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/settings`;
-      const result = await axios.patch(
-        url,
-        { form, changeImage },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const result = await axios.patch(url, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
       console.log(result.data);
     } catch (err) {
       console.error(err);

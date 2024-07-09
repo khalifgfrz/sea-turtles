@@ -1,22 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type checkout = {
-  products: IDetailProduct[];
+  getProducts: IDetailProduct[];
+  orderTotal: number;
 };
 
 export interface IDetailProduct {
   uuid?: string;
-  count?: number;
+  count: number;
   size?: "Regular" | "Medium" | "Large";
   delivery?: string;
   ice?: boolean;
   image?: string;
   product_name?: string;
-  price?: number;
+  price: number;
 }
 
 const initialState: checkout = {
-  products: [],
+  getProducts: [],
+  orderTotal: 0,
 };
 
 const checkoutSlice = createSlice({
@@ -24,13 +26,24 @@ const checkoutSlice = createSlice({
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<IDetailProduct>) => {
-      state.products.push(action.payload);
+      const existingProduct = state.getProducts.find(
+        (product: { uuid?: string; size?: string; delivery?: string; ice?: boolean }) =>
+          product.uuid === action.payload.uuid && product.size === action.payload.size && product.delivery === action.payload.delivery && product.ice === action.payload.ice
+      );
+      if (existingProduct) {
+        existingProduct.count += 1;
+      } else {
+        state.getProducts.push(action.payload);
+      }
+      state.orderTotal = state.getProducts.reduce((total, product) => total + product.price * product.count, 0);
     },
     deleteProducts: (state, action: PayloadAction<number>) => {
-      state.products = state.products.filter((_, index) => index !== action.payload);
+      state.getProducts = state.getProducts.filter((_, index) => index !== action.payload);
+      state.orderTotal = state.getProducts.reduce((total, product) => total + product.price * product.count, 0);
     },
     deleteAllProducts: (state) => {
-      state.products = [];
+      state.getProducts = [];
+      state.orderTotal = 0;
     },
   },
 });

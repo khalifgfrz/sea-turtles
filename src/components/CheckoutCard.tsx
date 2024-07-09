@@ -5,8 +5,8 @@ import { deleteProducts } from "../redux/slices/checkout";
 
 function CheckoutCard() {
   const dispatch = useStoreDispatch();
-  const { products } = useSelector((state: RootState) => state.checkout);
-  const orderedProduct = products;
+  const { getProducts } = useSelector((state: RootState) => state.checkout);
+  const orderedProduct = getProducts;
 
   return (
     <div>
@@ -21,7 +21,7 @@ function CheckoutCard() {
               {product.count}pcs | {product.size} | {product.ice ? "Ice" : "Hot"} | {product.delivery}
             </p>
             <div className="flex">
-              <p className="text-primary text-sm md:text-xl uw:text-2xl">{product.price}</p>
+              <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
             </div>
           </div>
           <div className="flex pr-1">

@@ -12,8 +12,11 @@ import paypalIcon from "../assets/images/paypal-logo.svg";
 import CheckoutCard from "../components/CheckoutCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import CheckoutButton from "../components/CheckoutButton";
+// import CheckoutButton from "../components/CheckoutButton";
 import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export function CheckoutProduct() {
   return (
@@ -27,6 +30,30 @@ export function CheckoutProduct() {
 
 function Checkout() {
   const navigate = useNavigate();
+  const [isModalCheckoutVisible, setIsModalCheckoutVisible] = useState(false);
+  const checkoutModalBgRef = useRef<HTMLDivElement>(null);
+  const orderTotal = useSelector((state: RootState) => state.checkout.orderTotal);
+  const taxTotal = Math.ceil(orderTotal * 0.1);
+  const subTotal = orderTotal + taxTotal;
+
+  const handleCheckoutClick = () => {
+    setIsModalCheckoutVisible(true);
+  };
+
+  const handleCancelCheckoutClick = () => {
+    setIsModalCheckoutVisible(false);
+  };
+
+  const handleConfirmCheckoutClick = () => {
+    navigate(`/order/:uuid`);
+    setIsModalCheckoutVisible(false);
+  };
+
+  const handleBackgroundCheckoutClick = (event: React.MouseEvent) => {
+    if (event.target === checkoutModalBgRef.current) {
+      setIsModalCheckoutVisible(false);
+    }
+  };
 
   const handleAddMenuClick = () => {
     navigate(`/product`);
@@ -101,7 +128,7 @@ function Checkout() {
             <div className="mt-4 bg-gray-50 px-2 py-5">
               <div className="flex mb-2 font-bold justify-between w-full">
                 <p className="text-xs md:text-base uw:text-xl">Order</p>
-                <p className="text-xs md:text-base uw:text-xl">Idr. 40.000</p>
+                <p className="text-xs md:text-base uw:text-xl">Idr. {orderTotal}</p>
               </div>
               <div className="flex mb-2 font-bold justify-between w-full">
                 <p className="text-xs md:text-base uw:text-xl">Delivery</p>
@@ -109,13 +136,31 @@ function Checkout() {
               </div>
               <div className="flex mb-2 font-bold justify-between w-full border-b">
                 <p className="text-xs md:text-base uw:text-xl">Tax</p>
-                <p className="text-xs md:text-base uw:text-xl">Idr. 4000</p>
+                <p className="text-xs md:text-base uw:text-xl">Idr. {taxTotal}</p>
               </div>
               <div className="flex mt-5 mb-5 font-bold justify-between w-full">
                 <p className="text-xs md:text-base uw:text-xl">Subtotal</p>
-                <p className="text-xs md:text-base uw:text-xl">Idr. 44.000</p>
+                <p className="text-xs md:text-base uw:text-xl">Idr. {subTotal}</p>
               </div>
-              <CheckoutButton />
+              <button onClick={handleCheckoutClick} className="w-full h-9 bg-primary font-semibold rounded-xl hover:bg-darkprimary2 active:bg-darkprimary">
+                Checkout
+              </button>
+              {isModalCheckoutVisible && (
+                <div ref={checkoutModalBgRef} onClick={handleBackgroundCheckoutClick} className="show fixed z-50 inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
+                  <div className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full text-center">
+                    <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4">Confirm Checkout</h2>
+                    <p className="text-xs xsm:text-sm tbt:text-base uw:text-2xl mb-6">Are you sure you want to checkout?</p>
+                    <div className="flex justify-center">
+                      <button onClick={handleConfirmCheckoutClick} className="text-xs tbt:text-base uw:text-2xl bg-primary hover:bg-darkprimary2 active:bg-darkprimary text-white px-4 py-2 rounded mr-2">
+                        Checkout
+                      </button>
+                      <button onClick={handleCancelCheckoutClick} className="text-xs tbt:text-base uw:text-2xl bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-4 py-2 rounded">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <p className="mt-3 text-lightgray text-sm md:text-base uw:text-xl">We Accept</p>
               <div className="flex justify-between mt-3">
                 <img className="mr-2 md:w-8 md:h-8 lg:w-9 lg:h-9 uw:w-14 uw:h-14" width="25" height="25" src={briIcon} alt="bri-logo" />

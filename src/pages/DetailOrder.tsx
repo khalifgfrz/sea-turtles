@@ -79,46 +79,46 @@ function DetailOrder() {
                       <img className="flex mr-1" width="15" height="15" src={nameIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Full Name</p>
                     </div>
-                    <p className="text-xs md:text-base">{order.full_name}</p>
+                    <p className="text-xs md:text-base">{order.full_name || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">
                       <img className="flex mr-1" width="15" height="15" src={addressIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Address</p>
                     </div>
-                    <p className="text-xs md:text-base">{order.address}</p>
+                    <p className="text-xs md:text-base">{order.address || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">
                       <img className="flex mr-1" width="15" height="15" src={phoneIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Phone</p>
                     </div>
-                    <p className="text-xs md:text-base">{order.phone}</p>
+                    <p className="text-xs md:text-base">{order.phone || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">
                       <img className="flex mr-1" width="15" height="15" src={paymentIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Payment Method</p>
                     </div>
-                    <p className="text-xs md:text-base">{order.payment_method}</p>
+                    <p className="text-xs md:text-base">{order.payment_method || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">
                       <img className="flex mr-1" width="15" height="15" src={shippingIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Shipping</p>
                     </div>
-                    <p className="text-xs md:text-base">{order.delivery_method}</p>
+                    <p className="text-xs md:text-base">{order.delivery_method || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full border-b pb-3">
                     <div className="flex">
                       <img className="flex mr-1" width="15" height="15" src={statusIcon} alt="name-icon" />
                       <p className="text-xs font-medium text-lightgray md:text-base">Status</p>
                     </div>
-                    <p className="text-center py-0.5 px-2 rounded-2xl text-green bg-greenbg text-xs md:text-base">{order.status}</p>
+                    <p className="text-center py-0.5 px-2 rounded-2xl text-green bg-greenbg text-xs md:text-base">{order.status || "N/A"}</p>
                   </div>
                   <div className="flex mb-3 font-bold justify-between w-full">
                     <p className="text-xs font-medium text-lightgray md:text-base">Total Transaksi</p>
-                    <p className="text-primary text-xs md:text-base">Idr {order.grand_total}</p>
+                    <p className="text-primary text-xs md:text-base">Idr {order.grand_total || 0}</p>
                   </div>
                 </div>
               </div>
