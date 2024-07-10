@@ -7,6 +7,7 @@ import logo from "../assets/images/navbar-logo.webp";
 // import useAuth from "../components/UseAuth";
 import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
 import { authAction } from "../redux/slices/auth";
+import { RootState } from "../redux/store";
 
 function Header() {
   const [isActive, setIsActive] = useState(false);
@@ -17,6 +18,9 @@ function Header() {
   const { logout } = authAction;
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
+  const { getProducts } = useStoreSelector((state: RootState) => state.checkout);
+
+  const cartItemCount = getProducts.reduce((total, product) => total + product.count, 0);
 
   const toggleNavbar = () => {
     setIsActive((prev) => !prev);
@@ -77,7 +81,8 @@ function Header() {
           <Link to="#" className="hidden md:flex md:mr-6" aria-label="Read more about search" id="search">
             <Search className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
-          <Link to="/checkout" className="mr-6" aria-label="Read more about card" id="shopping-cart">
+          <Link to="/checkout" className="mr-6 relative" aria-label="Read more about card" id="shopping-cart">
+            {cartItemCount > 0 && <sup className="text-white absolute top-0 left-6 text-[0.7rem]">{cartItemCount}</sup>}
             <ShoppingCart className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
           <div className="hidden md:flex uw:text-xl">

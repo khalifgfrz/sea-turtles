@@ -39,7 +39,7 @@ function Profile() {
   const { token } = useStoreSelector((state) => state.auth);
   const [getProfile, setProfile] = useState<IProfileBody[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [changeImage, setImage] = useState<File | Blob>();
+  const [changeImage, setImage] = useState<File | null>(null);
 
   useEffect(() => {
     const getDataUser = async () => {

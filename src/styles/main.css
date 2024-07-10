@@ -572,28 +572,10 @@ video {
   display: none;
 }
 
-.checkmark {
-  position: relative;
-  margin-right: 0.625rem;
-  display: inline-block;
-  height: 0.875rem;
-  width: 0.875rem;
-  border-radius: 0.25rem;
-  border-width: 1px;
-  border-style: solid;
-  background-color: transparent;
-}
-
 .checkbox input[type="checkbox"]:checked + .checkmark {
   cursor: pointer;
   --tw-bg-opacity: 1;
   background-color: rgb(255 137 6 / var(--tw-bg-opacity));
-}
-
-.checkmark:after {
-  position: absolute;
-  display: none;
-  content: "";
 }
 
 .checkbox input[type="checkbox"]:checked + .checkmark:after {
@@ -731,6 +713,26 @@ video {
 
 .top-full {
   top: 100%;
+}
+
+.left-10 {
+  left: 2.5rem;
+}
+
+.left-5 {
+  left: 1.25rem;
+}
+
+.left-4 {
+  left: 1rem;
+}
+
+.-top--22rem {
+  top: 22rem;
+}
+
+.left-6 {
+  left: 1.5rem;
 }
 
 .z-50 {
@@ -1464,6 +1466,10 @@ video {
   line-height: 1rem;
 }
 
+.text-\[0\.5rem\] {
+  font-size: 0.5rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1944,10 +1950,6 @@ video {
   .tbt\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
-  }
-
-  .tbt\:text-\[0\.7rem\] {
-    font-size: 0.7rem;
   }
 
   .tbt\:text-base {

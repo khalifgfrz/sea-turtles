@@ -27,6 +27,7 @@ function MenuCard({ products }: { products: IProductBody[] }) {
     } else {
       detailProduct = {
         uuid: product.uuid,
+        id: product.id,
         count: 1,
         delivery: "Dine In",
         ice: false,
@@ -51,6 +52,7 @@ function MenuCard({ products }: { products: IProductBody[] }) {
           <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white cursor-pointer">
             <p className="font-bold mb-1 text-sm md:text-base lg:text-lg uw:text-2xl">{product.product_name || "Product Name"}</p>
             <p className="hidden">{product.category}</p>
+            <p className="hidden">{product.id}</p>
             <p className="hidden">{product.created_at}</p>
             <p className="text-xs lg:text-sm 4xl:text-base uw:text-xl text-lightgray">{product.description || "Description"}</p>
             <div className="flex text-primary items-center mt-1">

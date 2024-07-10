@@ -1,7 +1,7 @@
-interface IPaginationMeta {
+export interface IPaginationMeta {
   totalData?: number;
   totalPage?: number;
-  page: number;
+  page: string;
   prevLink: string | null;
   nextLink: string | null;
 }

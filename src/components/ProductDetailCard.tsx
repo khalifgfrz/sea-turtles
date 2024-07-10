@@ -1,16 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import MenuCard from './MenuCard';
-
-interface IProductBody {
-    uuid: string;
-    image: string;
-    product_name: string;
-    category: string;
-    created_at: string;
-    description: string;
-    price: number;
-  }
+import { IProductBody } from '../types/product';
 
 function ProductDetailCard() {
     const [getProduct, setProduct] = useState<IProductBody[]>([]);

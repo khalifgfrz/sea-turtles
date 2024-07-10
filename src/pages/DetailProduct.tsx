@@ -32,6 +32,7 @@ function DetailProduct() {
 
   const [defaultProduct, setDefaultProduct] = useState<IDetailProduct>({
     uuid: undefined,
+    id: undefined,
     count: 1,
     size: "Regular",
     ice: false,
@@ -49,6 +50,7 @@ function DetailProduct() {
         setDefaultProduct((prevProduct) => ({
           ...prevProduct,
           uuid: result.data.data[0].uuid,
+          id: result.data.data[0].id,
           image: result.data.data[0].image,
           product_name: result.data.data[0].product_name,
           price: result.data.data[0].price,
@@ -117,6 +119,7 @@ function DetailProduct() {
               </div>
             </div>
             <div className="tbt:w-1/2 lg:w-2/3 xl:w-3/4 mt-4 tbt:mt-0">
+              <p className="hidden">{getProduct?.id}</p>
               <p className="font-bold mb-1 md:text-lg uw:text-4xl">{getProduct?.product_name || "Product Name"}</p>
               <div className="flex items-center">
                 <p className="text-primary md:text-xl uw:text-4xl">IDR {getProduct?.price || 0}</p>

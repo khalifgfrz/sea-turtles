@@ -7,6 +7,7 @@ type checkout = {
 
 export interface IDetailProduct {
   uuid?: string;
+  id?: number;
   count: number;
   size?: "Regular" | "Medium" | "Large";
   delivery?: string;

@@ -8,6 +8,7 @@ import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
 import axios from "axios";
 import MenuCard from "../components/MenuCard";
+import { IProductBody } from "../types/product";
 
 export function Products() {
   return (
@@ -27,14 +28,9 @@ interface IFilters {
   max_price: string;
 }
 
-interface IProductBody {
-  uuid: string;
-  image: string;
-  product_name: string;
-  category: string;
-  created_at: string;
-  description: string;
-  price: number;
+interface IPagination {
+  page: string;
+  totalPages: number;
 }
 
 function Product() {
@@ -42,6 +38,10 @@ function Product() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100000);
+  const [pagination, setPagination] = useState<IPagination>({
+    page: "1",
+    totalPages: 1,
+  });
   const [filters, setFilters] = useState<IFilters>({
     product_name: "",
     category: "",
@@ -57,12 +57,14 @@ function Product() {
       const product_name = searchParams.get("product_name");
       const min_price = searchParams.get("min_price");
       const max_price = searchParams.get("max_price");
+      const page = searchParams.get("page");
       const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
       try {
         const result = await axios.get(url, {
-          params: { product_name, category, sortBy, min_price, max_price },
+          params: { product_name, category, sortBy, min_price, max_price, page },
         });
         setProduct(result.data.data);
+        setPagination((prev) => ({ ...prev, totalPages: result.data.totalPage }));
       } catch (error) {
         console.log(error);
       }
@@ -80,8 +82,26 @@ function Product() {
     if (min_price) categoryFilters.min_price = min_price;
     if (max_price) categoryFilters.max_price = max_price;
 
-    const params = new URLSearchParams(categoryFilters).toString();
+    const params = new URLSearchParams({
+      ...categoryFilters,
+      page: pagination.page,
+    }).toString();
     setSearchParams(params);
+  };
+
+  const handlePageClick = (page: string) => {
+    setPagination({ ...pagination, page });
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("page", page);
+      return newParams;
+    });
+  };
+
+  const handleNextPageClick = () => {
+    if (parseInt(pagination.page) < pagination.totalPages) {
+      handlePageClick((parseInt(pagination.page) + 1).toString());
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +129,8 @@ function Product() {
     });
     setMinPrice(0);
     setMaxPrice(100000);
+    setPagination({ page: "1", totalPages: 1 });
+    setSearchParams("");
   };
 
   const updateProgress = useCallback(() => {
@@ -298,11 +320,25 @@ function Product() {
               </div>
             </div>
             <div className="flex justify-center mt-5">
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">2</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">3</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">4</button>
-              <button className="text-secondary bg-darkgray2 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">&#9656;</button>
+              <button onClick={() => handlePageClick("1")} className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">
+                1
+              </button>
+              <button onClick={() => handlePageClick("2")} className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">
+                2
+              </button>
+              <button onClick={() => handlePageClick("3")} className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">
+                3
+              </button>
+              <button onClick={() => handlePageClick("4")} className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">
+                4
+              </button>
+              <button
+                onClick={handleNextPageClick}
+                className="text-secondary bg-darkgray2 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black"
+                disabled={parseInt(pagination.page) >= pagination.totalPages}
+              >
+                &#9656;
+              </button>
             </div>
           </div>
         </div>
