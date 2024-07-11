@@ -1,4 +1,5 @@
 export interface IProductBody {
+  user_id: number;
   uuid: string;
   id: number;
   image: string;

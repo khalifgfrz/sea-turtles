@@ -69,7 +69,6 @@ function DetailOrder() {
               <div className="tbt:w-1/2">
                 <h2 className="font-semibold md:text-2xl">Your Order</h2>
                 <CheckoutCard />
-                <CheckoutCard />
               </div>
               <div className="mt-5 tbt:mt-0 tbt:w-1/2 tbt:mr-5">
                 <h2 className="md:text-2xl font-semibold">Order Information</h2>

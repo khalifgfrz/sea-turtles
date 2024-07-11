@@ -32,11 +32,12 @@ function DetailProduct() {
 
   const [defaultProduct, setDefaultProduct] = useState<IDetailProduct>({
     uuid: undefined,
-    id: undefined,
+    product_id: undefined,
     count: 1,
-    size: "Regular",
+    size: undefined,
     ice: false,
-    delivery: "Dine In",
+    delivery: undefined,
+    payment: undefined,
     image: undefined,
     price: 10,
   });
@@ -72,12 +73,16 @@ function DetailProduct() {
     setDefaultProduct((prevProduct) => ({ ...prevProduct, count: count - 1 }));
   };
 
-  const handleSizeChange = (size: "Regular" | "Medium" | "Large") => {
+  const handleSizeChange = (size: number) => {
     setDefaultProduct((prevProduct) => ({ ...prevProduct, size }));
   };
 
-  const handleDeliveryChange = (delivery: string) => {
+  const handleDeliveryChange = (delivery: number) => {
     setDefaultProduct((prevProduct) => ({ ...prevProduct, delivery }));
+  };
+
+  const handlePaymentChange = (payment: number) => {
+    setDefaultProduct((prevProduct) => ({ ...prevProduct, payment }));
   };
 
   const handleIceChange = (ice: boolean) => {
@@ -162,19 +167,19 @@ function DetailProduct() {
               <div className="flex justify-between mt-3">
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleSizeChange("Regular")}
+                  onClick={() => handleSizeChange(1)}
                 >
                   Regular
                 </button>
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleSizeChange("Medium")}
+                  onClick={() => handleSizeChange(2)}
                 >
                   Medium
                 </button>
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleSizeChange("Large")}
+                  onClick={() => handleSizeChange(3)}
                 >
                   Large
                 </button>
@@ -183,21 +188,48 @@ function DetailProduct() {
               <div className="flex justify-between mt-3">
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange("Dine In")}
+                  onClick={() => handleDeliveryChange(1)}
                 >
                   Dine In
                 </button>
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange("Door Delivery")}
+                  onClick={() => handleDeliveryChange(2)}
                 >
                   Door Delivery
                 </button>
                 <button
                   className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange("Pick Up")}
+                  onClick={() => handleDeliveryChange(3)}
                 >
                   Pick Up
+                </button>
+              </div>
+              <p className="mt-3 font-bold text-sm uw:text-xl">Payment Method</p>
+              <div className="flex justify-between mt-3">
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handlePaymentChange(1)}
+                >
+                  Cash
+                </button>
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handlePaymentChange(2)}
+                >
+                  Transfer
+                </button>
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handlePaymentChange(3)}
+                >
+                  Debit
+                </button>
+                <button
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  onClick={() => handlePaymentChange(4)}
+                >
+                  Qris
                 </button>
               </div>
               <p className="mt-3 font-bold text-sm uw:text-xl">Hot/Ice?</p>

@@ -9,14 +9,16 @@ import bcaIcon from "../assets/images/bca-logo.svg";
 import gopayIcon from "../assets/images/gopay-logo.svg";
 import ovoIcon from "../assets/images/ovo-logo.svg";
 import paypalIcon from "../assets/images/paypal-logo.svg";
-import CheckoutCard from "../components/CheckoutCard";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import CheckoutButton from "../components/CheckoutButton";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
+import { deleteProducts } from "../redux/slices/checkout";
+import axios, { AxiosResponse } from "axios";
+import { IAuthResponse } from "../types/response";
 
 export function CheckoutProduct() {
   return (
@@ -35,6 +37,10 @@ function Checkout() {
   const orderTotal = useSelector((state: RootState) => state.checkout.orderTotal);
   const taxTotal = Math.ceil(orderTotal * 0.1);
   const subTotal = orderTotal + taxTotal;
+  const dispatch = useStoreDispatch();
+  const { getProducts } = useSelector((state: RootState) => state.checkout);
+  const orderedProduct = getProducts;
+  const { token } = useStoreSelector((state) => state.auth);
 
   const handleCheckoutClick = () => {
     setIsModalCheckoutVisible(true);
@@ -45,6 +51,22 @@ function Checkout() {
   };
 
   const handleConfirmCheckoutClick = () => {
+    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/new`;
+    axios
+      .post(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        subtotal: subTotal,
+        tax: taxTotal,
+        // payment_id: orderedProduct.payment,
+        // delivery_id: orderedProduct[0].delivery,
+      })
+      .then((result: AxiosResponse<IAuthResponse>) => {
+        console.log(result.data);
+        navigate("/login");
+      })
+      .catch((err) => console.error(err));
     navigate(`/order/:uuid`);
     setIsModalCheckoutVisible(false);
   };
@@ -58,6 +80,7 @@ function Checkout() {
   const handleAddMenuClick = () => {
     navigate(`/product`);
   };
+  console.log(orderedProduct)
 
   return (
     <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
@@ -74,7 +97,31 @@ function Checkout() {
                 </div>
               </button>
             </div>
-            <CheckoutCard />
+            <div>
+          {orderedProduct.map((product, index) => (
+            <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+              <div className="flex mr-2 justify-center items-center">
+                <img width="150" height="150" src={product.image} alt="menu1" />
+              </div>
+              <div className="w-3/5 pr-5">
+                <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
+                <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                  {product.count}pcs | {(product.size === 1) ? 'Regular' : (product.size === 2) ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"} | {(product.delivery === 1) ? 'Dine In' : (product.delivery === 2) ? "Door Delivery" : "Pick Up"} | {(product.payment === 1) ? 'Cash' : (product.payment === 2) ? "Transfer" : (product.payment === 3) ? "Debit" : "Qris"}
+                </p>
+                <div className="flex">
+                  <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
+                </div>
+              </div>
+              <div className="flex pr-1">
+                <button onClick={() => dispatch(deleteProducts(index))} className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200">
+                  <div className="flex justify-center">
+                    <p>x</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
             <div className="mt-7">
               <h2 className="font-semibold md:text-2xl">Payment Info & Delivery</h2>
               <form className="mt-7">
