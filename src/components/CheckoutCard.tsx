@@ -16,7 +16,6 @@ function CheckoutCard() {
             <img width="150" height="150" src={product.image} alt="menu1" />
           </div>
           <div className="w-3/5 pr-5">
-            <p className="hidden">{product.id}</p>
             <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
             <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
               {product.count}pcs | {product.size} | {product.ice ? "Ice" : "Hot"} | {product.delivery}
