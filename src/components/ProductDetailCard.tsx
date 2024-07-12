@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import MenuCard from './MenuCard';
-import { IProductBody } from '../types/product';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import MenuCard from "./MenuCard";
+import { IProductBody } from "../types/product";
 
 function ProductDetailCard() {
-    const [getProduct, setProduct] = useState<IProductBody[]>([]);
+  const [getProduct, setProduct] = useState<IProductBody[]>([]);
 
   useEffect(() => {
     const getDataProduct = async () => {
@@ -17,12 +17,12 @@ function ProductDetailCard() {
       }
     };
     getDataProduct();
-  });
+  }, []);
   return (
     <div className="block md:grid md:grid-cols-4 justify-center">
       <MenuCard products={getProduct} />
     </div>
-  )
+  );
 }
 
-export default ProductDetailCard
+export default ProductDetailCard;

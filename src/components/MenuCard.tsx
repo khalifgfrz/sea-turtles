@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import productImg1 from "../assets/images/menu/1.webp";
 import { useStoreDispatch } from "../redux/hooks";
-import { setProducts, IDetailProduct } from "../redux/slices/checkout";
+import { setProducts, IDetailProduct } from "../redux/slices/product";
 import { IProductBody } from "../types/product";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 function MenuCard({ products }: { products: IProductBody[] }) {
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
-  const { getProducts } = useSelector((state: RootState) => state.checkout);
+  const { getProducts } = useSelector((state: RootState) => state.product);
 
   const handleComponentClick = (uuid: string) => {
     navigate(`/product/${uuid}`);

@@ -12,13 +12,16 @@ import paypalIcon from "../assets/images/paypal-logo.svg";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
-import { deleteProducts } from "../redux/slices/checkout";
-import axios, { AxiosResponse } from "axios";
-import { IAuthResponse } from "../types/response";
+import { deleteAllProducts, deleteProducts } from "../redux/slices/product";
+import axios from "axios";
+import { IProfileBody } from "../types/profile";
+import Input from "../components/Input";
+// import { checkoutAction } from "../redux/slices/checkout";
+// import { IAuthResponse } from "../types/response";
 
 export function CheckoutProduct() {
   return (
@@ -34,13 +37,41 @@ function Checkout() {
   const navigate = useNavigate();
   const [isModalCheckoutVisible, setIsModalCheckoutVisible] = useState(false);
   const checkoutModalBgRef = useRef<HTMLDivElement>(null);
-  const orderTotal = useSelector((state: RootState) => state.checkout.orderTotal);
+  const orderTotal = useSelector((state: RootState) => state.product.orderTotal);
   const taxTotal = Math.ceil(orderTotal * 0.1);
   const subTotal = orderTotal + taxTotal;
   const dispatch = useStoreDispatch();
-  const { getProducts } = useSelector((state: RootState) => state.checkout);
-  const orderedProduct = getProducts;
+  const { getProducts } = useSelector((state: RootState) => state.product);
   const { token } = useStoreSelector((state) => state.auth);
+  const [getProfile, setProfile] = useState<IProfileBody[]>([]);
+  const [form, setForm] = useState<{ full_name?: string; email?: string; address?: string }>({ full_name: "", email: "", address: "" });
+  // const itemCount = getProducts.reduce((total, product) => total + product.count, 0);
+
+  useEffect(() => {
+    const getDataUser = async () => {
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user`;
+      try {
+        const result = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setProfile(result.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDataUser();
+  }, [token]);
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((form) => {
+      return {
+        ...form,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
 
   const handleCheckoutClick = () => {
     setIsModalCheckoutVisible(true);
@@ -50,25 +81,39 @@ function Checkout() {
     setIsModalCheckoutVisible(false);
   };
 
-  const handleConfirmCheckoutClick = () => {
+  const handleConfirmCheckoutClick = async () => {
     const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/new`;
-    axios
-      .post(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      const result = await axios.post(
+        url,
+        {
+          user_id: getProfile[0]?.id,
+          subtotal: orderTotal,
+          tax: taxTotal,
+          payment_id: getProducts[0]?.payment,
+          delivery_id: getProducts[0]?.delivery,
+          status: "Waiting",
+          grand_total: subTotal,
+          size_id: getProducts[0]?.size,
+          product_ids: [getProducts[0]?.product_id],
+          qty: getProducts[0]?.count,
         },
-        subtotal: subTotal,
-        tax: taxTotal,
-        // payment_id: orderedProduct.payment,
-        // delivery_id: orderedProduct[0].delivery,
-      })
-      .then((result: AxiosResponse<IAuthResponse>) => {
-        console.log(result.data);
-        navigate("/login");
-      })
-      .catch((err) => console.error(err));
-    navigate(`/order/:uuid`);
-    setIsModalCheckoutVisible(false);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(result.data);
+      const orderUuid = result.data.data[0][0].uuid;
+      console.log(orderUuid);
+      navigate(`/order/${orderUuid}`);
+      setIsModalCheckoutVisible(false);
+      dispatch(deleteAllProducts());
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleBackgroundCheckoutClick = (event: React.MouseEvent) => {
@@ -80,7 +125,6 @@ function Checkout() {
   const handleAddMenuClick = () => {
     navigate(`/product`);
   };
-  console.log(orderedProduct)
 
   return (
     <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
@@ -98,30 +142,34 @@ function Checkout() {
               </button>
             </div>
             <div>
-          {orderedProduct.map((product, index) => (
-            <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
-              <div className="flex mr-2 justify-center items-center">
-                <img width="150" height="150" src={product.image} alt="menu1" />
-              </div>
-              <div className="w-3/5 pr-5">
-                <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
-                <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
-                  {product.count}pcs | {(product.size === 1) ? 'Regular' : (product.size === 2) ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"} | {(product.delivery === 1) ? 'Dine In' : (product.delivery === 2) ? "Door Delivery" : "Pick Up"} | {(product.payment === 1) ? 'Cash' : (product.payment === 2) ? "Transfer" : (product.payment === 3) ? "Debit" : "Qris"}
-                </p>
-                <div className="flex">
-                  <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
-                </div>
-              </div>
-              <div className="flex pr-1">
-                <button onClick={() => dispatch(deleteProducts(index))} className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200">
-                  <div className="flex justify-center">
-                    <p>x</p>
+              {getProducts.map((product, index) => (
+                <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+                  <div className="flex mr-2 justify-center items-center">
+                    <img width="150" height="150" src={product.image} alt="menu1" />
                   </div>
-                </button>
-              </div>
+                  <div className="w-3/5 pr-5">
+                    <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
+                    <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                      {product.count}pcs | {product.size === 1 ? "Regular" : product.size === 2 ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"} |{" "}
+                      {product.delivery === 1 ? "Dine In" : product.delivery === 2 ? "Door Delivery" : "Pick Up"} | {product.payment === 1 ? "Cash" : product.payment === 2 ? "Transfer" : product.payment === 3 ? "Debit" : "Qris"}
+                    </p>
+                    <div className="flex">
+                      <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
+                    </div>
+                  </div>
+                  <div className="flex pr-1">
+                    <button
+                      onClick={() => dispatch(deleteProducts(index))}
+                      className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200"
+                    >
+                      <div className="flex justify-center">
+                        <p>x</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
             <div className="mt-7">
               <h2 className="font-semibold md:text-2xl">Payment Info & Delivery</h2>
               <form className="mt-7">
@@ -130,42 +178,21 @@ function Checkout() {
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-                  <input
-                    className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                    type="text"
-                    name="email"
-                    id="email"
-                    placeholder="Enter Your Email"
-                    autoComplete="email"
-                  />
+                  <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: getProfile[0]?.email || form.email, onChange: onChangeHandler }} />
                 </div>
-                <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="fullname">
+                <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="full_name">
                   Full Name
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-                  <input
-                    className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                    type="text"
-                    name="fullname"
-                    id="fullname"
-                    placeholder="Enter Your Full Name"
-                    autoComplete="name"
-                  />
+                  <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: getProfile[0]?.full_name || form.full_name, onChange: onChangeHandler }} />
                 </div>
                 <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
                   Address
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
-                  <input
-                    className="w-full h-12 border border-solid border-darkwhite rounded-xl pt-0.5 pl-14 text-lightgray mb-3 text-xs md:text-sm uw:text-xl"
-                    type="text"
-                    name="address"
-                    id="address"
-                    placeholder="Enter Your Address"
-                    autoComplete="off"
-                  />
+                  <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: getProfile[0]?.address || form.address, onChange: onChangeHandler }} />
                 </div>
               </form>
             </div>

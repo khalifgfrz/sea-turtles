@@ -35,7 +35,7 @@ function Home() {
       }
     };
     getDataProduct();
-  });
+  }, []);
 
   return (
     <main className="font-jakarta">

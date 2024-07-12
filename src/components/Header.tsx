@@ -18,7 +18,7 @@ function Header() {
   const { logout } = authAction;
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
-  const { getProducts } = useStoreSelector((state: RootState) => state.checkout);
+  const { getProducts } = useStoreSelector((state: RootState) => state.product);
 
   const cartItemCount = getProducts.reduce((total, product) => total + product.count, 0);
 

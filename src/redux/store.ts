@@ -4,7 +4,7 @@ import { PersistConfig } from "redux-persist/lib/types";
 import storage from "redux-persist/lib/storage";
 
 import authReducer, { AuthState } from "./slices/auth";
-import checkoutReducer, { CheckoutState } from "./slices/checkout";
+import productReducer, { ProductState } from "./slices/product";
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: "auth:coffee",
@@ -14,17 +14,17 @@ const authPersistConfig: PersistConfig<AuthState> = {
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-const checkoutPersistConfig: PersistConfig<CheckoutState> = {
-  key: "checkout:coffee",
+const productPersistConfig: PersistConfig<ProductState> = {
+  key: "product:coffee",
   storage,
 };
 
-const persistedCheckoutReducer = persistReducer(checkoutPersistConfig, checkoutReducer);
+const persistedProductReducer = persistReducer(productPersistConfig, productReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    checkout: persistedCheckoutReducer,
+    product: persistedProductReducer,
   },
 });
 

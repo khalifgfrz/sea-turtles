@@ -9,7 +9,7 @@ import productImg1 from "../assets/images/menu/1.webp";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import thumbsIcon from "../assets/images/thumbs-icon.svg";
 import { useStoreDispatch } from "../redux/hooks";
-import { setProducts, IDetailProduct } from "../redux/slices/checkout";
+import { setProducts, IDetailProduct } from "../redux/slices/product";
 import ProductDetailCard from "../components/ProductDetailCard";
 import { IProductBody } from "../types/product";
 

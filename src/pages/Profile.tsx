@@ -15,6 +15,7 @@ import nameIcon from "../assets/images/form-icon.svg";
 import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
 import profileImg from "../assets/images/profile-img.webp";
+import { IProfileBody } from "../types/profile";
 
 // import UploadProfileImage from "../components/UploadProfileImage";
 
@@ -26,12 +27,6 @@ export function Profiles() {
       <Footer />
     </>
   );
-}
-
-interface IProfileBody {
-  email: string;
-  image: string;
-  full_name: string;
 }
 
 function Profile() {
@@ -139,28 +134,28 @@ function Profile() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form.full_name, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: getProfile[0]?.full_name || form.full_name, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="email">
               Email
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form.email, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: getProfile[0]?.email || form.email, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="phone">
               Phone
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
-              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form.phone, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: getProfile[0]?.phone || form.phone, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
               Address
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
-              <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: form.address, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: getProfile[0]?.address || form.address, onChange: onChangeHandler }} />
             </div>
             <button className="text-lightblack mb-5 text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">
               Submit

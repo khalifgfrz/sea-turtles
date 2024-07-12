@@ -2,12 +2,12 @@ import { ChangeEventHandler } from "react";
 
 type InputProps = {
   input: {
-    onChange: ChangeEventHandler<HTMLInputElement>;
-    type: string | undefined;
-    name: string | undefined;
-    placeholder: string | undefined;
-    autocomplete: string | undefined;
-    value: string | undefined;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    type?: string;
+    name?: string;
+    placeholder?: string;
+    autocomplete?: string;
+    value?: string;
   };
   isToggler?: boolean;
   onTogglerHandler?: (e: React.MouseEvent) => void;

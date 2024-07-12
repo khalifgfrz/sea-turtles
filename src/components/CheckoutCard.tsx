@@ -1,11 +1,11 @@
 import { useStoreDispatch } from "../redux/hooks";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteProducts } from "../redux/slices/checkout";
+import { deleteProducts } from "../redux/slices/product";
 
 function CheckoutCard() {
   const dispatch = useStoreDispatch();
-  const { getProducts } = useSelector((state: RootState) => state.checkout);
+  const { getProducts } = useSelector((state: RootState) => state.product);
   const orderedProduct = getProducts;
 
   return (

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type checkout = {
+type product = {
   getProducts: IDetailProduct[];
   orderTotal: number;
 };
@@ -18,20 +18,18 @@ export interface IDetailProduct {
   price: number;
 }
 
-const initialState: checkout = {
+const initialState: product = {
   getProducts: [],
   orderTotal: 0,
 };
 
-const checkoutSlice = createSlice({
-  name: "checkout",
+const productSlice = createSlice({
+  name: "product",
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<IDetailProduct>) => {
       const existingProduct = state.getProducts.find(
-        (product: {
-         uuid?: string; size?: number; delivery?: number; payment?: number; ice?: boolean 
-}) =>
+        (product: { uuid?: string; size?: number; delivery?: number; payment?: number; ice?: boolean }) =>
           product.uuid === action.payload.uuid && product.size === action.payload.size && product.delivery === action.payload.delivery && product.payment === action.payload.payment && product.ice === action.payload.ice
       );
       if (existingProduct) {
@@ -52,6 +50,6 @@ const checkoutSlice = createSlice({
   },
 });
 
-export const { deleteProducts, setProducts, deleteAllProducts } = checkoutSlice.actions;
-export type CheckoutState = ReturnType<typeof checkoutSlice.reducer>;
-export default checkoutSlice.reducer;
+export const { deleteProducts, setProducts, deleteAllProducts } = productSlice.actions;
+export type ProductState = ReturnType<typeof productSlice.reducer>;
+export default productSlice.reducer;

@@ -7,11 +7,13 @@ import addressIcon from "../assets/images/address-icon.svg";
 import paymentIcon from "../assets/images/payment-icon.svg";
 import shippingIcon from "../assets/images/shipping-icon.svg";
 import statusIcon from "../assets/images/status-icon.svg";
-import CheckoutCard from "../components/CheckoutCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useStoreSelector } from "../redux/hooks";
+import { IOrder } from "../types/order";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export function OrderDetail() {
   return (
@@ -24,21 +26,10 @@ export function OrderDetail() {
 }
 
 function DetailOrder() {
-  interface IOrder {
-    id: string;
-    uuid: string;
-    full_name: string;
-    address?: string;
-    phone?: string;
-    payment_method: string;
-    delivery_method: string;
-    status: string;
-    grand_total: string;
-  }
-
   const { uuid } = useParams<{ uuid: string }>();
   const [getOrder, setOrder] = useState<IOrder[]>([]);
   const { token } = useStoreSelector((state) => state.auth);
+  const { getProducts } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
     const getDetailOrder = async () => {
@@ -48,6 +39,7 @@ function DetailOrder() {
         const result = await axios.get(`${url}/${uuid}`, {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         });
         setOrder(result.data.data);
@@ -68,7 +60,20 @@ function DetailOrder() {
             <div className="inline-block mt-2 tbt:flex tbt:flex-row-reverse tbt:justify-between">
               <div className="tbt:w-1/2">
                 <h2 className="font-semibold md:text-2xl">Your Order</h2>
-                <CheckoutCard />
+                <div className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+                  <div className="flex mr-2 justify-center items-center">
+                    <img width="150" height="150" src={order.image} alt="menu1" />
+                  </div>
+                  <div className="w-3/5 pr-5">
+                    <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{order.product_name}</p>
+                    <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                      {order.qty}pcs | {order.size} | {getProducts[0]?.ice ? "Ice" : "Hot"} | {order.delivery_method}
+                    </p>
+                    <div className="flex">
+                      <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {order.price * order.qty}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className="mt-5 tbt:mt-0 tbt:w-1/2 tbt:mr-5">
                 <h2 className="md:text-2xl font-semibold">Order Information</h2>
