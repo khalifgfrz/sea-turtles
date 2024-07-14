@@ -16,8 +16,7 @@ import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
 import profileImg from "../assets/images/profile-img.webp";
 import { IProfileBody } from "../types/profile";
-
-// import UploadProfileImage from "../components/UploadProfileImage";
+import Swal from "sweetalert2";
 
 export function Profiles() {
   return (
@@ -30,7 +29,7 @@ export function Profiles() {
 }
 
 function Profile() {
-  const [form, setForm] = useState<{ full_name?: string; email?: string; phone?: string; address?: string }>({ full_name: "", email: "", phone: "", address: "" });
+  const [form, setForm] = useState<IProfileBody>();
   const { token } = useStoreSelector((state) => state.auth);
   const [getProfile, setProfile] = useState<IProfileBody[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -46,6 +45,7 @@ function Profile() {
           },
         });
         setProfile(result.data.data);
+        setForm(result.data.data[0]);
       } catch (error) {
         console.log(error);
       }
@@ -78,13 +78,13 @@ function Profile() {
     e.preventDefault();
     try {
       const formData = new FormData();
-      if (form.full_name) {
+      if (form?.full_name) {
         formData.append("full_name", form.full_name);
       }
-      if (form.phone) {
+      if (form?.phone) {
         formData.append("phone", form.phone);
       }
-      if (form.address) {
+      if (form?.address) {
         formData.append("address", form.address);
       }
       if (changeImage) {
@@ -97,8 +97,32 @@ function Profile() {
           "Content-Type": "multipart/form-data",
         },
       });
+      Swal.fire({
+        title: "Berhasil!",
+        text: "Data Berhasil Diubah!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2000,
+        position: "top-end",
+        customClass: {
+          popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+        },
+        toast: true,
+      });
       console.log(result.data);
     } catch (err) {
+      Swal.fire({
+        title: "Gagal!",
+        text: "Data Gagal Diubah!",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000,
+        position: "top-end",
+        customClass: {
+          popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+        },
+        toast: true,
+      });
       console.error(err);
     }
   };
@@ -134,28 +158,28 @@ function Profile() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: getProfile[0]?.full_name || form.full_name, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form?.full_name, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="email">
               Email
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: getProfile[0]?.email || form.email, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form?.email }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="phone">
               Phone
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
-              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: getProfile[0]?.phone || form.phone, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form?.phone, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
               Address
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
-              <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: getProfile[0]?.address || form.address, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: form?.address, onChange: onChangeHandler }} />
             </div>
             <button className="text-lightblack mb-5 text-lg uw:text-2xl bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11 uw:h-16" type="submit">
               Submit

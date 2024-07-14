@@ -84,6 +84,9 @@ function Checkout() {
   const handleConfirmCheckoutClick = async () => {
     const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/new`;
     try {
+      const productIds = getProducts.map((product) => product.product_id);
+      const sizes = getProducts.map((product) => product.size);
+      const qty = getProducts.map((product) => product.count);
       const result = await axios.post(
         url,
         {
@@ -94,9 +97,9 @@ function Checkout() {
           delivery_id: getProducts[0]?.delivery,
           status: "Waiting",
           grand_total: subTotal,
-          size_id: getProducts[0]?.size,
-          product_ids: [getProducts[0]?.product_id],
-          qty: getProducts[0]?.count,
+          size_id: sizes,
+          product_ids: [productIds],
+          qty: qty,
         },
         {
           headers: {

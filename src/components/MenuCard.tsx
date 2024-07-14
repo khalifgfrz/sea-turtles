@@ -7,6 +7,9 @@ import { setProducts, IDetailProduct } from "../redux/slices/product";
 import { IProductBody } from "../types/product";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
+import "@sweetalert2/theme-material-ui/material-ui.min.css";
 
 function MenuCard({ products }: { products: IProductBody[] }) {
   const navigate = useNavigate();
@@ -38,11 +41,22 @@ function MenuCard({ products }: { products: IProductBody[] }) {
         size: 1,
       };
     }
-
     dispatch(setProducts(detailProduct));
     if (isNavigate) {
-      navigate("/checkout");
+      return navigate("/checkout");
     }
+    Swal.fire({
+      title: "Berhasil!",
+      text: "Produk Berhasil Disimpan!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000,
+      position: "top-end",
+      customClass: {
+        popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+      },
+      toast: true,
+    });
   }
 
   return (

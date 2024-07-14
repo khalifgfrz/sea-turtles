@@ -12,6 +12,7 @@ import { useStoreDispatch } from "../redux/hooks";
 import { setProducts, IDetailProduct } from "../redux/slices/product";
 import ProductDetailCard from "../components/ProductDetailCard";
 import { IProductBody } from "../types/product";
+import Swal from "sweetalert2";
 
 export function DetailProducts() {
   return (
@@ -90,6 +91,18 @@ function DetailProduct() {
   };
 
   function checkoutProduct(isNavigate: boolean) {
+    Swal.fire({
+      title: "Berhasil!",
+      text: "Produk Berhasil Disimpan!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000,
+      position: "top-end",
+      customClass: {
+        popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+      },
+      toast: true,
+    });
     dispatch(setProducts(defaultProduct));
     if (isNavigate) {
       navigate("/checkout");
