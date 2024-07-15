@@ -10,8 +10,8 @@ export interface IDetailProduct {
   product_id?: number;
   count: number;
   size?: number;
-  delivery?: number;
-  payment?: number;
+  // delivery?: number;
+  // payment?: number;
   ice?: boolean;
   image?: string;
   product_name?: string;
@@ -29,8 +29,7 @@ const productSlice = createSlice({
   reducers: {
     setProducts: (state, action: PayloadAction<IDetailProduct>) => {
       const existingProduct = state.getProducts.find(
-        (product: { uuid?: string; size?: number; delivery?: number; payment?: number; ice?: boolean }) =>
-          product.uuid === action.payload.uuid && product.size === action.payload.size && product.delivery === action.payload.delivery && product.payment === action.payload.payment && product.ice === action.payload.ice
+        (product: { uuid?: string; size?: number; delivery?: number; payment?: number; ice?: boolean }) => product.uuid === action.payload.uuid && product.size === action.payload.size && product.ice === action.payload.ice
       );
       if (existingProduct) {
         existingProduct.count += 1;

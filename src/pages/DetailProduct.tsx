@@ -32,15 +32,12 @@ function DetailProduct() {
   const dispatch = useStoreDispatch();
 
   const [defaultProduct, setDefaultProduct] = useState<IDetailProduct>({
-    uuid: undefined,
-    product_id: undefined,
     count: 1,
     size: undefined,
+    product_id: undefined,
     ice: false,
-    delivery: undefined,
-    payment: undefined,
     image: undefined,
-    price: 10,
+    price: 0,
   });
 
   useEffect(() => {
@@ -49,14 +46,15 @@ function DetailProduct() {
       try {
         const result = await axios.get(`${url}/${uuid}`);
         setProduct(result.data.data[0]);
+        console.log(result.data.data[0]);
         setDefaultProduct((prevProduct) => ({
           ...prevProduct,
-          uuid: result.data.data[0].uuid,
-          id: result.data.data[0].id,
+          product_id: result.data.data[0].id,
           image: result.data.data[0].image,
           product_name: result.data.data[0].product_name,
           price: result.data.data[0].price,
         }));
+        console.log(setDefaultProduct);
       } catch (error) {
         console.log(error);
       }
@@ -76,14 +74,6 @@ function DetailProduct() {
 
   const handleSizeChange = (size: number) => {
     setDefaultProduct((prevProduct) => ({ ...prevProduct, size }));
-  };
-
-  const handleDeliveryChange = (delivery: number) => {
-    setDefaultProduct((prevProduct) => ({ ...prevProduct, delivery }));
-  };
-
-  const handlePaymentChange = (payment: number) => {
-    setDefaultProduct((prevProduct) => ({ ...prevProduct, payment }));
   };
 
   const handleIceChange = (ice: boolean) => {
@@ -195,54 +185,6 @@ function DetailProduct() {
                   onClick={() => handleSizeChange(3)}
                 >
                   Large
-                </button>
-              </div>
-              <p className="mt-3 font-bold text-sm uw:text-xl">Delivery</p>
-              <div className="flex justify-between mt-3">
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange(1)}
-                >
-                  Dine In
-                </button>
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange(2)}
-                >
-                  Door Delivery
-                </button>
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handleDeliveryChange(3)}
-                >
-                  Pick Up
-                </button>
-              </div>
-              <p className="mt-3 font-bold text-sm uw:text-xl">Payment Method</p>
-              <div className="flex justify-between mt-3">
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handlePaymentChange(1)}
-                >
-                  Cash
-                </button>
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handlePaymentChange(2)}
-                >
-                  Transfer
-                </button>
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handlePaymentChange(3)}
-                >
-                  Debit
-                </button>
-                <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
-                  onClick={() => handlePaymentChange(4)}
-                >
-                  Qris
                 </button>
               </div>
               <p className="mt-3 font-bold text-sm uw:text-xl">Hot/Ice?</p>

@@ -275,7 +275,6 @@ function Product() {
                 ></div>
                 <input
                   type="range"
-                  id="min-price-range"
                   min="0"
                   max="100000"
                   step="10000"
@@ -288,7 +287,6 @@ function Product() {
                 />
                 <input
                   type="range"
-                  id="max-price-range"
                   min="0"
                   max="100000"
                   step="10000"

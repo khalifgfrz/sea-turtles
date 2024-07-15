@@ -104,8 +104,10 @@ function Profile() {
         showConfirmButton: false,
         timer: 2000,
         position: "top-end",
+        background: "#0B0909",
+        color: "#fff",
         customClass: {
-          popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+          popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
         },
         toast: true,
       });
@@ -118,8 +120,10 @@ function Profile() {
         showConfirmButton: false,
         timer: 2000,
         position: "top-end",
+        background: "#0B0909",
+        color: "#fff",
         customClass: {
-          popup: "bg-blue-500 text-black text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+          popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
         },
         toast: true,
       });

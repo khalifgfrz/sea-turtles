@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Error from "./pages/Error";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
+import LoginAdmin from "./pages/LoginAdmin";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/login/admin",
+    element: <LoginAdmin />,
     errorElement: <Error />,
   },
   {

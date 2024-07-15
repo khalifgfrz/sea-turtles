@@ -1,11 +1,6 @@
 export interface IOrder {
   id: string;
   uuid: string;
-  image: string;
-  size: string;
-  product_name: string;
-  qty: number;
-  price: number;
   full_name: string;
   address?: string;
   phone?: string;
@@ -13,4 +8,14 @@ export interface IOrder {
   delivery_method: string;
   status: string;
   grand_total: string;
+  product_name: string;
+  size: string;
+  qty: number;
+  products: {
+    image: string;
+    product_name: string;
+    price: number;
+    size: string;
+    qty: number;
+  }[];
 }

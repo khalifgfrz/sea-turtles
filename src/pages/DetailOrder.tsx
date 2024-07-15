@@ -60,20 +60,22 @@ function DetailOrder() {
             <div className="inline-block mt-2 tbt:flex tbt:flex-row-reverse tbt:justify-between">
               <div className="tbt:w-1/2">
                 <h2 className="font-semibold md:text-2xl">Your Order</h2>
-                <div className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
-                  <div className="flex mr-2 justify-center items-center">
-                    <img width="150" height="150" src={order.image} alt="menu1" />
-                  </div>
-                  <div className="w-3/5 pr-5">
-                    <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{order.product_name}</p>
-                    <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
-                      {order.qty}pcs | {order.size} | {getProducts[0]?.ice ? "Ice" : "Hot"} | {order.delivery_method}
-                    </p>
-                    <div className="flex">
-                      <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {order.price * order.qty}</p>
+                {order.products.map((product) => (
+                  <div className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+                    <div className="flex mr-2 justify-center items-center">
+                      <img width="150" height="150" src={product.image} alt="menu1" />
+                    </div>
+                    <div className="w-3/5 pr-5">
+                      <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
+                      <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                        {product.qty}pcs | {product.size} | {getProducts[0]?.ice ? "Ice" : "Hot"}
+                      </p>
+                      <div className="flex">
+                        <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.qty}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
               <div className="mt-5 tbt:mt-0 tbt:w-1/2 tbt:mr-5">
                 <h2 className="md:text-2xl font-semibold">Order Information</h2>

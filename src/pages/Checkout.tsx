@@ -20,6 +20,7 @@ import { deleteAllProducts, deleteProducts } from "../redux/slices/product";
 import axios from "axios";
 import { IProfileBody } from "../types/profile";
 import Input from "../components/Input";
+import CheckoutWarning from "../components/CheckoutWarning";
 // import { checkoutAction } from "../redux/slices/checkout";
 // import { IAuthResponse } from "../types/response";
 
@@ -39,13 +40,15 @@ function Checkout() {
   const checkoutModalBgRef = useRef<HTMLDivElement>(null);
   const orderTotal = useSelector((state: RootState) => state.product.orderTotal);
   const taxTotal = Math.ceil(orderTotal * 0.1);
-  const subTotal = orderTotal + taxTotal;
   const dispatch = useStoreDispatch();
   const { getProducts } = useSelector((state: RootState) => state.product);
   const { token } = useStoreSelector((state) => state.auth);
   const [getProfile, setProfile] = useState<IProfileBody[]>([]);
   const [form, setForm] = useState<{ full_name?: string; email?: string; address?: string }>({ full_name: "", email: "", address: "" });
-  // const itemCount = getProducts.reduce((total, product) => total + product.count, 0);
+  const [delivery, setDelivery] = useState<number>(0);
+  const [payment, setPayment] = useState<number>(0);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const subTotal = orderTotal + taxTotal + deliveryCharge;
 
   useEffect(() => {
     const getDataUser = async () => {
@@ -73,6 +76,23 @@ function Checkout() {
     });
   };
 
+  const handleDeliveryChange = (delivery: number) => {
+    setDelivery(delivery);
+    if (delivery === 1) {
+      setDeliveryCharge(0);
+    }
+    if (delivery === 2) {
+      setDeliveryCharge(5000);
+    }
+    if (delivery === 3) {
+      setDeliveryCharge(0);
+    }
+  };
+
+  const handlePaymentChange = (payment: number) => {
+    setPayment(payment);
+  };
+
   const handleCheckoutClick = () => {
     setIsModalCheckoutVisible(true);
   };
@@ -84,22 +104,24 @@ function Checkout() {
   const handleConfirmCheckoutClick = async () => {
     const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/new`;
     try {
-      const productIds = getProducts.map((product) => product.product_id);
-      const sizes = getProducts.map((product) => product.size);
-      const qty = getProducts.map((product) => product.count);
+      const products = getProducts.map((product) => {
+        return {
+          product_id: product.product_id,
+          size_id: product.size,
+          qty: product.count,
+        };
+      });
       const result = await axios.post(
         url,
         {
           user_id: getProfile[0]?.id,
           subtotal: orderTotal,
           tax: taxTotal,
-          payment_id: getProducts[0]?.payment,
-          delivery_id: getProducts[0]?.delivery,
+          payment_id: payment,
+          delivery_id: delivery,
           status: "Waiting",
           grand_total: subTotal,
-          size_id: sizes,
-          product_ids: [productIds],
-          qty: qty,
+          products: products,
         },
         {
           headers: {
@@ -109,7 +131,7 @@ function Checkout() {
         }
       );
       console.log(result.data);
-      const orderUuid = result.data.data[0][0].uuid;
+      const orderUuid = result.data.data[0].uuid;
       console.log(orderUuid);
       navigate(`/order/${orderUuid}`);
       setIsModalCheckoutVisible(false);
@@ -145,33 +167,36 @@ function Checkout() {
               </button>
             </div>
             <div>
-              {getProducts.map((product, index) => (
-                <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
-                  <div className="flex mr-2 justify-center items-center">
-                    <img width="150" height="150" src={product.image} alt="menu1" />
-                  </div>
-                  <div className="w-3/5 pr-5">
-                    <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
-                    <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
-                      {product.count}pcs | {product.size === 1 ? "Regular" : product.size === 2 ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"} |{" "}
-                      {product.delivery === 1 ? "Dine In" : product.delivery === 2 ? "Door Delivery" : "Pick Up"} | {product.payment === 1 ? "Cash" : product.payment === 2 ? "Transfer" : product.payment === 3 ? "Debit" : "Qris"}
-                    </p>
-                    <div className="flex">
-                      <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
+              {getProducts.length === 0 ? (
+                <CheckoutWarning />
+              ) : (
+                getProducts.map((product, index) => (
+                  <div key={product.uuid && index} className="font-jakarta flex bg-gray-50 mt-3 py-3 pl-3 justify-between">
+                    <div className="flex mr-2 justify-center items-center">
+                      <img width="150" height="150" src={product.image} alt="menu1" />
+                    </div>
+                    <div className="w-3/5 pr-5">
+                      <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
+                      <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                        {product.count}pcs | {product.size === 1 ? "Regular" : product.size === 2 ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"}
+                      </p>
+                      <div className="flex">
+                        <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>
+                      </div>
+                    </div>
+                    <div className="flex pr-1">
+                      <button
+                        onClick={() => dispatch(deleteProducts(index))}
+                        className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200"
+                      >
+                        <div className="flex justify-center">
+                          <p>x</p>
+                        </div>
+                      </button>
                     </div>
                   </div>
-                  <div className="flex pr-1">
-                    <button
-                      onClick={() => dispatch(deleteProducts(index))}
-                      className="w-6 2xl:w-6 uw:w-10 h-6 uw:h-10 text-sm uw:text-xl font-bold text-red-500 border-2 uw:border-4 border-red-500 rounded-full hover:bg-gray-100 active:bg-gray-200"
-                    >
-                      <div className="flex justify-center">
-                        <p>x</p>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
             <div className="mt-7">
               <h2 className="font-semibold md:text-2xl">Payment Info & Delivery</h2>
@@ -199,6 +224,54 @@ function Checkout() {
                 </div>
               </form>
             </div>
+            <p className="mt-3 font-bold text-sm uw:text-xl">Delivery</p>
+            <div className="flex justify-between mt-3">
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handleDeliveryChange(1)}
+              >
+                Dine In
+              </button>
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handleDeliveryChange(2)}
+              >
+                Door Delivery
+              </button>
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handleDeliveryChange(3)}
+              >
+                Pick Up
+              </button>
+            </div>
+            <p className="mt-3 font-bold text-sm uw:text-xl">Payment Method</p>
+            <div className="flex justify-between mt-3">
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handlePaymentChange(1)}
+              >
+                Cash
+              </button>
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handlePaymentChange(2)}
+              >
+                Transfer
+              </button>
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handlePaymentChange(3)}
+              >
+                Debit
+              </button>
+              <button
+                className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                onClick={() => handlePaymentChange(4)}
+              >
+                Qris
+              </button>
+            </div>
           </div>
           <div className="mt-5 tbt:mt-2 tbt:w-1/2">
             <h2 className="md:text-2xl font-semibold">Total</h2>
@@ -209,7 +282,7 @@ function Checkout() {
               </div>
               <div className="flex mb-2 font-bold justify-between w-full">
                 <p className="text-xs md:text-base uw:text-xl">Delivery</p>
-                <p className="text-xs md:text-base uw:text-xl">Idr. 0</p>
+                <p className="text-xs md:text-base uw:text-xl">Idr. {deliveryCharge}</p>
               </div>
               <div className="flex mb-2 font-bold justify-between w-full border-b">
                 <p className="text-xs md:text-base uw:text-xl">Tax</p>
