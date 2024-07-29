@@ -4,6 +4,9 @@ import axios, { AxiosResponse } from "axios";
 import { IAuthResponse } from "../types/response";
 import { useStoreSelector } from "../redux/hooks";
 
+// if (pin.length < 6) throw new Error("Pin required!!!");
+// if (!result.rows.length) throw new Error("Pin is wrong!!!");
+
 import passwordIcon from "../assets/images/password-icon.svg";
 import eyeIcon from "../assets/images/eye-icon.svg";
 import eyeOffIcon from "../assets/images/eye-off-icon.svg";

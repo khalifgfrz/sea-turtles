@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 import headerImg from "../assets/images/header-img.webp";
 import aboutImg from "../assets/images/about-img.webp";
 import visitImg from "../assets/images/visit-img.webp";
@@ -10,16 +7,6 @@ import MenuCard from "../components/MenuCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { IProductBody } from "../types/product";
-
-export function Index() {
-  return (
-    <>
-      <Header />
-      <Home />
-      <Footer />
-    </>
-  );
-}
 
 function Home() {
   const [getProduct, setProduct] = useState<IProductBody[]>([]);

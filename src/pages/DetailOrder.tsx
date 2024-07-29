@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 import phoneIcon from "../assets/images/phone-icon.svg";
 import nameIcon from "../assets/images/form-icon.svg";
 import addressIcon from "../assets/images/address-icon.svg";
@@ -14,16 +11,6 @@ import { useStoreSelector } from "../redux/hooks";
 import { IOrder } from "../types/order";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-
-export function OrderDetail() {
-  return (
-    <>
-      <Header />
-      <DetailOrder />
-      <Footer />
-    </>
-  );
-}
 
 function DetailOrder() {
   const { uuid } = useParams<{ uuid: string }>();

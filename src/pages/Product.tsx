@@ -1,24 +1,11 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 import promoImg1 from "../assets/images/promo/1.svg";
 import promoImg2 from "../assets/images/promo/2.svg";
 import axios from "axios";
 import MenuCard from "../components/MenuCard";
 import { IProductBody } from "../types/product";
-
-export function Products() {
-  return (
-    <>
-      <Header />
-      <Product />
-      <Footer />
-    </>
-  );
-}
 
 interface IFilters {
   category: string;

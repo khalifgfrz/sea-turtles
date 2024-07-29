@@ -9,8 +9,6 @@ import bcaIcon from "../assets/images/bca-logo.svg";
 import gopayIcon from "../assets/images/gopay-logo.svg";
 import ovoIcon from "../assets/images/ovo-logo.svg";
 import paypalIcon from "../assets/images/paypal-logo.svg";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -21,18 +19,6 @@ import axios from "axios";
 import { IProfileBody } from "../types/profile";
 import Input from "../components/Input";
 import CheckoutWarning from "../components/CheckoutWarning";
-// import { checkoutAction } from "../redux/slices/checkout";
-// import { IAuthResponse } from "../types/response";
-
-export function CheckoutProduct() {
-  return (
-    <>
-      <Header />
-      <Checkout />
-      <Footer />
-    </>
-  );
-}
 
 function Checkout() {
   const navigate = useNavigate();

@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 // import { IAuthResponse } from "../types/response";
@@ -17,16 +14,6 @@ import emailIcon from "../assets/images/email-icon.svg";
 import profileImg from "../assets/images/profile-img.webp";
 import { IProfileBody } from "../types/profile";
 import Swal from "sweetalert2";
-
-export function Profiles() {
-  return (
-    <>
-      <Header />
-      <Profile />
-      <Footer />
-    </>
-  );
-}
 
 function Profile() {
   const [form, setForm] = useState<IProfileBody>();
