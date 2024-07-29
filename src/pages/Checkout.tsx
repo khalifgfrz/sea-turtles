@@ -164,7 +164,7 @@ function Checkout() {
                     <div className="w-3/5 pr-5">
                       <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
                       <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
-                        {product.count}pcs | {product.size === 1 ? "Regular" : product.size === 2 ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"}
+                        {product.count} pcs | {product.size === 1 ? "Regular" : product.size === 2 ? "Medium" : "Large"} | {product.ice ? "Ice" : "Hot"}
                       </p>
                       <div className="flex">
                         <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.count}</p>

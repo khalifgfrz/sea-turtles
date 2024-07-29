@@ -255,6 +255,7 @@ function Product() {
                 <div className="range-track"></div>
                 <div
                   className="range-progress"
+                  id="range-progress"
                   style={{
                     left: `${(minPrice / 100000) * 100}%`,
                     right: `${100 - (maxPrice / 100000) * 100}%`,

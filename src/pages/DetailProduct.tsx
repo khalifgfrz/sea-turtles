@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -13,16 +11,6 @@ import { setProducts, IDetailProduct } from "../redux/slices/product";
 import ProductDetailCard from "../components/ProductDetailCard";
 import { IProductBody } from "../types/product";
 import Swal from "sweetalert2";
-
-export function DetailProducts() {
-  return (
-    <>
-      <Header />
-      <DetailProduct />
-      <Footer />
-    </>
-  );
-}
 
 function DetailProduct() {
   const { uuid } = useParams<{ uuid: string }>();
