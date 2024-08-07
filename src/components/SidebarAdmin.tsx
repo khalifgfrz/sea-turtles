@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStoreDispatch } from "../redux/hooks";
 import { authAction } from "../redux/slices/auth";
+import dashboardIcon from "../assets/images/dashboard.svg";
+import productIcon from "../assets/images/product.svg";
+import orderIcon from "../assets/images/order.svg";
+import userIcon from "../assets/images/user.svg";
+import logoutIcon from "../assets/images/logout.svg";
 
 function SidebarAdmin() {
   const logoutModalBgRef = useRef<HTMLDivElement>(null);
@@ -32,41 +37,35 @@ function SidebarAdmin() {
 
   return (
     <>
-      <main className="hidden md:inline-block px-5 py-6 text-sm text-gray-600 bg-white border-r border-gray-200 border-solid w-[261px] font-montserrat">
+      <main className="hidden md:inline-block pl-[3%] pr-3 py-6 text-sm text-gray-600 bg-white border-r border-gray-200 border-solid w-[200px] font-jakarta">
         <div className="inline-block w-full">
-          <Link to="/user/dashboard">
-            <button className="w-full h-10 items-center pl-2 flex rounded-md focus:text-blue-600  focus:border-l-4 focus:border-blue-600 focus:border-solid focus:bg-blue-600 focus:bg-opacity-10">
-              <img width="20" height="20" src="" />
-              <div className="ml-2">Dashboard</div>
+          <Link to="#">
+            <button className="w-full h-7 items-center mb-2 flex rounded-md hover:bg-primary focus:bg-primary">
+              <img width="20" height="20" src={dashboardIcon} />
+              <div className="ml-2 text-xs font-semibold text-black">Dashboard</div>
             </button>
           </Link>
-          <Link to="/user/transfer">
-            <button className="w-full h-10 items-center mt-2 pl-2 flex rounded-md focus:text-blue-600  focus:border-l-4 focus:border-blue-600 focus:border-solid focus:bg-blue-600 focus:bg-opacity-10">
-              <img width="20" height="20" src="" />
-              <div className="ml-2">Transfer</div>
+          <Link to="#">
+            <button className="w-full h-7 items-center mb-2 flex rounded-md hover:bg-primary focus:bg-primary">
+              <img width="20" height="20" src={productIcon} />
+              <div className="ml-2 text-xs font-semibold text-black">Product</div>
             </button>
           </Link>
-          <Link to="/user/history">
-            <button className="w-full h-10 items-center mt-2 pl-2 flex rounded-md focus:text-blue-600  focus:border-l-4 focus:border-blue-600 focus:border-solid focus:bg-blue-600 focus:bg-opacity-10">
-              <img width="20" height="20" src="" />
-              <div className="ml-2">History</div>
+          <Link to="#">
+            <button className="w-full h-7 items-center mb-2 flex rounded-md hover:bg-primary focus:bg-primary">
+              <img width="20" height="20" src={orderIcon} />
+              <div className="ml-2 text-xs font-semibold text-black">Order</div>
             </button>
           </Link>
-          <Link to="/user/topup">
-            <button className="w-full h-10 items-center mt-2 pl-2 flex rounded-md focus:text-blue-600  focus:border-l-4 focus:border-blue-600 focus:border-solid focus:bg-blue-600 focus:bg-opacity-10">
-              <img width="20" height="20" src="" />
-              <div className="ml-2">Top Up</div>
+          <Link to="#">
+            <button className="w-full h-7 items-center mb-2 flex rounded-md hover:bg-primary focus:bg-primary">
+              <img width="20" height="20" src={userIcon} />
+              <div className="ml-2 text-xs font-semibold text-black">User</div>
             </button>
           </Link>
-          <Link to="/user">
-            <button className="w-full h-10 items-center mt-2 pl-2 flex rounded-md focus:text-blue-600  focus:border-l-4 focus:border-blue-600 focus:border-solid focus:bg-blue-600 focus:bg-opacity-10">
-              <img width="20" height="20" src="" />
-              <div className="ml-2">Profile</div>
-            </button>
-          </Link>
-          <button onClick={handleLogout} className="w-full h-10 items-center mt-2 pl-2 flex rounded-md text-red-600 focus:border-l-4 focus:border-red-600 focus:border-solid focus:bg-red-600 focus:bg-opacity-10">
-            <img width="20" height="20" src="" />
-            <div className="ml-2">Keluar</div>
+          <button onClick={handleLogout} className="w-full h-7 items-center flex rounded-md hover:bg-primary focus:bg-primary">
+            <img width="20" height="20" src={logoutIcon} />
+            <div className="ml-2 text-xs font-semibold text-black">Keluar</div>
           </button>
         </div>
         {showModal && (

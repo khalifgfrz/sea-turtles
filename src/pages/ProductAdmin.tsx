@@ -11,8 +11,8 @@ export function ProductsAdmin() {
 
 function ProductAdmin() {
   return (
-    <main className="font-jakarta mt-[10%] lg:mt-[5%]">
-      <h1 className="text-black my-auto pl-[10%] text-4xl lg:text-4xl max-w-xl lg:max-w-4xl">Product List</h1>
+    <main className="font-jakarta mt-5 px-[3%] w-full">
+      <h1 className="text-black text-lg font-bold">Product List</h1>
     </main>
   );
 }

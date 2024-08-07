@@ -54,25 +54,11 @@ function Header() {
 
   return (
     <header className="font-jakarta">
-      <nav className="flex justify-between items-center bg-white py-[2%] tbt:py-[0.5%] px-[5%] tbt:px-[10%] top-0 left-0 right-0 z-50 border-b-2 border-solid border-darkgray2">
+      <nav className="flex justify-between items-center bg-white py-[2%] tbt:py-[0.5%] px-[3%] top-0 left-0 right-0 z-50 border-b-2 border-solid border-darkgray2">
         <div className="flex items-center">
           <div className="mr-16">
             <Link to="#">
-              <img width="90" height="22.5" className="tbt:w-44" src={logo} alt="navbar-logo" />
-            </Link>
-          </div>
-          <div className="hidden md:flex uw:text-xl">
-            <Link
-              to="/"
-              className="md:mr-16 md:text-white md:after:block md:after:border-b-2 md:after:border-solid md:after:border-primary md:after:scale-x-0 md:after:duration-200 md:after:ease-linear md:hover:after:scale-x-100 md:active:text-darkwhite"
-            >
-              Home
-            </Link>
-            <Link
-              to="/product"
-              className="md:mr-16 md:text-white md:after:block md:after:border-b-2 md:after:border-solid md:after:border-primary md:after:scale-x-0 md:after:duration-200 md:after:ease-linear md:hover:after:scale-x-100 md:active:text-darkwhite"
-            >
-              Product
+              <img width="120" height="22.5" src={logo} alt="navbar-logo" />
             </Link>
           </div>
         </div>
