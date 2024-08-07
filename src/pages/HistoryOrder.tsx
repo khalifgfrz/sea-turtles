@@ -6,15 +6,35 @@ import glassIcon from "../assets/images/glass-icon.svg";
 import totalIcon from "../assets/images/total-icon.svg";
 import statusIcon from "../assets/images/status-icon.svg";
 import messageIcon from "../assets/images/message-icon.svg";
-import productImg1 from "../assets/images/menu/1.webp";
-import productImg2 from "../assets/images/menu/2.webp";
-import productImg3 from "../assets/images/menu/3.webp";
-import productImg4 from "../assets/images/menu/4.webp";
+import axios from "axios";
+import { useStoreSelector } from "../redux/hooks";
+import { IHistory } from "../types/history";
 
 function HistoryOrder() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const toggleDropdownRef = useRef<HTMLButtonElement>(null);
   const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  const { token } = useStoreSelector((state) => state.auth);
+  const [getHistory, setHistory] = useState<IHistory[]>([]);
+
+  useEffect(() => {
+    const getDetailOrder = async () => {
+      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/get/history`;
+      try {
+        console.log(token);
+        const result = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setHistory(result.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDetailOrder();
+  }, [token]);
 
   const handleToggleDropdown = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -78,39 +98,36 @@ function HistoryOrder() {
                 <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">Finish Order</button>
               </div>
             </div>
-            <div className="block mt-3 text-xs lg:text-base uw:text-xl">
-              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1">
-                <div className="hidden tbt:grid tbt:mr-2">
-                  <img className="lg:w-24 uw:w-40" width="90" src={productImg1} alt="menu2" />
-                </div>
+            {getHistory.map((history) => (
+              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1 mt-3 text-xs lg:text-base uw:text-xl">
                 <div className="grid grid-cols-2 md:grid-cols-4">
                   <div className="mb-4 inline-block">
                     <div className="flex text-lightgray">
                       <img className="mr-1" width="13" height="13" src={glassIcon} alt="glass-icon" />
                       <p>No.Order</p>
                     </div>
-                    <p className="mt-1 font-bold">#12354-09893</p>
+                    <p className="mt-1 font-bold">{history.id}</p>
                   </div>
                   <div className="mb-4 ml-6 md:ml-0 inline-block">
                     <div className="flex text-lightgray">
                       <img className="mr-1" width="13" height="13" src={calenderIcon} alt="calender-icon" />
                       <p>Date</p>
                     </div>
-                    <p className="mt-1 font-bold">23 January 2024</p>
+                    <p className="mt-1 font-bold">{history.created_at}</p>
                   </div>
                   <div className="mb-4 md:mx-4 inline-block">
                     <div className="flex text-lightgray">
                       <img className="mr-1" width="13" height="13" src={totalIcon} alt="total-icon" />
                       <p>Total</p>
                     </div>
-                    <p className="mt-1 font-bold">Idr 40.000</p>
+                    <p className="mt-1 font-bold">Idr. {history.grand_total}</p>
                   </div>
                   <div className="mb-4 ml-6 md:ml-0 md:mr-4 inline-block">
                     <div className="flex text-lightgray">
                       <img className="mr-1" width="13" height="13" src={statusIcon} alt="status-icon" />
                       <p>Status</p>
                     </div>
-                    <p className="bg-lightprimary text-primary text-center p-0.5 max-w-24 xl:max-w-32 mt-1 rounded-2xl font-semibold">On Progress</p>
+                    <p className="bg-lightprimary text-primary text-center p-0.5 max-w-24 xl:max-w-32 mt-1 rounded-2xl font-semibold">{history.status}</p>
                   </div>
                   <div className="inline-block border-b w-full col-span-2">
                     <a href="#" className="text-primary font-semibold hover:underline active:text-darkprimary">
@@ -119,127 +136,7 @@ function HistoryOrder() {
                   </div>
                 </div>
               </div>
-              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1">
-                <div className="hidden tbt:grid tbt:mr-2">
-                  <img className="lg:w-24 uw:w-40" width="90" src={productImg2} alt="menu2" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4">
-                  <div className="mb-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={glassIcon} alt="glass-icon" />
-                      <p>No.Order</p>
-                    </div>
-                    <p className="mt-1 font-bold">#12354-09893</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={calenderIcon} alt="calender-icon" />
-                      <p>Date</p>
-                    </div>
-                    <p className="mt-1 font-bold">23 January 2024</p>
-                  </div>
-                  <div className="mb-4 md:mx-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={totalIcon} alt="total-icon" />
-                      <p>Total</p>
-                    </div>
-                    <p className="mt-1 font-bold">Idr 40.000</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 md:mr-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={statusIcon} alt="status-icon" />
-                      <p>Status</p>
-                    </div>
-                    <p className="bg-lightprimary text-primary text-center p-0.5 max-w-24 xl:max-w-32 mt-1 rounded-2xl font-semibold">On Progress</p>
-                  </div>
-                  <div className="inline-block border-b w-full col-span-2">
-                    <a href="#" className="text-primary font-semibold hover:underline active:text-darkprimary">
-                      Views Order Detail
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1">
-                <div className="hidden tbt:grid tbt:mr-2">
-                  <img className="lg:w-24 uw:w-40" width="90" src={productImg3} alt="menu3" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4">
-                  <div className="mb-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={glassIcon} alt="glass-icon" />
-                      <p>No.Order</p>
-                    </div>
-                    <p className="mt-1 font-bold">#12354-09893</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={calenderIcon} alt="calender-icon" />
-                      <p>Date</p>
-                    </div>
-                    <p className="mt-1 font-bold">23 January 2024</p>
-                  </div>
-                  <div className="mb-4 md:mx-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={totalIcon} alt="total-icon" />
-                      <p>Total</p>
-                    </div>
-                    <p className="mt-1 font-bold">Idr 40.000</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 md:mr-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={statusIcon} alt="status-icon" />
-                      <p>Status</p>
-                    </div>
-                    <p className="bg-lightprimary text-primary text-center p-0.5 max-w-24 xl:max-w-32 mt-1 rounded-2xl font-semibold">On Progress</p>
-                  </div>
-                  <div className="inline-block border-b w-full col-span-2">
-                    <a href="#" className="text-primary font-semibold hover:underline active:text-darkprimary">
-                      Views Order Detail
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1">
-                <div className="hidden tbt:grid tbt:mr-2">
-                  <img className="lg:w-24 uw:w-40" width="90" src={productImg4} alt="menu4" />
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4">
-                  <div className="mb-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={glassIcon} alt="glass-icon" />
-                      <p>No.Order</p>
-                    </div>
-                    <p className="mt-1 font-bold">#12354-09893</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={calenderIcon} alt="calender-icon" />
-                      <p>Date</p>
-                    </div>
-                    <p className="mt-1 font-bold">23 January 2024</p>
-                  </div>
-                  <div className="mb-4 md:mx-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={totalIcon} alt="total-icon" />
-                      <p>Total</p>
-                    </div>
-                    <p className="mt-1 font-bold">Idr 40.000</p>
-                  </div>
-                  <div className="mb-4 ml-6 md:ml-0 md:mr-4 inline-block">
-                    <div className="flex text-lightgray">
-                      <img className="mr-1" width="13" height="13" src={statusIcon} alt="status-icon" />
-                      <p>Status</p>
-                    </div>
-                    <p className="bg-lightprimary text-primary text-center p-0.5 max-w-24 xl:max-w-32 mt-1 rounded-2xl font-semibold">On Progress</p>
-                  </div>
-                  <div className="inline-block border-b w-full col-span-2">
-                    <a href="#" className="text-primary font-semibold hover:underline active:text-darkprimary">
-                      Views Order Detail
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
             <div className="flex justify-center">
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>
               <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">2</button>
