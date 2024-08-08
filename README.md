@@ -13,7 +13,7 @@ Coffee Shop Web adalah website sederhana untuk mengelola coffee shop. Aplikasi i
 
 ## Tentang Proyek
 
-Website Coffee Shop ini dibangun dengan tujuan untuk memudahkan pengguna dalam mengelola usaha coffee shop. Website ini menggunakan html, css, tailwind css, dan react js sebagai pengembang dalam pembuatan.
+Website Coffee Shop ini dibangun dengan tujuan untuk memudahkan pengguna dalam mengelola usaha coffee shop. Pada Frontend, website ini menggunakan HTML, CSS, TailwindCSS, ReactJS. Dan pada Backend, menggunakan NodeJS, ExpressJS, serta database menggunakan PostgreSQL.
 
 ### Fitur
 
@@ -29,10 +29,21 @@ Website Coffee Shop ini dibangun dengan tujuan untuk memudahkan pengguna dalam m
 
 ### Teknologi
 
+#### Frontend
+
 - HTML
 - CSS
-- Tailwind CSS
-- React JS
+- TailwindCSS
+- ReactJS
+
+#### Backend
+
+- NodeJS
+- ExpressJS
+
+#### Database
+
+- PostgreSQL
 
 ### Screenshot
 
