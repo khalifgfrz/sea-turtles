@@ -163,7 +163,7 @@ function Profile() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
-              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form?.phone, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "phone", placeholder: " ", autocomplete: "off", value: form?.phone, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl uw:text-2xl" htmlFor="address">
               Address

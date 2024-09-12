@@ -10,7 +10,7 @@ export interface IAuthState {
 }
 
 const initialState = {
-  token: "",
+  token: null,
   isLoading: false,
   isFulfilled: false,
   isRejected: false,
@@ -42,7 +42,7 @@ const authSlice = createSlice({
       prevState.token = initialState.token;
     },
     logout: (state) => {
-      state.token = null;
+      state.token = "";
     },
   },
   extraReducers: (builder) => {
