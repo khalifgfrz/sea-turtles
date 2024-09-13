@@ -5,4 +5,5 @@ export interface IProfileBody {
   full_name?: string;
   phone?: string;
   address?: string;
+  created_at?: string;
 }

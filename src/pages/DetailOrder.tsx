@@ -16,7 +16,7 @@ function DetailOrder() {
   const { uuid } = useParams<{ uuid: string }>();
   const [getOrder, setOrder] = useState<IOrder[]>([]);
   const { token } = useStoreSelector((state) => state.auth);
-  const { getProducts } = useSelector((state: RootState) => state.product);
+  const { getProducts } = useSelector((state: RootState) => state.checkout);
 
   useEffect(() => {
     const getDetailOrder = async () => {
@@ -53,12 +53,12 @@ function DetailOrder() {
                       <img width="150" height="150" src={product.image} alt="menu1" />
                     </div>
                     <div className="w-3/5 pr-5">
-                      <p className="font-bold mb-3 text-sm md:text-lg uw:text-2xl">{product.product_name}</p>
-                      <p className="text-lightgray mb-3 text-xs md:text-base uw:text-xl">
+                      <p className="font-bold mb-3 text-sm md:text-lg">{product.product_name}</p>
+                      <p className="text-lightgray mb-3 text-xs md:text-base">
                         {product.qty}pcs | {product.size} | {getProducts[0]?.ice ? "Ice" : "Hot"}
                       </p>
                       <div className="flex">
-                        <p className="text-primary text-sm md:text-xl uw:text-2xl">IDR {product.price * product.qty}</p>
+                        <p className="text-primary text-sm md:text-xl">IDR {product.price * product.qty}</p>
                       </div>
                     </div>
                   </div>

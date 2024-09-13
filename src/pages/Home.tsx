@@ -7,6 +7,7 @@ import MenuCard from "../components/MenuCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { IProductBody } from "../types/product";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [getProduct, setProduct] = useState<IProductBody[]>([]);
@@ -32,22 +33,22 @@ function Home() {
         </div>
         <div className="tbt:w-1/2 max-tbt:absolute max-tbt:top-[51%] xxsm:top-[60%] xsm:top-[68%] px-[5%] tbt:pl-[10%] py-12 tbt:pt-28 md:pt-52 lg:pt-80 uw:pt-[25%] tbt:pb-0 bg-black">
           <h1 className="text-2xl lg:text-5xl text-white">Start Your Day with Coffee and Good Meals</h1>
-          <p className="mt-5 text-sm lg:text-lg uw:text-2xl text-white">We provide high quality beans, good taste, and healthy meals made by love just for you. Start your day with us for a bigger smile!</p>
-          <a href="login.html">
-            <button className="mt-4 bg-primary hover:bg-darkprimary active:bg-darkprimary2 px-[5%] py-3 rounded-xl lg:text-lg uw:text-2xl">Get Started</button>
-          </a>
+          <p className="mt-5 text-sm lg:text-lg text-white">We provide high quality beans, good taste, and healthy meals made by love just for you. Start your day with us for a bigger smile!</p>
+          <Link to="/login">
+            <button className="mt-4 bg-primary hover:bg-darkprimary active:bg-darkprimary2 px-[5%] py-3 rounded-xl lg:text-lg">Get Started</button>
+          </Link>
           <div className="flex justify-between mt-5">
             <div className="staff mr-5">
-              <p className="text-primary text-2xl lg:text-4xl uw:text-5xl">90+</p>
-              <p className="text-white text-xs lg:text-sm uw:text-xl">Staff</p>
+              <p className="text-primary text-2xl lg:text-4xl">90+</p>
+              <p className="text-white text-xs lg:text-sm">Staff</p>
             </div>
             <div className="stores border-x border-white px-10 mr-5">
-              <p className="text-primary text-2xl lg:text-4xl uw:text-5xl">30+</p>
-              <p className="text-white text-xs lg:text-sm uw:text-xl">Stores</p>
+              <p className="text-primary text-2xl lg:text-4xl">30+</p>
+              <p className="text-white text-xs lg:text-sm">Stores</p>
             </div>
             <div className="mr-auto">
-              <p className="text-primary text-2xl lg:text-4xl uw:text-5xl">800+</p>
-              <p className="text-white text-xs lg:text-sm uw:text-xl">Customer</p>
+              <p className="text-primary text-2xl lg:text-4xl">800+</p>
+              <p className="text-white text-xs lg:text-sm">Customer</p>
             </div>
           </div>
         </div>
@@ -129,22 +130,22 @@ function Home() {
             “Wow... I am very happy to spend my whole day here. the Wi-fi is good, and the coffee and meals tho. I like it here!! Very recommended!"
           </p>
           <div className="flex text-primary items-center mt-1 md:mt-0" style={{ gridArea: "rating" }}>
-            <div className="mr-1 lg:text-2xl uw:text-4xl" data-value="1">
+            <div className="mr-1 lg:text-2xl" data-value="1">
               &#9733;
             </div>
-            <div className="mr-1 lg:text-2xl uw:text-4xl" data-value="2">
+            <div className="mr-1 lg:text-2xl" data-value="2">
               &#9733;
             </div>
-            <div className="mr-1 lg:text-2xl uw:text-4xl" data-value="3">
+            <div className="mr-1 lg:text-2xl" data-value="3">
               &#9733;
             </div>
-            <div className="mr-1 lg:text-2xl uw:text-4xl" data-value="4">
+            <div className="mr-1 lg:text-2xl" data-value="4">
               &#9733;
             </div>
-            <div className="mr-1 lg:text-2xl uw:text-4xl" data-value="5">
+            <div className="mr-1 lg:text-2xl" data-value="5">
               &#9733;
             </div>
-            <div className="text-white text-sm lg:text-base uw:text-2xl">5.0</div>
+            <div className="text-white text-sm lg:text-base">5.0</div>
           </div>
           <div className="flex mt-2 md:mt-0" style={{ gridArea: "button" }}>
             <button className="left-button mr-2 w-10 h-10 rounded-full bg-white hover:bg-primary active:bg-darkprimary">&#9664;</button>

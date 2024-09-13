@@ -67,7 +67,7 @@ function HistoryOrder() {
           <div className="tbt:w-3/4 md:w-4/5 lg:w-3/4 tbt:mr-5">
             <div className="w-full inline-block md:flex md:flex-row-reverse md:justify-between">
               <div className="inline-block">
-                <button ref={toggleDropdownRef} onClick={handleToggleDropdown} className="bg-darkgray3 text-lightblack2 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base uw:text-xl hover:bg-darkgray2 active:bg-darkgray">
+                <button ref={toggleDropdownRef} onClick={handleToggleDropdown} className="bg-darkgray3 text-lightblack2 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base hover:bg-darkgray2 active:bg-darkgray">
                   <div className="flex px-2 py-1">
                     <img className="mr-1 lg:w-5 uw:w-7" width="15" height="15" src={calenderIcon} alt="calender-icon" />
                     <p className="font-semibold my-auto mr-1">January 2024</p>
@@ -80,26 +80,26 @@ function HistoryOrder() {
                   className={`dropdown-content ${isDropdownVisible ? "show" : ""} absolute w-32 lg:w-40 uw:w-52 bg-darkgray3 border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none`}
                 >
                   <div className="py-1">
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base uw:text-xl text-lightblack2 hover:bg-darkgray2 active:bg-darkgray">
+                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-lightblack2 hover:bg-darkgray2 active:bg-darkgray">
                       February 2024
                     </a>
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base uw:text-xl text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
+                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
                       March 2024
                     </a>
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base uw:text-xl text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
+                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
                       April 2024
                     </a>
                   </div>
                 </div>
               </div>
-              <div className="p-1 font-semibold flex justify-between bg-darkgray3 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base uw:text-xl mt-2 md:mt-0">
+              <div className="p-1 font-semibold flex justify-between bg-darkgray3 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base mt-2 md:mt-0">
                 <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">On Progress</button>
                 <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">Sending Goods</button>
                 <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">Finish Order</button>
               </div>
             </div>
             {getHistory.map((history) => (
-              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1 mt-3 text-xs lg:text-base uw:text-xl">
+              <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1 mt-3 text-xs lg:text-base">
                 <div className="grid grid-cols-2 md:grid-cols-4">
                   <div className="mb-4 inline-block">
                     <div className="flex text-lightgray">
@@ -147,9 +147,9 @@ function HistoryOrder() {
           </div>
           <div className="border border-darkgray2 px-5 py-3 mt-4 tbt:mt-0 tbt:w-1/2 tbt:h-1/2">
             <img className="uw:w-14" width="35" height="35" src={messageIcon} alt="message-icon" />
-            <h2 className="mt-2 font-bold uw:text-2xl">Send Us Message</h2>
-            <p className="text-lightgray text-sm uw:text-2xl mt-1">if your unable to find answer or find your product quickly, please describe your problem and tell us. we will give you solution.</p>
-            <button className="text-sm uw:text-2xl w-full h-9 uw:h-14 bg-primary font-semibold rounded mt-2 hover:bg-darkprimary2 active:bg-darkprimary focus:bg-darkprimary2">Send Message</button>
+            <h2 className="mt-2 font-bold">Send Us Message</h2>
+            <p className="text-lightgray text-sm mt-1">if your unable to find answer or find your product quickly, please describe your problem and tell us. we will give you solution.</p>
+            <button className="text-sm w-full h-9 uw:h-14 bg-primary font-semibold rounded mt-2 hover:bg-darkprimary2 active:bg-darkprimary focus:bg-darkprimary2">Send Message</button>
           </div>
         </div>
       </section>

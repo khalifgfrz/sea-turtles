@@ -1,54 +1,114 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { RootState } from "../store";
+import { IProductBody } from "../../types/product";
 
-type product = {
-  getProducts: IDetailProduct[];
-  orderTotal: number;
-};
-
-export interface IDetailProduct {
-  uuid?: string;
-  product_id?: number;
-  count: number;
-  size?: number;
-  // delivery?: number;
-  // payment?: number;
-  ice?: boolean;
-  image?: string;
-  product_name?: string;
-  price: number;
+interface IFilters {
+  category: string;
+  sortBy: string;
+  product_name: string;
+  min_price: string;
+  max_price: string;
 }
 
-const initialState: product = {
-  getProducts: [],
-  orderTotal: 0,
+interface IPagination {
+  page: string;
+  totalPages: number;
+}
+
+export interface IProductState {
+  products: IProductBody[];
+  loading: boolean;
+  error: string | null;
+  filters: IFilters;
+  pagination: IPagination;
+  minPrice: number;
+  maxPrice: number;
+}
+
+const initialState: IProductState = {
+  products: [],
+  loading: false,
+  error: null,
+  filters: {
+    product_name: "",
+    category: "",
+    sortBy: "",
+    min_price: "",
+    max_price: "",
+  },
+  pagination: {
+    page: "1",
+    totalPages: 1,
+  },
+  minPrice: 0,
+  maxPrice: 100000,
 };
+
+export const productsThunk = createAsyncThunk<IProductBody[], void, { state: RootState }>("product/fetchProducts", async (_, { getState }) => {
+  const state = getState();
+  const { filters, pagination } = state.product;
+  const { product_name, category, sortBy, min_price, max_price } = filters;
+  const { page } = pagination;
+
+  const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
+  const result = await axios.get(url, {
+    params: { product_name, category, sortBy, min_price, max_price, page },
+  });
+  return result.data.data;
+});
 
 const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setProducts: (state, action: PayloadAction<IDetailProduct>) => {
-      const existingProduct = state.getProducts.find(
-        (product: { uuid?: string; size?: number; delivery?: number; payment?: number; ice?: boolean }) => product.uuid === action.payload.uuid && product.size === action.payload.size && product.ice === action.payload.ice
-      );
-      if (existingProduct) {
-        existingProduct.count += 1;
-      } else {
-        state.getProducts.push(action.payload);
-      }
-      state.orderTotal = state.getProducts.reduce((total, product) => total + product.price * product.count, 0);
+    setFilters: (state, action: PayloadAction<Partial<IFilters>>) => {
+      state.filters = { ...state.filters, ...action.payload };
     },
-    deleteProducts: (state, action: PayloadAction<number>) => {
-      state.getProducts = state.getProducts.filter((_, index) => index !== action.payload);
-      state.orderTotal = state.getProducts.reduce((total, product) => total + product.price * product.count, 0);
+    resetFilters: (state) => {
+      state.filters = {
+        product_name: "",
+        category: "",
+        sortBy: "",
+        min_price: "",
+        max_price: "",
+      };
+      state.minPrice = 0;
+      state.maxPrice = 100000;
+      state.pagination = { page: "1", totalPages: 1 };
     },
-    deleteAllProducts: (state) => {
-      state.getProducts = [];
-      state.orderTotal = 0;
+    setPagination: (state, action: PayloadAction<Partial<IPagination>>) => {
+      state.pagination = { ...state.pagination, ...action.payload };
     },
+    setMinPrice: (state, action: PayloadAction<number>) => {
+      state.minPrice = action.payload;
+      state.filters.min_price = action.payload.toString();
+    },
+    setMaxPrice: (state, action: PayloadAction<number>) => {
+      state.maxPrice = action.payload;
+      state.filters.max_price = action.payload.toString();
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(productsThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productsThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(productsThunk.rejected, (state) => {
+        state.loading = false;
+        state.error = "Something went wrong";
+      });
   },
 });
 
-export const { deleteProducts, setProducts, deleteAllProducts } = productSlice.actions;
-export type ProductState = ReturnType<typeof productSlice.reducer>;
+export const { setFilters, resetFilters, setPagination, setMinPrice, setMaxPrice } = productSlice.actions;
+export const productAction = {
+  ...productSlice.actions,
+  productsThunk,
+};
 export default productSlice.reducer;

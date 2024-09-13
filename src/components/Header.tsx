@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/images/navbar-logo.webp";
-// import useAuth from "../components/UseAuth";
 import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
 import { authAction } from "../redux/slices/auth";
 import { RootState } from "../redux/store";
@@ -18,9 +17,9 @@ function Header() {
   const { logout } = authAction;
   const navigate = useNavigate();
   const dispatch = useStoreDispatch();
-  const { getProducts } = useStoreSelector((state: RootState) => state.product);
+  const { getProducts } = useStoreSelector((state: RootState) => state.checkout);
 
-  const cartItemCount = getProducts.reduce((total, product) => total + product.count, 0);
+  const cartItemCount = getProducts.reduce((total, checkout) => total + checkout.count, 0);
 
   const toggleNavbar = () => {
     setIsActive((prev) => !prev);
@@ -62,7 +61,7 @@ function Header() {
               <img width="90" height="22.5" className="tbt:w-44" src={logo} alt="navbar-logo" />
             </Link>
           </div>
-          <div className="hidden md:flex uw:text-xl">
+          <div className="hidden md:flex">
             <Link to="/" className="mr-16 text-sm text-white after:block after:border-b after:border-solid after:border-primary after:scale-x-0 after:duration-200 after:ease-linear hover:after:scale-x-100 active:text-darkwhite">
               Home
             </Link>
@@ -79,7 +78,7 @@ function Header() {
             {cartItemCount > 0 && <sup className="text-white absolute top-0 left-6 text-[0.7rem]">{cartItemCount}</sup>}
             <ShoppingCart className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
-          <div className="hidden md:flex uw:text-xl">
+          <div className="hidden md:flex">
             {token ? (
               <>
                 <Link to="/profile">
@@ -143,14 +142,14 @@ function Header() {
       </nav>
       {showModal && (
         <div className="show fixed z-50 inset-0 bg-black bg-opacity-50 modal-bg justify-center items-center">
-          <div className="bg-white p-6 rounded shadow-lg max-w-md uw:max-w-2xl w-3/4 tbt:w-full text-center">
-            <h2 className="text-sm tbt:text-2xl uw:text-4xl font-semibold mb-4">Confirm Log Out</h2>
-            <p className="text-xs xsm:text-sm tbt:text-base uw:text-2xl mb-6">Are you sure you want to log out?</p>
+          <div className="bg-white p-6 rounded shadow-lg max-w-md w-3/4 tbt:w-full text-center">
+            <h2 className="text-sm tbt:text-2xl font-semibold mb-4">Confirm Log Out</h2>
+            <p className="text-xs xsm:text-sm tbt:text-base mb-6">Are you sure you want to log out?</p>
             <div className="flex justify-center">
-              <button onClick={handleConfirmLogout} className="text-xs tbt:text-base uw:text-2xl bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-4 py-2 rounded mr-2">
+              <button onClick={handleConfirmLogout} className="text-xs tbt:text-base bg-red-500 hover:bg-red-600 active:bg-red-700 text-white px-4 py-2 rounded mr-2">
                 Log Out
               </button>
-              <button onClick={handleCloseModal} className="text-xs tbt:text-base uw:text-2xl bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-4 py-2 rounded">
+              <button onClick={handleCloseModal} className="text-xs tbt:text-base bg-gray-500 hover:bg-gray-600 active:bg-gray-700 text-white px-4 py-2 rounded">
                 Cancel
               </button>
             </div>

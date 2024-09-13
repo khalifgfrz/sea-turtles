@@ -7,7 +7,7 @@ import productImg1 from "../assets/images/menu/1.webp";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import thumbsIcon from "../assets/images/thumbs-icon.svg";
 import { useStoreDispatch } from "../redux/hooks";
-import { setProducts, IDetailProduct } from "../redux/slices/product";
+import { setCheckouts, IDetailProduct } from "../redux/slices/checkout";
 import ProductDetailCard from "../components/ProductDetailCard";
 import { IProductBody } from "../types/product";
 import Swal from "sweetalert2";
@@ -81,7 +81,7 @@ function DetailProduct() {
       },
       toast: true,
     });
-    dispatch(setProducts(defaultProduct));
+    dispatch(setCheckouts(defaultProduct));
     if (isNavigate) {
       navigate("/checkout");
     }
@@ -116,75 +116,75 @@ function DetailProduct() {
             </div>
             <div className="tbt:w-1/2 lg:w-2/3 xl:w-3/4 mt-4 tbt:mt-0">
               <p className="hidden">{getProduct?.id}</p>
-              <p className="font-bold mb-1 md:text-lg uw:text-4xl">{getProduct?.product_name || "Product Name"}</p>
+              <p className="font-bold mb-1 md:text-lg">{getProduct?.product_name || "Product Name"}</p>
               <div className="flex items-center">
-                <p className="text-primary md:text-xl uw:text-4xl">IDR {getProduct?.price || 0}</p>
+                <p className="text-primary md:text-xl">IDR {getProduct?.price || 0}</p>
               </div>
               <div className="flex text-primary items-center mt-1">
-                <div className="mr-2 uw:text-4xl" data-value="1">
+                <div className="mr-2" data-value="1">
                   &#9733;
                 </div>
-                <div className="mr-2 uw:text-4xl" data-value="2">
+                <div className="mr-2" data-value="2">
                   &#9733;
                 </div>
-                <div className="mr-2 uw:text-4xl" data-value="3">
+                <div className="mr-2" data-value="3">
                   &#9733;
                 </div>
-                <div className="mr-2 uw:text-4xl" data-value="4">
+                <div className="mr-2" data-value="4">
                   &#9733;
                 </div>
-                <div className="mr-2 uw:text-4xl" data-value="5">
+                <div className="mr-2" data-value="5">
                   &#9733;
                 </div>
-                <div className="text-lightgray text-sm uw:text-2xl">5.0</div>
+                <div className="text-lightgray text-sm">5.0</div>
               </div>
               <div className="flex text-lightgray items-center my-1">
-                <p className="text-xs lg:text-sm uw:text-2xl mr-2">200+ Review | Recommendation</p>
+                <p className="text-xs lg:text-sm mr-2">200+ Review | Recommendation</p>
                 <img className="uw:w-10 uw:h-10" width="20" height="20" src={thumbsIcon} alt="thumbs-icon" />
               </div>
-              <p className="text-xs lg:text-sm uw:text-2xl text-lightgray mb-1">{getProduct?.description || "description"}</p>
+              <p className="text-xs lg:text-sm text-lightgray mb-1">{getProduct?.description || "description"}</p>
               <div className="grid grid-cols-3 border border-darkgray2 rounded max-w-24 uw:max-w-32 mt-2">
-                <button onClick={handleDecrement} className="uw:text-xl border border-primary mr-2 rounded w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
+                <button onClick={handleDecrement} className=" border border-primary mr-2 rounded w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
                   -
                 </button>
-                <div className="flex justify-center items-center font-bold uw:text-xl">
+                <div className="flex justify-center items-center font-bold ">
                   <p>{count}</p>
                 </div>
-                <button onClick={handleIncrement} className="uw:text-xl uw:ml-2 border rounded border-primary w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
+                <button onClick={handleIncrement} className="uw:ml-2 border rounded border-primary w-8 text-lightblack2 font-bold text-lg hover:bg-primary active:bg-darkprimary">
                   +
                 </button>
               </div>
-              <p className="mt-3 font-bold text-sm uw:text-xl">Choose Size</p>
+              <p className="mt-3 font-bold text-sm ">Choose Size</p>
               <div className="flex justify-between mt-3">
                 <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base  active:bg-darkgray focus:border-primary focus:text-black"
                   onClick={() => handleSizeChange(1)}
                 >
                   Regular
                 </button>
                 <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base  active:bg-darkgray focus:border-primary focus:text-black"
                   onClick={() => handleSizeChange(2)}
                 >
                   Medium
                 </button>
                 <button
-                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  className="w-1/4 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-[0.7rem] tbt:text-xs md:text-sm lg:text-base  active:bg-darkgray focus:border-primary focus:text-black"
                   onClick={() => handleSizeChange(3)}
                 >
                   Large
                 </button>
               </div>
-              <p className="mt-3 font-bold text-sm uw:text-xl">Hot/Ice?</p>
+              <p className="mt-3 font-bold text-sm ">Hot/Ice?</p>
               <div className="flex justify-between mt-3">
                 <button
-                  className="w-1/2 mr-4 uw:mr-32 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  className="w-1/2 mr-4 uw:mr-32 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-xs md:text-sm lg:text-base  active:bg-darkgray focus:border-primary focus:text-black"
                   onClick={() => handleIceChange(true)}
                 >
                   Ice
                 </button>
                 <button
-                  className="w-1/2 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-xs md:text-sm lg:text-base uw:text-xl active:bg-darkgray focus:border-primary focus:text-black"
+                  className="w-1/2 h-8 border border-solid border-darkwhite text-lightgray hover:border-primary text-xs md:text-sm lg:text-base  active:bg-darkgray focus:border-primary focus:text-black"
                   onClick={() => handleIceChange(false)}
                 >
                   Hot
@@ -192,7 +192,7 @@ function DetailProduct() {
               </div>
               <div className="block tbt:flex mt-3 md:mt-8 uw:mt-10">
                 <button
-                  className="w-full tbt:w-1/2 h-8 uw:h-12 tbt:mr-5 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs md:text-sm lg:text-base uw:text-xl"
+                  className="w-full tbt:w-1/2 h-8 uw:h-12 tbt:mr-5 bg-primary font-semibold rounded hover:bg-darkprimary2 active:bg-darkprimary text-xs md:text-sm lg:text-base "
                   onClick={() => {
                     checkoutProduct(true);
                   }}
@@ -200,7 +200,7 @@ function DetailProduct() {
                   Buy
                 </button>
                 <button
-                  className="mt-3 tbt:mt-0 w-full tbt:w-1/2 h-8 uw:h-12 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs md:text-sm lg:text-base uw:text-xl"
+                  className="mt-3 tbt:mt-0 w-full tbt:w-1/2 h-8 uw:h-12 border border-solid border-primary text-primary rounded hover:bg-darkwhite2 active:bg-darkwhite text-xs md:text-sm lg:text-base "
                   onClick={() => {
                     checkoutProduct(false);
                   }}
@@ -214,7 +214,7 @@ function DetailProduct() {
             </div>
           </div>
           <div className="block">
-            <p className="mt-4 text-center font-semibold text-lg tbt:text-xl uw:text-4xl text-lightblack2">
+            <p className="mt-4 text-center font-semibold text-lg tbt:text-xl text-lightblack2">
               Recommendation <span className="text-span">For You</span>
             </p>
             <div>
