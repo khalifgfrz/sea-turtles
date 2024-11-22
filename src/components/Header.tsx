@@ -25,6 +25,10 @@ function Header() {
     setIsActive((prev) => !prev);
   };
 
+  const closeNavbar = () => {
+    setIsActive(false);
+  };
+
   const handleClickOutside = (event: MouseEvent) => {
     if (hamburgerRef.current && !hamburgerRef.current.contains(event.target as Node) && navbarNavRef.current && !navbarNavRef.current.contains(event.target as Node)) {
       setIsActive(false);
@@ -57,7 +61,7 @@ function Header() {
       <nav className="flex justify-between items-center bg-black fixed py-[2%] tbt:py-[0.5%] px-[5%] tbt:px-[10%] top-0 left-0 right-0 z-50">
         <div className="flex items-center">
           <div className="mr-16">
-            <Link to="#">
+            <Link to="/" onClick={closeNavbar}>
               <img width="90" height="22.5" className="tbt:w-44" src={logo} alt="navbar-logo" />
             </Link>
           </div>
@@ -109,18 +113,18 @@ function Header() {
             <Menu className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
           </Link>
           <div className={`navbar-nav-detail ${isActive ? "active" : ""} absolute top-full bg-white w-full h-screen duration-300`} ref={navbarNavRef}>
-            <Link to="/index" className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
+            <Link to="/" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Home
             </Link>
-            <Link to="/product" className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
+            <Link to="/product" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Product
             </Link>
-            <Link to="#" className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
+            <Link to="#" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Search
             </Link>
             {token ? (
               <>
-                <Link to="/profile" className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
+                <Link to="/profile" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
                   Profile
                 </Link>
                 <button onClick={handleLogout} className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
@@ -129,10 +133,10 @@ function Header() {
               </>
             ) : (
               <>
-                <Link to="/login" className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
+                <Link to="/login" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
                   Sign In
                 </Link>
-                <Link to="/register" className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
+                <Link to="/register" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left hover:after:scale-x-0">
                   Sign Up
                 </Link>
               </>

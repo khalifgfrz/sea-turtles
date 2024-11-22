@@ -12,35 +12,40 @@ import nameIcon from "../assets/images/form-icon.svg";
 import addressIcon from "../assets/images/address-icon.svg";
 import emailIcon from "../assets/images/email-icon.svg";
 import profileImg from "../assets/images/profile-img.webp";
-import { IProfileBody } from "../types/profile";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { getUserThunk } from "../redux/slices/getUser";
 
 function Profile() {
-  const [form, setForm] = useState<IProfileBody>();
+  const dispatch = useDispatch<AppDispatch>();
+  const { profile } = useSelector((state: RootState) => state.getUser);
   const { token } = useStoreSelector((state) => state.auth);
-  const [getProfile, setProfile] = useState<IProfileBody[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [changeImage, setImage] = useState<File | null>(null);
-  const formattedDate = moment(getProfile[0]?.created_at).format("D MMMM YYYY");
+  const formattedDate = moment(profile?.created_at).format("D MMMM YYYY");
+  const [form, setForm] = useState({
+    full_name: profile?.full_name || "",
+    email: profile?.email || "",
+    phone: profile?.phone || "",
+    address: profile?.address || "",
+  });
 
   useEffect(() => {
-    const getDataUser = async () => {
-      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user`;
-      try {
-        const result = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfile(result.data.data);
-        setForm(result.data.data[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDataUser();
-  }, [token]);
+    dispatch(getUserThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (profile) {
+      setForm({
+        full_name: profile.full_name || "",
+        email: profile.email || "",
+        phone: profile.phone || "",
+        address: profile.address || "",
+      });
+    }
+  }, [profile]);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((form) => {
@@ -118,13 +123,13 @@ function Profile() {
       <section className="block tbt:flex">
         <div className="border border-solid border-darkgray2 p-2 tbt:h-1/2 tbt:mr-4 tbt:w-1/2 md:w-2/5 lg:w-1/4 2xl:w-1/5">
           <div>
-            <p className="text-center text-sm">{getProfile[0]?.full_name || "fullname"}</p>
-            <p className="text-center text-sm mb-2">{getProfile[0]?.email || "email"}</p>
+            <p className="text-center text-sm">{profile?.full_name || "fullname"}</p>
+            <p className="text-center text-sm mb-2">{profile?.email || "email"}</p>
             <div className="grid place-items-center mb-2 w-full h-25">
               {changeImage ? (
                 <img className="rounded-full" width="100" height="100" src={URL.createObjectURL(changeImage)} alt="profile" />
               ) : (
-                <img className="rounded-full" width="100" height="100" src={getProfile[0]?.image || profileImg} alt="profile" />
+                <img className="rounded-full" width="100" height="100" src={profile?.image || profileImg} alt="profile" />
               )}
             </div>
           </div>
@@ -150,14 +155,14 @@ function Profile() {
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form?.email }} />
+              <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form?.email, readOnly: true }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl" htmlFor="phone">
               Phone
             </label>
             <div className="relative mt-2">
               <img className="absolute mt-4 ml-5" width="20" height="20" src={phoneIcon} alt="phone-icon" />
-              <Input input={{ type: "text", name: "phone", placeholder: " ", autocomplete: "off", value: form?.phone, onChange: onChangeHandler }} />
+              <Input input={{ type: "text", name: "phone", placeholder: "Enter Your Phone", autocomplete: "off", value: form?.phone, onChange: onChangeHandler }} />
             </div>
             <label className="text-lightblack2 font-semibold md:text-xl" htmlFor="address">
               Address

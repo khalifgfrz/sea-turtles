@@ -7,16 +7,17 @@ import bcaIcon from "../assets/images/bca-logo.svg";
 import gopayIcon from "../assets/images/gopay-logo.svg";
 import ovoIcon from "../assets/images/ovo-logo.svg";
 import paypalIcon from "../assets/images/paypal-logo.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
 import { deleteAllCheckouts, deleteCheckouts } from "../redux/slices/checkout";
 import axios from "axios";
-import { IProfileBody } from "../types/profile";
 import Input from "../components/Input";
 import CheckoutWarning from "../components/CheckoutWarning";
+import { getUserThunk } from "../redux/slices/getUser";
+import Swal from "sweetalert2";
 
 function Checkout() {
   const navigate = useNavigate();
@@ -27,38 +28,52 @@ function Checkout() {
   const dispatch = useStoreDispatch();
   const { getProducts } = useSelector((state: RootState) => state.checkout);
   const { token } = useStoreSelector((state) => state.auth);
-  const [getProfile, setProfile] = useState<IProfileBody[]>([]);
-  const [form, setForm] = useState<{ full_name?: string; email?: string; address?: string }>({ full_name: "", email: "", address: "" });
+  const { profile } = useSelector((state: RootState) => state.getUser);
   const [delivery, setDelivery] = useState<number>(0);
   const [payment, setPayment] = useState<number>(0);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const subTotal = orderTotal + taxTotal + deliveryCharge;
+  const [form, setForm] = useState({
+    full_name: profile?.full_name || "",
+    email: profile?.email || "",
+    phone: profile?.phone || "",
+    address: profile?.address || "",
+  });
 
   useEffect(() => {
-    const getDataUser = async () => {
-      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user`;
-      try {
-        const result = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setProfile(result.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDataUser();
-  }, [token]);
+    dispatch(getUserThunk());
+  }, [dispatch]);
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((form) => {
-      return {
-        ...form,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
+  useEffect(() => {
+    if (profile) {
+      setForm({
+        full_name: profile.full_name || "",
+        email: profile.email || "",
+        phone: profile.phone || "",
+        address: profile.address || "",
+      });
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    if (!form.full_name || !form.email || !form.address) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please update your profile.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000,
+        position: "top-end",
+        background: "#0B0909",
+        color: "#fff",
+        customClass: {
+          popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+        },
+        toast: true,
+      });
+      navigate("/profile");
+    }
+  }, [form, navigate]);
 
   const handleDeliveryChange = (delivery: number) => {
     setDelivery(delivery);
@@ -98,7 +113,7 @@ function Checkout() {
       const result = await axios.post(
         url,
         {
-          user_id: getProfile[0]?.id,
+          user_id: profile?.id,
           subtotal: orderTotal,
           tax: taxTotal,
           payment_id: payment,
@@ -120,8 +135,38 @@ function Checkout() {
       navigate(`/order/${orderUuid}`);
       setIsModalCheckoutVisible(false);
       dispatch(deleteAllCheckouts());
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        Swal.fire({
+          title: "Error!",
+          text: error.response?.data?.err || "An unexpected error occurred.",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2000,
+          position: "top-end",
+          background: "#0B0909",
+          color: "#fff",
+          customClass: {
+            popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+          },
+          toast: true,
+        });
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "An unexpected error occurred.",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2000,
+          position: "top-end",
+          background: "#0B0909",
+          color: "#fff",
+          customClass: {
+            popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+          },
+          toast: true,
+        });
+      }
     }
   };
 
@@ -129,10 +174,6 @@ function Checkout() {
     if (event.target === checkoutModalBgRef.current) {
       setIsModalCheckoutVisible(false);
     }
-  };
-
-  const handleAddMenuClick = () => {
-    navigate(`/product`);
   };
 
   return (
@@ -143,12 +184,14 @@ function Checkout() {
           <div className="tbt:w-1/2 tbt:mr-5">
             <div className="flex justify-between items-center">
               <h2 className="font-semibold md:text-2xl">Your Order</h2>
-              <button onClick={() => handleAddMenuClick()} className="bg-primary rounded w-20 h-8 md:w-24 md:h-11 uw:w-32 uw:h-12 hover:bg-darkprimary2 active:bg-darkprimary">
-                <div className="flex justify-center items-center">
-                  <p className="text-xl md:text-2xl mr-2">+</p>
-                  <p className="text-xs md:text-sm">Add Menu</p>
-                </div>
-              </button>
+              <Link to="/product">
+                <button className="bg-primary rounded w-20 h-8 md:w-24 md:h-11 uw:w-32 uw:h-12 hover:bg-darkprimary2 active:bg-darkprimary">
+                  <div className="flex justify-center items-center">
+                    <p className="text-xl md:text-2xl mr-2">+</p>
+                    <p className="text-xs md:text-sm">Add Menu</p>
+                  </div>
+                </button>
+              </Link>
             </div>
             <div>
               {getProducts.length === 0 ? (
@@ -187,21 +230,21 @@ function Checkout() {
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={emailIcon} alt="email-icon" />
-                  <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: getProfile[0]?.email || form.email, onChange: onChangeHandler }} />
+                  <Input input={{ type: "text", name: "email", placeholder: "Enter your email", autocomplete: "email", value: form?.email, readOnly: true }} />
                 </div>
                 <label className="text-lightblack2 font-semibold md:text-xl" htmlFor="full_name">
                   Full Name
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={nameIcon} alt="name-icon" />
-                  <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: getProfile[0]?.full_name || form.full_name, onChange: onChangeHandler }} />
+                  <Input input={{ type: "text", name: "full_name", placeholder: "Enter Your Full Name", autocomplete: "name", value: form?.full_name, readOnly: true }} />
                 </div>
                 <label className="text-lightblack2 font-semibold md:text-xl" htmlFor="address">
                   Address
                 </label>
                 <div className="relative mt-2">
                   <img className="absolute mt-4 ml-5" width="20" height="20" src={addressIcon} alt="address-icon" />
-                  <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: getProfile[0]?.address || form.address, onChange: onChangeHandler }} />
+                  <Input input={{ type: "text", name: "address", placeholder: "Enter Your Address", autocomplete: "off", value: form?.address, readOnly: true }} />
                 </div>
               </form>
             </div>

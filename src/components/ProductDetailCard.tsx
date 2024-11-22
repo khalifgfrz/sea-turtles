@@ -1,26 +1,28 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MenuCard from "./MenuCard";
-import { IProductBody } from "../types/product";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { productsThunk } from "../redux/slices/product";
 
 function ProductDetailCard() {
-  const [getProduct, setProduct] = useState<IProductBody[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { products, loading, error } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
-    const getDataProduct = async () => {
-      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
-      try {
-        const result = await axios.get(url);
-        setProduct(result.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDataProduct();
-  }, []);
+    dispatch(productsThunk());
+  }, [dispatch]);
+
   return (
-    <div className="block md:grid md:grid-cols-4 justify-center">
-      <MenuCard products={getProduct} />
+    <div className="flex justify-center">
+      {loading ? (
+        <p className="text-center">Loading...</p>
+      ) : error ? (
+        <p className="text-center">{error}</p>
+      ) : (
+        <div className="block w-1/2 md:w-full md:grid md:grid-cols-4 justify-center place-items-center">
+          <MenuCard products={products} />
+        </div>
+      )}
     </div>
   );
 }

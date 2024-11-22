@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IAuthResponse } from "../types/response";
 import Input from "../components/Input";
+import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
+import { registerAction } from "../redux/slices/register";
 
 import headerLogo from "../assets/images/header-logo.webp";
 import nameIcon from "../assets/images/form-icon.svg";
@@ -14,6 +14,9 @@ import eyeIcon from "../assets/images/eye-icon.svg";
 import eyeOffIcon from "../assets/images/eye-off-icon.svg";
 
 function Register() {
+  const { isLoading, isRegisterSuccess } = useStoreSelector((state) => state.register);
+  const dispatch = useStoreDispatch();
+  const { registerThunk } = registerAction;
   const [form, setForm] = useState<{ full_name: string; email: string; pwd: string }>({ full_name: "", email: "", pwd: "" });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,15 +42,12 @@ function Register() {
       return setErrorMessage("Password harus sama");
     }
     setErrorMessage("");
-    const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user/register`;
-    axios
-      .post(url, form)
-      .then((result: AxiosResponse<IAuthResponse>) => {
-        console.log(result.data);
-        navigate("/login");
-      })
-      .catch((err) => console.error(err));
+    dispatch(registerThunk(form));
   };
+
+  useEffect(() => {
+    if (isRegisterSuccess) navigate("/login");
+  }, [navigate, isRegisterSuccess]);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -95,7 +95,7 @@ function Register() {
             </div>
             {errorMessage && <p className="text-red-500 text-sm mb-3">{errorMessage}</p>}
             <button className="text-lightblack text-lg bg-primary hover:bg-darkprimary active:bg-darkprimary2 rounded-lg w-full h-11" type="submit">
-              Register
+              {isLoading ? "loading..." : "Register"}
             </button>
             <p className="text-center text-lightgray text-sm my-5">
               Have An Account?

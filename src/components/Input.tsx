@@ -8,6 +8,7 @@ type InputProps = {
     placeholder?: string;
     autocomplete?: string;
     value?: string;
+    readOnly?: boolean;
   };
   isToggler?: boolean;
   onTogglerHandler?: (e: React.MouseEvent) => void;
@@ -26,6 +27,7 @@ function Input(props: InputProps) {
       placeholder={input.placeholder}
       autoComplete={input.autocomplete}
       onChange={input.onChange}
+      readOnly={input.readOnly}
     />
   );
 }

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { IAuthResponse } from "../../types/response";
+import Swal from "sweetalert2";
 
 export interface IAuthState {
   token: string | null;
@@ -22,7 +23,23 @@ const loginThunk = createAsyncThunk<string, { email: string; pwd: string }, { re
     const result: AxiosResponse<IAuthResponse> = await axios.post(url, form);
     return result.data.data[0].token;
   } catch (error) {
-    if (error instanceof AxiosError) return rejectWithValue({ error: error.response?.data, status: error.status });
+    if (error instanceof AxiosError) {
+      Swal.fire({
+        title: "Error!",
+        text: error.response?.data?.err || "An error occurred during login.",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 2000,
+        position: "top-end",
+        background: "#0B0909",
+        color: "#fff",
+        customClass: {
+          popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+        },
+        toast: true,
+      });
+      return rejectWithValue({ error: error.response?.data, status: error.status });
+    }
     return String(error);
   }
 });

@@ -25,16 +25,16 @@ function Product() {
         <h1 className="text-2xl mt-5">
           Our <span className="text-span">Product</span>
         </h1>
-        <div className="flex md:mt-8">
+        <div className="flex justify-center md:mt-8">
           <Filter />
-          <div className="block justify-center items-center w-full">
+          <div className="w-1/2 md:w-full">
             <div className="flex justify-center">
               {loading ? (
                 <p className="text-center">Loading...</p>
               ) : error ? (
                 <p className="text-center">{error}</p>
               ) : (
-                <div className="block md:grid md:grid-cols-2 justify-center">
+                <div className="md:grid md:grid-cols-2 justify-center">
                   <MenuCard products={products} />
                 </div>
               )}

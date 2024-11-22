@@ -62,7 +62,7 @@ function MenuCard({ products }: { products: IProductBody[] }) {
   return (
     <>
       {products.map((product) => (
-        <div key={product.uuid} className="font-jakarta block mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
+        <div key={product.uuid} className="font-jakarta block md:mr-2 md:relative md:max-w-44 lg:max-w-64 2xl:max-w-[22rem] md:mb-44">
           <img className=" md:mb-0 mt-4 w-full cursor-pointer" onClick={() => handleComponentClick(product.uuid)} src={product.image || productImg1} alt={product.product_name} />
           <div className="md:absolute md:p-2 md:max-w-36 lg:max-w-52 2xl:max-w-72 md:bottom-[-10rem] left-0 right-0 ms-auto me-auto md:bg-white cursor-pointer">
             <p className="font-bold mb-1 text-sm md:text-base lg:text-lg">{product.product_name || "Product Name"}</p>

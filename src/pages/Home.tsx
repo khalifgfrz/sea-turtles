@@ -4,26 +4,19 @@ import visitImg from "../assets/images/visit-img.webp";
 import testimonialImg from "../assets/images/testimonial-img.webp";
 import checklistLogo from "../assets/images/checklist-logo.svg";
 import MenuCard from "../components/MenuCard";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { IProductBody } from "../types/product";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { productsThunk } from "../redux/slices/product";
 
 function Home() {
-  const [getProduct, setProduct] = useState<IProductBody[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { products, loading, error } = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
-    const getDataProduct = async () => {
-      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/product`;
-      try {
-        const result = await axios.get(url);
-        setProduct(result.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDataProduct();
-  }, []);
+    dispatch(productsThunk());
+  }, [dispatch]);
 
   return (
     <main className="font-jakarta">
@@ -93,10 +86,16 @@ function Home() {
           </div>
           <p className="mt-2 text-sm lg:text-base text-lightgray">Let's choose and have a bit taste of poeple's favorite. It might be yours too!</p>
         </div>
-        <div>
-          <div className="block md:grid md:grid-cols-4 justify-center">
-            <MenuCard products={getProduct} />
-          </div>
+        <div className="flex justify-center">
+          {loading ? (
+            <p className="text-center">Loading...</p>
+          ) : error ? (
+            <p className="text-center">{error}</p>
+          ) : (
+            <div className="block w-1/2 md:w-full md:grid md:grid-cols-4 justify-center place-items-center">
+              <MenuCard products={products} />
+            </div>
+          )}
         </div>
       </section>
       <section className="my-5 uw:mt-60 px-[5%] tbt:px-[10%]">
