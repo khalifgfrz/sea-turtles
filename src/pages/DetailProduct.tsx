@@ -34,7 +34,6 @@ function DetailProduct() {
       try {
         const result = await axios.get(`${url}/${uuid}`);
         setProduct(result.data.data[0]);
-        console.log(result.data.data[0]);
         setDefaultProduct((prevProduct) => ({
           ...prevProduct,
           product_id: result.data.data[0].id,
