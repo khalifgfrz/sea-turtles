@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, Search, ShoppingCart } from "react-feather";
+import { Menu, ShoppingCart } from "react-feather";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -72,12 +72,12 @@ function Header() {
             <Link to="/product" className="mr-16 text-sm text-white after:block after:border-b after:border-solid after:border-primary after:scale-x-0 after:duration-200 after:ease-linear hover:after:scale-x-100 active:text-darkwhite">
               Product
             </Link>
+            <Link to="/history" className="mr-16 text-sm text-white after:block after:border-b after:border-solid after:border-primary after:scale-x-0 after:duration-200 after:ease-linear hover:after:scale-x-100 active:text-darkwhite">
+              History
+            </Link>
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <Link to="#" className="hidden md:flex md:mr-6" aria-label="Read more about search" id="search">
-            <Search className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
-          </Link>
           <Link to="/checkout" className="mr-6 relative" aria-label="Read more about card" id="shopping-cart">
             {cartItemCount > 0 && <sup className="text-white absolute top-0 left-6 text-[0.7rem]">{cartItemCount}</sup>}
             <ShoppingCart className="text-center w-5 h-5 text-white  hover:text-primary active:text-darkprimary focus:text-primary" />
@@ -118,9 +118,6 @@ function Header() {
             </Link>
             <Link to="/product" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
               Product
-            </Link>
-            <Link to="#" onClick={closeNavbar} className="block text-black m-5 p-5 after:origin-top-left active:bg-darkgray">
-              Search
             </Link>
             {token ? (
               <>

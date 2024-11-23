@@ -50,7 +50,7 @@ function Filter() {
       </div>
       <div className="text-sm">
         <h2 className="mb-4">Category</h2>
-        {["Favorite Product", "Coffee", "Non Coffee", "Foods", "Add-On"].map((category) => (
+        {["Coffee", "Non Coffee", "Foods", "Add-On"].map((category) => (
           <label key={category} className="checkbox">
             <input type="radio" name="category" value={category} checked={filters.category === category} onChange={handleChange} />
             {category}
@@ -59,7 +59,7 @@ function Filter() {
       </div>
       <div className="text-sm">
         <h2 className="mb-4">Sort By</h2>
-        {["alphabet", "price", "latest", "oldest"].map((sortBy) => (
+        {["Alphabet", "Price", "Latest", "Oldest"].map((sortBy) => (
           <label key={sortBy} className="checkbox">
             <input type="radio" name="sortBy" value={sortBy} checked={filters.sortBy === sortBy} onChange={handleChange} />
             {sortBy}

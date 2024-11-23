@@ -9,9 +9,9 @@ import ovoIcon from "../assets/images/ovo-logo.svg";
 import paypalIcon from "../assets/images/paypal-logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { useStoreDispatch, useStoreSelector } from "../redux/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { useStoreSelector } from "../redux/hooks";
 import { deleteAllCheckouts, deleteCheckouts } from "../redux/slices/checkout";
 import axios from "axios";
 import Input from "../components/Input";
@@ -25,7 +25,7 @@ function Checkout() {
   const checkoutModalBgRef = useRef<HTMLDivElement>(null);
   const orderTotal = useSelector((state: RootState) => state.checkout.orderTotal);
   const taxTotal = Math.ceil(orderTotal * 0.1);
-  const dispatch = useStoreDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { getProducts } = useSelector((state: RootState) => state.checkout);
   const { token } = useStoreSelector((state) => state.auth);
   const { profile } = useSelector((state: RootState) => state.getUser);
@@ -53,27 +53,28 @@ function Checkout() {
         address: profile.address || "",
       });
     }
-  }, [profile]);
+    const timer = setTimeout(() => {
+      if (!form.full_name || !form.email || !form.address) {
+        Swal.fire({
+          title: "Error!",
+          text: "Please update your profile first.",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2000,
+          position: "top-end",
+          background: "#0B0909",
+          color: "#fff",
+          customClass: {
+            popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
+          },
+          toast: true,
+        });
+        navigate("/profile");
+      }
+    }, 3000);
 
-  useEffect(() => {
-    if (!form.full_name || !form.email || !form.address) {
-      Swal.fire({
-        title: "Error!",
-        text: "Please update your profile.",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 2000,
-        position: "top-end",
-        background: "#0B0909",
-        color: "#fff",
-        customClass: {
-          popup: "border-solid border-5 border-primary text-sm rounded-lg shadow-lg mt-8 tbt:mt-16",
-        },
-        toast: true,
-      });
-      navigate("/profile");
-    }
-  }, [form, navigate]);
+    return () => clearTimeout(timer);
+  }, [profile, form, navigate]);
 
   const handleDeliveryChange = (delivery: number) => {
     setDelivery(delivery);

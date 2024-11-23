@@ -1,104 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 import calenderIcon from "../assets/images/calender-icon.svg";
-import downIcon from "../assets/images/down-icon.svg";
 import glassIcon from "../assets/images/glass-icon.svg";
 import totalIcon from "../assets/images/total-icon.svg";
 import statusIcon from "../assets/images/status-icon.svg";
 import messageIcon from "../assets/images/message-icon.svg";
-import axios from "axios";
-import { useStoreSelector } from "../redux/hooks";
-import { IHistory } from "../types/history";
+import { useDispatch, useSelector } from "react-redux";
+import { historyThunk } from "../redux/slices/history";
+import { AppDispatch, RootState } from "../redux/store";
 
 function HistoryOrder() {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const toggleDropdownRef = useRef<HTMLButtonElement>(null);
-  const dropdownMenuRef = useRef<HTMLDivElement>(null);
-  const { token } = useStoreSelector((state) => state.auth);
-  const [getHistory, setHistory] = useState<IHistory[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { history } = useSelector((state: RootState) => state.history);
 
   useEffect(() => {
-    const getDetailOrder = async () => {
-      const url = `${import.meta.env.VITE_REACT_APP_API_URL}/order/get/history`;
-      try {
-        console.log(token);
-        const result = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setHistory(result.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getDetailOrder();
-  }, [token]);
-
-  const handleToggleDropdown = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsDropdownVisible((prev) => !prev);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (toggleDropdownRef.current && !toggleDropdownRef.current.contains(event.target as Node) && dropdownMenuRef.current && !dropdownMenuRef.current.contains(event.target as Node)) {
-      setIsDropdownVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+    dispatch(historyThunk());
+  }, [dispatch]);
 
   return (
     <main className="font-jakarta mt-[15%] uw:mt-[5%] lg:mt-[7%] tbt:mt-[10%]">
       <section className="px-[5%] tbt:px-[10%]">
         <div className="flex justify-between tbt:justify-normal tbt:items-center">
           <h1 className="items-center justify-center font-bold font-jakarta text-xl md:text-4xl tbt:mr-2">History Order</h1>
-          <div className="flex justify-center bg-darkgray2 w-5 h-full">
-            <p className="font-bold text-sm">2</p>
-          </div>
         </div>
         <div className="inline-block w-full mt-2 tbt:flex">
           <div className="tbt:w-3/4 md:w-4/5 lg:w-3/4 tbt:mr-5">
-            <div className="w-full inline-block md:flex md:flex-row-reverse md:justify-between">
-              <div className="inline-block">
-                <button ref={toggleDropdownRef} onClick={handleToggleDropdown} className="bg-darkgray3 text-lightblack2 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base hover:bg-darkgray2 active:bg-darkgray">
-                  <div className="flex px-2 py-1">
-                    <img className="mr-1 lg:w-5 uw:w-7" width="15" height="15" src={calenderIcon} alt="calender-icon" />
-                    <p className="font-semibold my-auto mr-1">January 2024</p>
-                    <img className="lg:w-5 uw:w-7" width="15" height="15" src={downIcon} alt="down-icon" />
-                  </div>
-                </button>
-                <div
-                  ref={dropdownMenuRef}
-                  onClick={(event) => event.stopPropagation()}
-                  className={`dropdown-content ${isDropdownVisible ? "show" : ""} absolute w-32 lg:w-40 uw:w-52 bg-darkgray3 border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none`}
-                >
-                  <div className="py-1">
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-lightblack2 hover:bg-darkgray2 active:bg-darkgray">
-                      February 2024
-                    </a>
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
-                      March 2024
-                    </a>
-                    <a href="#" className="block px-4 py-2 font-semibold text-xs xl:text-sm 4xl:text-base text-gray-700 hover:bg-darkgray2 active:bg-darkgray">
-                      April 2024
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="p-1 font-semibold flex justify-between bg-darkgray3 text-[0.6rem] md:text-[0.7rem] lg:text-xs xl:text-sm 4xl:text-base mt-2 md:mt-0">
-                <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">On Progress</button>
-                <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">Sending Goods</button>
-                <button className="p-1 mx-auto hover:bg-white active:bg-darkwhite2 focus:bg-white">Finish Order</button>
-              </div>
-            </div>
-            {getHistory.map((history) => (
+            {history.map((history) => (
               <div className="flex bg-darkgray2 mb-3 pl-3 py-3 px-1 mt-3 text-xs lg:text-base">
                 <div className="grid grid-cols-2 md:grid-cols-4">
                   <div className="mb-4 inline-block">
@@ -137,13 +64,6 @@ function HistoryOrder() {
                 </div>
               </div>
             ))}
-            <div className="flex justify-center">
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">1</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">2</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">3</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">4</button>
-              <button className="text-secondary bg-darkgray2 mr-4 rounded-full w-8 uw:w-12 h-8 uw:h-12 hover:bg-primary hover:text-black active:bg-darkprimary focus:bg-primary focus:text-black">&#9656;</button>
-            </div>
           </div>
           <div className="border border-darkgray2 px-5 py-3 mt-4 tbt:mt-0 tbt:w-1/2 tbt:h-1/2">
             <img className="uw:w-14" width="35" height="35" src={messageIcon} alt="message-icon" />

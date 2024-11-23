@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "history-order",
+        path: "history",
         element: (
           <PrivateRoute to={"/login"}>
             <HistoryOrder />

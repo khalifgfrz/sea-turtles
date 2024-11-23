@@ -45,7 +45,7 @@ const initialState: IProductState = {
   maxPrice: 100000,
 };
 
-export const productsThunk = createAsyncThunk<IProductBody[], void, { state: RootState }>("product/fetchProducts", async (_, { getState }) => {
+export const productsThunk = createAsyncThunk<IProductBody[], void, { state: RootState }>("product/getProducts", async (_, { getState }) => {
   const state = getState();
   const { filters, pagination } = state.product;
   const { product_name, category, sortBy, min_price, max_price } = filters;

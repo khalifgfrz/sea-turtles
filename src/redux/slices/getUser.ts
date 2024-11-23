@@ -1,4 +1,3 @@
-// src/redux/slices/userSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
@@ -16,7 +15,7 @@ const initialState: getUserState = {
   error: null,
 };
 
-export const getUserThunk = createAsyncThunk<IProfileBody, void, { state: RootState }>("user/fetchUser", async (_, { getState }) => {
+export const getUserThunk = createAsyncThunk<IProfileBody, void, { state: RootState }>("user/getUser", async (_, { getState }) => {
   const state = getState() as RootState;
   const token = state.auth.token;
   const url = `${import.meta.env.VITE_REACT_APP_API_URL}/user`;
@@ -30,7 +29,7 @@ export const getUserThunk = createAsyncThunk<IProfileBody, void, { state: RootSt
 });
 
 const getUserSlice = createSlice({
-  name: "user",
+  name: "getUser",
   initialState,
   reducers: {
     setProfile: (state, action: PayloadAction<IProfileBody>) => {
