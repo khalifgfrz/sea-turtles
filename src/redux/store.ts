@@ -11,6 +11,7 @@ import getUserReducer from "./slices/getUser";
 import updateUserReducer from "./slices/updateUser";
 import detailOrderReducer from "./slices/detailOrder";
 import historyReducer from "./slices/history";
+import detailProductReducer from "./slices/detailProduct";
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: "auth:coffee",
@@ -33,6 +34,7 @@ export const store = configureStore({
     register: registerReducer,
     checkout: persistedCheckoutReducer,
     product: productReducer,
+    detailProduct: detailProductReducer,
     getUser: getUserReducer,
     detailOrder: detailOrderReducer,
     history: historyReducer,

@@ -9,3 +9,14 @@ export interface IProductBody {
   description: string;
   price: number;
 }
+
+export interface IDetailProduct {
+  uuid?: string;
+  product_id?: number;
+  count: number;
+  size?: number;
+  ice?: boolean;
+  image?: string;
+  product_name?: string;
+  price: number;
+}

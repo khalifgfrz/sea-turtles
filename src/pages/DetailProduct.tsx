@@ -7,9 +7,9 @@ import productImg1 from "../assets/images/menu/1.webp";
 import shoppingLogo from "../assets/images/shopping-cart.svg";
 import thumbsIcon from "../assets/images/thumbs-icon.svg";
 import { useStoreDispatch } from "../redux/hooks";
-import { setCheckouts, IDetailProduct } from "../redux/slices/checkout";
+import { setCheckouts } from "../redux/slices/checkout";
 import ProductDetailCard from "../components/ProductDetailCard";
-import { IProductBody } from "../types/product";
+import { IDetailProduct, IProductBody } from "../types/product";
 import Swal from "sweetalert2";
 
 function DetailProduct() {
@@ -41,7 +41,6 @@ function DetailProduct() {
           product_name: result.data.data[0].product_name,
           price: result.data.data[0].price,
         }));
-        console.log(setDefaultProduct);
       } catch (error) {
         console.log(error);
       }

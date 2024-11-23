@@ -1,20 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IDetailProduct } from "../../types/product";
 
 type checkout = {
   getProducts: IDetailProduct[];
   orderTotal: number;
 };
-
-export interface IDetailProduct {
-  uuid?: string;
-  product_id?: number;
-  count: number;
-  size?: number;
-  ice?: boolean;
-  image?: string;
-  product_name?: string;
-  price: number;
-}
 
 const initialState: checkout = {
   getProducts: [],
