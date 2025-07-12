@@ -4,16 +4,23 @@ import MenuCard from "../components/MenuCard";
 import Filter from "../components/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import { productsThunk } from "../redux/slices/product";
+import { productsThunk, setPagination } from "../redux/slices/product";
 import Pagination from "../components/Pagination";
+import { useSearchParams } from "react-router-dom";
 
 function Product() {
   const dispatch = useDispatch<AppDispatch>();
-  const { products, loading, error } = useSelector((state: RootState) => state.product);
+  const { products, loading, error, pagination } = useSelector((state: RootState) => state.product);
+  const [searchParams] = useSearchParams();
+  const pageParam = searchParams.get("page") || "1";
+
+  useEffect(() => {
+    dispatch(setPagination({ page: pageParam }));
+  }, [pageParam, dispatch]);
 
   useEffect(() => {
     dispatch(productsThunk());
-  }, [dispatch]);
+  }, [dispatch, pagination.page]);
 
   return (
     <main className="font-jakarta">

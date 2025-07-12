@@ -11,6 +11,7 @@ import getUserReducer from "./slices/getUser";
 import updateUserReducer from "./slices/updateUser";
 import detailOrderReducer from "./slices/detailOrder";
 import historyReducer from "./slices/history";
+import favoriteReducer from "./slices/favorite";
 import detailProductReducer from "./slices/detailProduct";
 
 const authPersistConfig: PersistConfig<AuthState> = {
@@ -38,6 +39,7 @@ export const store = configureStore({
     getUser: getUserReducer,
     detailOrder: detailOrderReducer,
     history: historyReducer,
+    favorite: favoriteReducer,
     updateuser: updateUserReducer,
   },
 });

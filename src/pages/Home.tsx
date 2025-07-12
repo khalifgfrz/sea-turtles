@@ -8,14 +8,14 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
-import { productsThunk } from "../redux/slices/product";
+import { favoriteThunk } from "../redux/slices/favorite";
 
 function Home() {
   const dispatch = useDispatch<AppDispatch>();
-  const { products, loading, error } = useSelector((state: RootState) => state.product);
+  const { favorites, loading, error } = useSelector((state: RootState) => state.favorite);
 
   useEffect(() => {
-    dispatch(productsThunk());
+    dispatch(favoriteThunk());
   }, [dispatch]);
 
   return (
@@ -93,7 +93,7 @@ function Home() {
             <p className="text-center">{error}</p>
           ) : (
             <div className="block w-1/2 md:w-full md:grid md:grid-cols-4 justify-center place-items-center">
-              <MenuCard products={products} />
+              <MenuCard products={favorites} />
             </div>
           )}
         </div>

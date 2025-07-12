@@ -13,7 +13,7 @@ interface IFilters {
 
 interface IPagination {
   page: string;
-  totalPages: number;
+  totalPage: number;
 }
 
 export interface IProductState {
@@ -39,13 +39,13 @@ const initialState: IProductState = {
   },
   pagination: {
     page: "1",
-    totalPages: 1,
+    totalPage: 1,
   },
   minPrice: 0,
   maxPrice: 100000,
 };
 
-export const productsThunk = createAsyncThunk<IProductBody[], void, { state: RootState }>("product/getProducts", async (_, { getState }) => {
+export const productsThunk = createAsyncThunk<{ products: IProductBody[]; totalPage: number }, void, { state: RootState }>("product/getProducts", async (_, { getState }) => {
   const state = getState();
   const { filters, pagination } = state.product;
   const { product_name, category, sortBy, min_price, max_price } = filters;
@@ -55,7 +55,10 @@ export const productsThunk = createAsyncThunk<IProductBody[], void, { state: Roo
   const result = await axios.get(url, {
     params: { product_name, category, sortBy, min_price, max_price, page },
   });
-  return result.data.data;
+  return {
+    products: result.data.data,
+    totalPage: result.data.meta.totalPage, // 👈 ambil dari response backend
+  };
 });
 
 const productSlice = createSlice({
@@ -75,7 +78,7 @@ const productSlice = createSlice({
       };
       state.minPrice = 0;
       state.maxPrice = 100000;
-      state.pagination = { page: "1", totalPages: 1 };
+      state.pagination = { page: "1", totalPage: 1 };
     },
     setPagination: (state, action: PayloadAction<Partial<IPagination>>) => {
       state.pagination = { ...state.pagination, ...action.payload };
@@ -97,7 +100,8 @@ const productSlice = createSlice({
       })
       .addCase(productsThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.products = action.payload.products;
+        state.pagination.totalPage = action.payload.totalPage;
       })
       .addCase(productsThunk.rejected, (state) => {
         state.loading = false;
