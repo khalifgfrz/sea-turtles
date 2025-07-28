@@ -26,6 +26,7 @@ const tailwindConfig = {
       },
       fontFamily: {
         jakarta: ["Plus Jakarta Sans", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
       colors: {
         primary: "#ff8906",
